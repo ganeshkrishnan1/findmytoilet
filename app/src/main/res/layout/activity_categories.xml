@@ -1,0 +1,291 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.miracitechnology.wikibackpacker.CategoriesActivity"
+    android:padding="10dp"
+    android:id="@+id/myRelativeLayout">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/txtHomeMessage"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Campgrounds\n"
+                android:id="@+id/txtCampgrounds"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/galleryOne"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtCampgroundsName"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hostels\n"
+                android:id="@+id/txtHostels"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/galleryTwo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtHostelsName"
+                android:textSize="20dp"
+                android:spacing="5dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Day Use Area\n"
+                android:id="@+id/txtDayUseArea"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/galleryThree"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDayUseAreaName"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Points Of Interest\n"
+                android:id="@+id/txtPointsOfInterest"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/galleryFour"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtPointsOfInterestName"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Infocenter\n"
+                android:id="@+id/txtInfocenter"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/galleryFive"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtInfocenterName"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Toilets\n"
+                android:id="@+id/txtToilets"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/gallerySix"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtToiletsName"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Showers\n"
+                android:id="@+id/txtShowers"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/gallerySeven"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtShowersName"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drinking Water\n"
+                android:id="@+id/txtDrinkingWater"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/galleryEight"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDrinkingWaterName"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Caravan Parks\n"
+                android:id="@+id/txtCaravanParks"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/galleryNine"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtCaravanParksName"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BBQ Spots\n"
+                android:id="@+id/txtBBQSpots"
+                android:textSize="20dp" />
+
+            <Gallery
+                android:id="@+id/galleryTen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spacing="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtBBQSpotsName"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
