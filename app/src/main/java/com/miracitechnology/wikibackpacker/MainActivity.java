@@ -1,6 +1,7 @@
 package com.miracitechnology.wikibackpacker;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;

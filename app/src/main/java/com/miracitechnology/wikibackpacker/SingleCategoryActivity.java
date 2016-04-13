@@ -1,10 +1,15 @@
 package com.miracitechnology.wikibackpacker;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.TextView;
@@ -13,6 +18,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -24,6 +31,7 @@ public class SingleCategoryActivity extends FragmentActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     List<HashMap<String,String>> singleCategoryDetails;
     int selectedIndex;
+    LatLngBounds bounds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,9 @@ public class SingleCategoryActivity extends FragmentActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 txtName.setText(singleCategoryDetails.get(position).get("name"));
+                Double lat = Double.parseDouble(singleCategoryDetails.get(position).get("lat"));
+                Double lon = Double.parseDouble(singleCategoryDetails.get(position).get("lon"));
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(lat,lon)));
             }
 
             @Override
@@ -96,10 +107,42 @@ public class SingleCategoryActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
-        Double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
-        String title = singleCategoryDetails.get(selectedIndex).get("name");
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15));
+        adjustPadding();
+
+        List<Marker> markers = new ArrayList<Marker>();
+        for (HashMap<String,String> hm : singleCategoryDetails)
+        {
+            double lat = Double.parseDouble(hm.get("lat"));
+            double lon = Double.parseDouble(hm.get("lon"));
+            String title = hm.get("name");
+            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
+            markers.add(marker);
+        }
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (Marker marker : markers)
+        {
+            builder.include(marker.getPosition());
+        }
+
+        bounds = builder.build();
+
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,50));
+            }
+        });
+    }
+
+    public void adjustPadding()
+    {
+        WindowManager windowManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int deviceWidth = size.x;
+        int deviceHeight = size.y;
+        mMap.setPadding(0,0,0,deviceHeight/6 + 40);
     }
 }
