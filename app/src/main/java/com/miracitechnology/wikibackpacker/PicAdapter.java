@@ -87,7 +87,14 @@ public class PicAdapter extends BaseAdapter {
         //imageView.setImageBitmap(imageBitmap);
         Glide.with(galleryContext).load(images.get(position).get("url")).into(imageView);
         //set layout options
-        imageView.setLayoutParams(new Gallery.LayoutParams(deviceWidth*9/10,deviceHeight*4/10));
+        if (currentImgAdapter == 11)
+        {
+            imageView.setLayoutParams(new Gallery.LayoutParams(deviceWidth /3, deviceHeight /6));
+        }
+        else
+        {
+            imageView.setLayoutParams(new Gallery.LayoutParams(deviceWidth * 9 / 10, deviceHeight * 4 / 10));
+        }
         //scale type within view area
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         //set default gallery item background

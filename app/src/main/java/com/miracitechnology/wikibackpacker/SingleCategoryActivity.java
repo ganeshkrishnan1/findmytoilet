@@ -2,6 +2,12 @@ package com.miracitechnology.wikibackpacker;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Gallery;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +34,25 @@ public class SingleCategoryActivity extends FragmentActivity {
         selectedIndex = getIntent().getIntExtra("selectedIndex",0);
 
         setUpMapIfNeeded();
+
+        final TextView txtName = (TextView)findViewById(R.id.txtSelectedItemName);
+
+        PicAdapter picAdapter = new PicAdapter(this,singleCategoryDetails,11);
+        Gallery gallery = (Gallery)findViewById(R.id.galleryOSelectedCategory);
+        gallery.setAdapter(picAdapter);
+        gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                txtName.setText(singleCategoryDetails.get(position).get("name"));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
     }
 
     @Override
@@ -74,7 +99,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
         Double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
         String title = singleCategoryDetails.get(selectedIndex).get("name");
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lat,lon)).title(title));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lon),15));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15));
     }
 }

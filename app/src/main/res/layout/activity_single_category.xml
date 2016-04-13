@@ -11,4 +11,32 @@
         tools:context="com.miracitechnology.wikibackpacker.SingleCategoryActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/txtSelectedItemName"
+            android:textSize="20dp" />
+
+        <Gallery
+            android:id="@+id/galleryOSelectedCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spacing="5dp"/>
+        </LinearLayout>
+
+    <!--<android.support.v7.widget.RecyclerView
+        android:id="@+id/cardList"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"/>-->
+
     </RelativeLayout>
