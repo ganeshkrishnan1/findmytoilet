@@ -1,46 +1,66 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout_two"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.miracitechnology.wikibackpacker.SingleCategoryActivity"
-    android:id="@+id/mapActivityRelativeLayout">
+    android:background="@color/background_floating_material_light">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/include" />
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:id="@+id/map"
-        tools:context="com.miracitechnology.wikibackpacker.SingleCategoryActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_below="@+id/include" />
-
-    <LinearLayout
-        android:orientation="vertical"
+    !-- The main content view -->
+    <FrameLayout
+        android:id="@+id/content_frame_two"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/txtSelectedItemName"
-            android:textSize="20dp" />
+        android:layout_height="match_parent">
 
-        <Gallery
-            android:id="@+id/galleryOSelectedCategory"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:spacing="5dp"/>
-        </LinearLayout>
+            android:layout_height="match_parent"
+            tools:context="com.miracitechnology.wikibackpacker.SingleCategoryActivity"
+            android:id="@+id/mapActivityRelativeLayout">
 
-    <!--<android.support.v7.widget.RecyclerView
-        android:id="@+id/cardList"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="200dp"/>-->
+            <include layout="@layout/toolbar"
+                android:id="@+id/mToolbar" />
 
-    </RelativeLayout>
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/map"
+                tools:context="com.miracitechnology.wikibackpacker.SingleCategoryActivity"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_below="@+id/mToolbar" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/txtSelectedItemName"
+                    android:textSize="20dp" />
+
+                <Gallery
+                    android:id="@+id/galleryOSelectedCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spacing="5dp"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+    <ListView android:id="@+id/left_drawer_two"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:background="#ffffff"/>
+
+    </android.support.v4.widget.DrawerLayout>

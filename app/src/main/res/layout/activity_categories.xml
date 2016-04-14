@@ -2,7 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_floating_material_light">
+
     <!-- The main content view -->
     <FrameLayout
         android:id="@+id/content_frame"
@@ -30,7 +32,8 @@
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/scrollView" >
+                    android:id="@+id/scrollView"
+                    android:background="@color/background_floating_material_light">
 
                     <LinearLayout
                         android:orientation="vertical"

@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -91,7 +90,7 @@ public class CategoriesActivity extends AppCompatActivity {
         int deviceWidth = size.x;
         int deviceHeight = size.y;
         ImageView imgParallax = (ImageView)findViewById(R.id.imgParallax);
-        imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth,deviceHeight/2));
+        imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth,deviceHeight*2/3));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(this).load("http://api.wikibackpacker.com/api/viewAmenityImage/1587").into(imgParallax);
 
@@ -361,7 +360,7 @@ public class CategoriesActivity extends AppCompatActivity {
             }
         });
 
-        txtHomeMessage.setText("Hi, Rent unique places to stay from local hosts all over the world");
+        txtHomeMessage.setText("\nHi, Rent unique places to stay from local hosts all over the world");
     }
 
 

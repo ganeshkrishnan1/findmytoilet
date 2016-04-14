@@ -1,18 +1,26 @@
 package com.miracitechnology.wikibackpacker;
 
 import android.content.Context;
-import android.content.res.TypedArray;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Gallery;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +30,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,10 +44,30 @@ public class SingleCategoryActivity extends FragmentActivity {
     List<Marker> markers;
     Gallery gallery;
 
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_category);
+
+        mToolbar = (Toolbar)findViewById(R.id.mToolbar);
+        mToolbar.setTitle("SingleCategoryActivity");
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setNavigationIcon(R.drawable.ic_drawer);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_two);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer_two);
+        List<String> listDrawer = new ArrayList<String>();
+        listDrawer.add("Option 1");
+        listDrawer.add("Option 2");
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,listDrawer);
+        mDrawerList.setAdapter(arrayAdapter);
+        setupDrawer();
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
         selectedIndex = getIntent().getIntExtra("selectedIndex",0);
@@ -63,6 +92,15 @@ public class SingleCategoryActivity extends FragmentActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
             }
         });
 
@@ -165,5 +203,56 @@ public class SingleCategoryActivity extends FragmentActivity {
         int deviceWidth = size.x;
         int deviceHeight = size.y;
         mMap.setPadding(0,0,0,deviceHeight/6 + 40);
+    }
+
+    private void setupDrawer()
+    {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                mToolbar.setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                mToolbar.setTitle("SingleCategoryActivity");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+                {
+                    //mDrawerLayout.openDrawer(Gravity.LEFT);
+                    Toast.makeText(getApplicationContext(),"OPEN",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    //mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    Toast.makeText(getApplicationContext(),"CLOSED",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }
