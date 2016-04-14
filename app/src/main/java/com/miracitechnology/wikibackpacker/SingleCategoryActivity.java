@@ -78,6 +78,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         PicAdapter picAdapter = new PicAdapter(this,singleCategoryDetails,11);
         gallery = (Gallery)findViewById(R.id.galleryOSelectedCategory);
         gallery.setAdapter(picAdapter);
+        gallery.setSelection(selectedIndex);
         gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

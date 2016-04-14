@@ -1,11 +1,19 @@
 package com.miracitechnology.wikibackpacker;
 
+import android.content.Context;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,17 +22,27 @@ import java.util.List;
 
 public class DetailsActivity extends ActionBarActivity {
 
+    List<HashMap<String,String>> singleCategoryDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
-
-        TextView txtTest = (TextView)findViewById(R.id.txtTest);
-        List<HashMap<String,String>> list = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
+        singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
         int selectedIndex = getIntent().getIntExtra("selectedIndex",0);
-        txtTest.setText(list.get(selectedIndex).get("name"));
+
+        WindowManager windowManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int deviceWidth = size.x;
+        int deviceHeight = size.y;
+        ImageView imgParallax = (ImageView)findViewById(R.id.imgParallaxTwo);
+        imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth,deviceHeight/3));
+        imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
+        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).into(imgParallax);
     }
 
 
