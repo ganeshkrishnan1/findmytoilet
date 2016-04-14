@@ -32,6 +32,8 @@ public class SingleCategoryActivity extends FragmentActivity {
     List<HashMap<String,String>> singleCategoryDetails;
     int selectedIndex;
     LatLngBounds bounds;
+    List<Marker> markers;
+    Gallery gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         final TextView txtName = (TextView)findViewById(R.id.txtSelectedItemName);
 
         PicAdapter picAdapter = new PicAdapter(this,singleCategoryDetails,11);
-        Gallery gallery = (Gallery)findViewById(R.id.galleryOSelectedCategory);
+        gallery = (Gallery)findViewById(R.id.galleryOSelectedCategory);
         gallery.setAdapter(picAdapter);
         gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -55,6 +57,7 @@ public class SingleCategoryActivity extends FragmentActivity {
                 Double lat = Double.parseDouble(singleCategoryDetails.get(position).get("lat"));
                 Double lon = Double.parseDouble(singleCategoryDetails.get(position).get("lon"));
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(lat,lon)));
+                markers.get(position).showInfoWindow();
             }
 
             @Override
@@ -109,7 +112,7 @@ public class SingleCategoryActivity extends FragmentActivity {
     private void setUpMap() {
         adjustPadding();
 
-        List<Marker> markers = new ArrayList<Marker>();
+        markers = new ArrayList<Marker>();
         for (HashMap<String,String> hm : singleCategoryDetails)
         {
             double lat = Double.parseDouble(hm.get("lat"));
@@ -131,6 +134,24 @@ public class SingleCategoryActivity extends FragmentActivity {
             @Override
             public void onMapLoaded() {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,50));
+            }
+        });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                String markerTitle = marker.getTitle();
+                int markerIndex = 0;
+                for (int i = 0; i < singleCategoryDetails.size(); i++)
+                {
+                    if (singleCategoryDetails.get(i).get("name").equals(markerTitle))
+                    {
+                        markerIndex = i;
+                        break;
+                    }
+                }
+                gallery.setSelection(markerIndex,true);
+                return true;
             }
         });
     }
