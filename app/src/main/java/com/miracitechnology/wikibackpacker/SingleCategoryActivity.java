@@ -20,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Gallery;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -232,13 +231,11 @@ public class SingleCategoryActivity extends FragmentActivity {
             public void onClick(View v) {
                 if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
                 {
-                    //mDrawerLayout.openDrawer(Gravity.LEFT);
-                    Toast.makeText(getApplicationContext(),"OPEN",Toast.LENGTH_SHORT).show();
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
                 }
                 else
                 {
-                    //mDrawerLayout.closeDrawer(Gravity.LEFT);
-                    Toast.makeText(getApplicationContext(),"CLOSED",Toast.LENGTH_SHORT).show();
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
                 }
             }
         });
