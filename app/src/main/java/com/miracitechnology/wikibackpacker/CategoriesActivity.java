@@ -1,14 +1,29 @@
 package com.miracitechnology.wikibackpacker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Gallery;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,12 +60,40 @@ public class CategoriesActivity extends AppCompatActivity {
     List<HashMap<String,String>> listCaravanParks;
     List<HashMap<String,String>> listBBQSpots;
 
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private  String mActivityTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
+
         jsonString = getIntent().getStringExtra("jsonString");
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mActivityTitle = getSupportActionBar().getTitle().toString();
+        List<String> listDrawer = new ArrayList<String>();
+        listDrawer.add("Option 1");
+        listDrawer.add("Option 2");
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,listDrawer);
+        mDrawerList.setAdapter(arrayAdapter);
+        setupDrawer();
+
+        WindowManager windowManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int deviceWidth = size.x;
+        int deviceHeight = size.y;
+        ImageView imgParallax = (ImageView)findViewById(R.id.imgParallax);
+        imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth,deviceHeight/2));
+        imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
+        Glide.with(this).load("http://api.wikibackpacker.com/api/viewAmenityImage/1587").into(imgParallax);
 
         listCampgrounds = new ArrayList<HashMap<String,String>>();
         listHostels = new ArrayList<HashMap<String,String>>();
@@ -341,6 +384,10 @@ public class CategoriesActivity extends AppCompatActivity {
             return true;
         }
 
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -453,7 +500,7 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
-                hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
+                hm.put("name",jsonArray.getJSONObject(i).optString("bbqName"));
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
@@ -462,5 +509,44 @@ public class CategoriesActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setupDrawer()
+    {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }

@@ -1,7 +1,6 @@
 package com.miracitechnology.wikibackpacker;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -126,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().hide();
 
         myProgressBar = (ProgressBar)findViewById(R.id.myProgressBar);
         myProgressBar.setMax(10);
