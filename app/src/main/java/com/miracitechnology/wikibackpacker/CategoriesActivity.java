@@ -137,7 +137,7 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryOne.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listCampgrounds);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -161,7 +161,7 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listHostels);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -185,7 +185,7 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryThree.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listDayUseArea);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -209,7 +209,7 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryFour.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listPointsOfInterest);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -233,7 +233,7 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryFive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listInfocenter);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -257,7 +257,7 @@ public class CategoriesActivity extends AppCompatActivity {
         gallerySix.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listToilets);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -281,7 +281,7 @@ public class CategoriesActivity extends AppCompatActivity {
         gallerySeven.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listShowers);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -305,7 +305,7 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryEight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listDrinkingWater);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -329,7 +329,7 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryNine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listCaravanParks);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);
@@ -353,7 +353,7 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryTen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listBBQSpots);
                 intent.putExtra("selectedIndex",position);
                 startActivity(intent);

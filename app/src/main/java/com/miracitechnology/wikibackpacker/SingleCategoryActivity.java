@@ -2,23 +2,16 @@ package com.miracitechnology.wikibackpacker;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Gallery;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,10 +36,6 @@ public class SingleCategoryActivity extends FragmentActivity {
     List<Marker> markers;
     Gallery gallery;
 
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-
     Toolbar mToolbar;
 
     @Override
@@ -57,16 +46,13 @@ public class SingleCategoryActivity extends FragmentActivity {
         mToolbar = (Toolbar)findViewById(R.id.mToolbar);
         mToolbar.setTitle("SingleCategoryActivity");
         mToolbar.setTitleTextColor(Color.WHITE);
-        mToolbar.setNavigationIcon(R.drawable.ic_drawer);
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_two);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer_two);
-        List<String> listDrawer = new ArrayList<String>();
-        listDrawer.add("Option 1");
-        listDrawer.add("Option 2");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,listDrawer);
-        mDrawerList.setAdapter(arrayAdapter);
-        setupDrawer();
+        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
         selectedIndex = getIntent().getIntExtra("selectedIndex",0);
@@ -180,15 +166,13 @@ public class SingleCategoryActivity extends FragmentActivity {
             public boolean onMarkerClick(Marker marker) {
                 String markerTitle = marker.getTitle();
                 int markerIndex = 0;
-                for (int i = 0; i < singleCategoryDetails.size(); i++)
-                {
-                    if (singleCategoryDetails.get(i).get("name").equals(markerTitle))
-                    {
+                for (int i = 0; i < singleCategoryDetails.size(); i++) {
+                    if (singleCategoryDetails.get(i).get("name").equals(markerTitle)) {
                         markerIndex = i;
                         break;
                     }
                 }
-                gallery.setSelection(markerIndex,true);
+                gallery.setSelection(markerIndex, true);
                 return true;
             }
         });
@@ -202,55 +186,6 @@ public class SingleCategoryActivity extends FragmentActivity {
         display.getSize(size);
         int deviceWidth = size.x;
         int deviceHeight = size.y;
-        mMap.setPadding(0,0,0,deviceHeight/6 + 40);
-    }
-
-    private void setupDrawer()
-    {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                mToolbar.setTitle("Navigation!");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                mToolbar.setTitle("SingleCategoryActivity");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
-                {
-                    mDrawerLayout.closeDrawer(Gravity.LEFT);
-                }
-                else
-                {
-                    mDrawerLayout.openDrawer(Gravity.LEFT);
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        mMap.setPadding(0, 0, 0, deviceHeight / 6 + 40);
     }
 }

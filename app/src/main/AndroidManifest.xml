@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".CategoriesActivity"
-            android:label="@string/title_activity_categories" >
+            android:label="@string/title_activity_categories"
+            android:launchMode="singleTop">
         </activity>
 
         <meta-data
@@ -46,6 +47,11 @@
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details" >
+        </activity>
+        <activity
+            android:name=".SingleCategoryListActivity"
+            android:label="@string/title_activity_single_category_list"
+            android:parentActivityName=".CategoriesActivity">
         </activity>
     </application>
 
