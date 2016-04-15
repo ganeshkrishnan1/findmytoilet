@@ -76,7 +76,7 @@ public class CustomListViewAdapter extends BaseAdapter implements ListAdapter {
         txtPrimary.setText("\n" + list.get(position).get("name"));
 
         TextView txtSecondary = (TextView)view.findViewById(R.id.txtSecondary);
-        txtSecondary.setText(list.get(position).get("name") + "\n");
+        txtSecondary.setText(list.get(position).get("name") + "\n\n");
 
         return view;
     }

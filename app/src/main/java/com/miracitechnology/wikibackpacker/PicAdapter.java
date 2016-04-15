@@ -87,7 +87,7 @@ public class PicAdapter extends BaseAdapter {
         //imageView.setImageBitmap(imageBitmap);
         Glide.with(galleryContext).load(images.get(position).get("url")).into(imageView);
         //set layout options
-        if (currentImgAdapter == 11)
+        if (currentImgAdapter >= 11)
         {
             imageView.setLayoutParams(new Gallery.LayoutParams(deviceWidth /3, deviceHeight /6));
         }

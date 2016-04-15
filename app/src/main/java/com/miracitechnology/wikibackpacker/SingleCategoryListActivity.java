@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,11 +31,20 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
-        selectedIndex = getIntent().getIntExtra("selectedIndex",0);
 
         ListView listPlaces = (ListView)findViewById(R.id.listPlaces);
         CustomListViewAdapter customListViewAdapter = new CustomListViewAdapter(singleCategoryDetails,this);
         listPlaces.setAdapter(customListViewAdapter);
+
+        listPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -54,7 +66,6 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         if (id == R.id.action_map) {
             Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
             intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
-            intent.putExtra("selectedIndex",selectedIndex);
             startActivity(intent);
         }
 

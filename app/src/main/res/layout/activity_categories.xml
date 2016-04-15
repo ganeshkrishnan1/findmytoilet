@@ -57,13 +57,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Campgrounds\n"
                             android:id="@+id/txtCampgrounds"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/galleryOne"
@@ -87,13 +88,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Hostels\n"
                             android:id="@+id/txtHostels"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/galleryTwo"
@@ -118,13 +120,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Day Use Area\n"
                             android:id="@+id/txtDayUseArea"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/galleryThree"
@@ -148,13 +151,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Points Of Interest\n"
                             android:id="@+id/txtPointsOfInterest"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/galleryFour"
@@ -178,13 +182,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Infocenter\n"
                             android:id="@+id/txtInfocenter"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/galleryFive"
@@ -208,13 +213,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Toilets\n"
                             android:id="@+id/txtToilets"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/gallerySix"
@@ -238,13 +244,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Showers\n"
                             android:id="@+id/txtShowers"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/gallerySeven"
@@ -268,13 +275,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Drinking Water\n"
                             android:id="@+id/txtDrinkingWater"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/galleryEight"
@@ -298,13 +306,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Caravan Parks\n"
                             android:id="@+id/txtCaravanParks"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/galleryNine"
@@ -328,13 +337,14 @@
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="BBQ Spots\n"
                             android:id="@+id/txtBBQSpots"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:onClick="onClickCategory" />
 
                         <Gallery
                             android:id="@+id/galleryTen"
