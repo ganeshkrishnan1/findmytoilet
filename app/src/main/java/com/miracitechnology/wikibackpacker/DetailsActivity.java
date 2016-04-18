@@ -1,8 +1,10 @@
 package com.miracitechnology.wikibackpacker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -17,9 +19,11 @@ import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,6 +31,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +42,8 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     List<HashMap<String,String>> singleCategoryDetails;
     int selectedIndex;
     Toolbar mToolbarDetails;
+    ImageView imgParallax;
+    Typeface customFont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,8 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
+       customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
+
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
         selectedIndex = getIntent().getIntExtra("selectedIndex",0);
 
@@ -68,22 +77,26 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         display.getSize(size);
         int deviceWidth = size.x;
         int deviceHeight = size.y;
-        ImageView imgParallax = (ImageView)findViewById(R.id.imgParallaxTwo);
-        imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth,deviceHeight *4/10));
+        imgParallax = (ImageView)findViewById(R.id.imgParallaxTwo);
+        imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth, deviceHeight * 4 / 10));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).into(imgParallax);
 
-        TextView txtTest = (TextView)findViewById(R.id.txtTest);
-        txtTest.setText(singleCategoryDetails.toString());
+        TextView txtName = (TextView)findViewById(R.id.txtName);
+        txtName.setTypeface(customFont);
+        txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
 
         TextView txtSimilarItem = (TextView)findViewById(R.id.txtSimilarItem);
+        txtSimilarItem.setTypeface(customFont);
         txtSimilarItem.setTextColor(Color.WHITE);
         final TextView txtSimilarItemName = (TextView)findViewById(R.id.txtSimilarItemName);
+        txtSimilarItemName.setTypeface(customFont);
         txtSimilarItemName.setTextColor(Color.WHITE);
 
         Gallery gallerySimilarPlaces = (Gallery)findViewById(R.id.gallerySimilarPlaces);
         PicAdapter picAdapterSimilarPlaces = new PicAdapter(this, singleCategoryDetails, 12);
         gallerySimilarPlaces.setAdapter(picAdapterSimilarPlaces);
+        gallerySimilarPlaces.setFocusable(false);
         gallerySimilarPlaces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -93,6 +106,16 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        gallerySimilarPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = getIntent();
+                intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
+                intent.putExtra("selectedIndex",position);
+                finish();
+                startActivity(intent);
             }
         });
     }
@@ -125,6 +148,8 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
         double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
         String title = singleCategoryDetails.get(selectedIndex).get("name");
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
+        Marker marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
+        marker.showInfoWindow();
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lon),15));
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -64,6 +65,8 @@ public class CategoriesActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private  String mActivityTitle;
 
+    Typeface customFont;
+
     public void onClickCategory(View view)
     {
         Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
@@ -113,6 +116,8 @@ public class CategoriesActivity extends AppCompatActivity {
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
 
+        customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
+
         jsonString = getIntent().getStringExtra("jsonString");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -150,16 +155,49 @@ public class CategoriesActivity extends AppCompatActivity {
         parseJSONString(jsonString);
 
         TextView txtHomeMessage = (TextView)findViewById(R.id.txtHomeMessage);
+        txtHomeMessage.setTypeface(customFont);
+
+        TextView txtCampgrounds = (TextView)findViewById(R.id.txtCampgrounds);
+        txtCampgrounds.setTypeface(customFont);
+        TextView txtHostels = (TextView)findViewById(R.id.txtHostels);
+        txtHostels.setTypeface(customFont);
+        TextView txtDayUseArea = (TextView)findViewById(R.id.txtDayUseArea);
+        txtDayUseArea.setTypeface(customFont);
+        TextView txtPointsOfInterest = (TextView)findViewById(R.id.txtPointsOfInterest);
+        txtPointsOfInterest.setTypeface(customFont);
+        TextView txtInfocenter = (TextView)findViewById(R.id.txtInfocenter);
+        txtInfocenter.setTypeface(customFont);
+        TextView txtToilets = (TextView)findViewById(R.id.txtToilets);
+        txtToilets.setTypeface(customFont);
+        TextView txtShowers = (TextView)findViewById(R.id.txtShowers);
+        txtShowers.setTypeface(customFont);
+        TextView txtDrinkingWater = (TextView)findViewById(R.id.txtDrinkingWater);
+        txtDrinkingWater.setTypeface(customFont);
+        TextView txtCaravanParks = (TextView)findViewById(R.id.txtCaravanParks);
+        txtCaravanParks.setTypeface(customFont);
+        TextView txtBBQSpots = (TextView)findViewById(R.id.txtBBQSpots);
+        txtBBQSpots.setTypeface(customFont);
+
         final TextView txtCampgroundsName = (TextView)findViewById(R.id.txtCampgroundsName);
+        txtCampgroundsName.setTypeface(customFont);
         final TextView txtHostelsName = (TextView)findViewById(R.id.txtHostelsName);
+        txtHostelsName.setTypeface(customFont);
         final TextView txtDayUseAreaName = (TextView)findViewById(R.id.txtDayUseAreaName);
+        txtDayUseAreaName.setTypeface(customFont);
         final TextView txtPointsOfInterestName = (TextView)findViewById(R.id.txtPointsOfInterestName);
+        txtPointsOfInterest.setTypeface(customFont);
         final TextView txtInfocenterName = (TextView)findViewById(R.id.txtInfocenterName);
+        txtInfocenterName.setTypeface(customFont);
         final TextView txtToiletsName = (TextView)findViewById(R.id.txtToiletsName);
+        txtToiletsName.setTypeface(customFont);
         final TextView txtShowersName = (TextView)findViewById(R.id.txtShowersName);
+        txtShowersName.setTypeface(customFont);
         final TextView txtDrinkingWaterName = (TextView)findViewById(R.id.txtDrinkingWaterName);
+        txtDrinkingWaterName.setTypeface(customFont);
         final TextView txtCaravanParksName = (TextView)findViewById(R.id.txtCaravanParksName);
+        txtCaravanParksName.setTypeface(customFont);
         final TextView txtBBQSpotsName = (TextView)findViewById(R.id.txtBBQSpotsName);
+        txtBBQSpotsName.setTypeface(customFont);
 
         Gallery galleryOne = (Gallery)findViewById(R.id.galleryOne);
         imgAdapterOne = new PicAdapter(this,listCampgrounds,1);
@@ -354,6 +392,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listCampgrounds.add(hm);
             }
 
@@ -365,6 +406,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listHostels.add(hm);
             }
 
@@ -376,6 +420,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listDayUseArea.add(hm);
             }
 
@@ -387,6 +434,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listPointsOfInterest.add(hm);
             }
 
@@ -398,6 +448,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listInfocenter.add(hm);
             }
 
@@ -409,6 +462,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listToilets.add(hm);
             }
 
@@ -420,6 +476,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listShowers.add(hm);
             }
 
@@ -431,6 +490,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listDrinkingWater.add(hm);
             }
 
@@ -442,6 +504,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listCaravanParks.add(hm);
             }
 
@@ -453,6 +518,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
+                hm.put("score",jsonArray.getJSONObject(i).optString("score"));
+                hm.put("rating",jsonArray.getJSONObject(i).optString("rating"));
+                hm.put("notes",jsonArray.getJSONObject(i).optString("notes"));
                 listBBQSpots.add(hm);
             }
         } catch (Exception e) {

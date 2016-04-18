@@ -20,7 +20,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +31,7 @@
         <activity
             android:name=".CategoriesActivity"
             android:label="@string/title_activity_categories"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
 
@@ -42,14 +44,17 @@
 
         <activity
             android:name=".SingleCategoryActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_single_category" >
         </activity>
         <activity
             android:name=".DetailsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_details" >
         </activity>
         <activity
             android:name=".SingleCategoryListActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_single_category_list"
             android:parentActivityName=".CategoriesActivity">
         </activity>

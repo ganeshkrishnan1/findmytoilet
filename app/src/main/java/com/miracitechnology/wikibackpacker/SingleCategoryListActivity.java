@@ -21,7 +21,6 @@ import java.util.List;
 public class SingleCategoryListActivity extends AppCompatActivity {
 
     List<HashMap<String,String>> singleCategoryDetails;
-    int selectedIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

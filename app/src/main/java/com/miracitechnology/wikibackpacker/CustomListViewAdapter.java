@@ -2,6 +2,8 @@ package com.miracitechnology.wikibackpacker;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Typeface;
+import android.text.Html;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +32,7 @@ public class CustomListViewAdapter extends BaseAdapter implements ListAdapter {
     int deviceWidth;
     int deviceHeight;
 
-
+    Typeface customFont;
 
     public CustomListViewAdapter(List<HashMap<String,String>> list, Context context) {
         this.list = list;
@@ -42,6 +44,8 @@ public class CustomListViewAdapter extends BaseAdapter implements ListAdapter {
         display.getSize(size);
         deviceWidth = size.x;
         deviceHeight = size.y;
+
+        customFont = Typeface.createFromAsset(context.getAssets(),"brown.ttf");
     }
 
     @Override
@@ -73,9 +77,11 @@ public class CustomListViewAdapter extends BaseAdapter implements ListAdapter {
         Glide.with(context).load(list.get(position).get("url")).into(imgPlace);
 
         TextView txtPrimary = (TextView)view.findViewById(R.id.txtPrimary);
-        txtPrimary.setText("\n" + list.get(position).get("name"));
+        txtPrimary.setTypeface(customFont);
+        txtPrimary.setText(Html.fromHtml("<br><b>" + list.get(position).get("name") + "</b>"));
 
         TextView txtSecondary = (TextView)view.findViewById(R.id.txtSecondary);
+        txtSecondary.setTypeface(customFont);
         txtSecondary.setText(list.get(position).get("name") + "\n\n");
 
         return view;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +39,8 @@ public class SingleCategoryActivity extends FragmentActivity {
 
     Toolbar mToolbar;
 
+    Typeface customFont;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +59,12 @@ public class SingleCategoryActivity extends FragmentActivity {
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
 
+        customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
+
         setUpMapIfNeeded();
 
         final TextView txtName = (TextView)findViewById(R.id.txtSelectedItemName);
+        txtName.setTypeface(customFont);
 
         PicAdapter picAdapter = new PicAdapter(this,singleCategoryDetails,11);
         gallery = (Gallery)findViewById(R.id.galleryOSelectedCategory);
