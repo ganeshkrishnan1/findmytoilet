@@ -28,6 +28,7 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_category_list);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
+        setTitle("Wikibackpacker");
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
 

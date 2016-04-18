@@ -47,7 +47,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         setContentView(R.layout.activity_single_category);
 
         mToolbar = (Toolbar)findViewById(R.id.mToolbar);
-        mToolbar.setTitle("SingleCategoryActivity");
+        mToolbar.setTitle("Wikibackpacker");
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setNavigationIcon(R.drawable.ic_action_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

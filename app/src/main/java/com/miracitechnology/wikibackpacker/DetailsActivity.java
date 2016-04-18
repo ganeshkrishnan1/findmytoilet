@@ -18,6 +18,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,13 +51,32 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         //getActivity().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
 
         mToolbarDetails = (Toolbar)findViewById(R.id.mToolbarDetais);
-        mToolbarDetails.setTitle("DetailsActivity");
+        mToolbarDetails.setTitle("Wikibackpacker");
         mToolbarDetails.setTitleTextColor(Color.WHITE);
         mToolbarDetails.setNavigationIcon(R.drawable.ic_action_back);
         mToolbarDetails.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        mToolbarDetails.inflateMenu(R.menu.menu_details);
+        mToolbarDetails.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if(id == R.id.action_share)
+                {
+                    String shareText = singleCategoryDetails.get(selectedIndex).get("name") + "\n";
+                    shareText += singleCategoryDetails.get(selectedIndex).get("url");
+
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                    sendIntent.setType("text/plain");
+                    startActivity(Intent.createChooser(sendIntent, "Share Via.."));
+                }
+                return  true;
             }
         });
 

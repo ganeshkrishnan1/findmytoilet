@@ -64,7 +64,6 @@ public class CategoriesActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private  String mActivityTitle;
 
     Typeface customFont;
 
@@ -116,6 +115,7 @@ public class CategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
+        setTitle("Wikibackpacker");
 
         customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
 
@@ -123,7 +123,6 @@ public class CategoriesActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mActivityTitle = getSupportActionBar().getTitle().toString();
         List<String> listDrawer = new ArrayList<String>();
         listDrawer.add("Option 1");
         listDrawer.add("Option 2");
@@ -536,14 +535,12 @@ public class CategoriesActivity extends AppCompatActivity {
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation!");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mActivityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
