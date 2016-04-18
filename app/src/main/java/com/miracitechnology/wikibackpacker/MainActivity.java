@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     boolean isDownloadedJSONData = false;
 
+    static boolean activityChanged = false;
+
     Handler handler;
     Runnable runnable;
 
@@ -100,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
                             jsonObject.put("bbqspots", jsonArray);
                             break;
                     }
-                    publishProgress(i + 1);
+                    if(!activityChanged)
+                    {
+                        publishProgress(i + 1);
+                    }
                 }
                 return jsonObject.toString();
             } catch (Exception e) {
@@ -111,13 +116,30 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            downloadedJSONString = s;
-            isDownloadedJSONData = true;
+            if(!activityChanged)
+            {
+                downloadedJSONString = s;
+                isDownloadedJSONData = true;
+            }
+            else
+            {
+                try {
+                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("WikiBackPackerJSONData.txt", MODE_PRIVATE));
+                    outputStreamWriter.write(s);
+                    outputStreamWriter.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            myProgressBar.setProgress(values[0]);
+            if (!activityChanged)
+            {
+                myProgressBar.setProgress(values[0]);
+            }
         }
     }
 
@@ -160,6 +182,13 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
+            activityChanged = true;
+            JSONDownloader jsonDownloader = new JSONDownloader();
+            try {
+                jsonDownloader.execute(apiCampgrounds, apiHostels, apiDayUseArea, apiPointsOfnterest, apiInfoCenter, apiToilets, apiShowers, apiDrinkingWater, apiCaravanParks, apiBBQSpots);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             new CountDownTimer(3000,1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {

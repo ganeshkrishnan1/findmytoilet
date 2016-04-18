@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
@@ -19,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -63,7 +60,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
-       customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
+        customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
         selectedIndex = getIntent().getIntExtra("selectedIndex",0);
