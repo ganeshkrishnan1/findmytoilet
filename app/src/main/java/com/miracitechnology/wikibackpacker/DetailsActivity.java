@@ -16,9 +16,8 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,8 +50,9 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         //getActivity().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
 
         mToolbarDetails = (Toolbar)findViewById(R.id.mToolbarDetais);
-        mToolbarDetails.setTitle("Wikibackpacker");
-        mToolbarDetails.setTitleTextColor(Color.WHITE);
+        //mToolbarDetails.setTitle("Wikibackpacker");
+        //mToolbarDetails.setTitleTextColor(Color.WHITE);
+        mToolbarDetails.setBackgroundColor(Color.TRANSPARENT);
         mToolbarDetails.setNavigationIcon(R.drawable.ic_action_back);
         mToolbarDetails.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +95,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         int deviceWidth = size.x;
         int deviceHeight = size.y;
         imgParallax = (ImageView)findViewById(R.id.imgParallaxTwo);
-        imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth, deviceHeight * 4 / 10));
+        imgParallax.setLayoutParams(new RelativeLayout.LayoutParams(deviceWidth, deviceHeight * 4 / 10));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).into(imgParallax);
 
