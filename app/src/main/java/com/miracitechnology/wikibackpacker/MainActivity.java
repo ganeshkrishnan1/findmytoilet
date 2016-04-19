@@ -1,6 +1,16 @@
 package com.miracitechnology.wikibackpacker;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -8,7 +18,11 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,7 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationListener {
 
     String apiCampgrounds = "http://api.wikibackpacker.com/api/findAmenity/1";
     String apiHostels = "http://api.wikibackpacker.com/api/findAmenity/4";
@@ -48,6 +62,39 @@ public class MainActivity extends AppCompatActivity {
     Runnable runnable;
 
     ProgressBar myProgressBar;
+
+    LocationManager locationManager;
+    String provider;
+    Location location;
+
+    TextView txtStatus;
+
+    @Override
+    public void onLocationChanged(Location location) {
+        String lat = String.valueOf(location.getLatitude());
+        String lon = String.valueOf(location.getLongitude());
+        updateAPI(lat,lon);
+
+        txtStatus.setText("Location Received");
+
+        locationManager.removeUpdates(this);
+        onLocationReceived();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 
     public class JSONDownloader extends AsyncTask<String,Integer,String>
     {
@@ -150,6 +197,80 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        txtStatus = (TextView)findViewById(R.id.txtStatus);
+        Typeface customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
+        txtStatus.setTypeface(customFont);
+
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        provider = locationManager.getBestProvider(new Criteria(),true);
+        if(provider.contains("gps"))
+        {
+            onGPSAvailable();
+        }
+        else
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("GPS unavailable, Please enable GPS and click OK");
+            builder.setCancelable(false);
+            builder.setPositiveButton("OK",null);
+            final AlertDialog alertDialog = builder.create();
+            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    Button btnPstv = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                    btnPstv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(isGPSEnabled())
+                            {
+                                alertDialog.dismiss();
+                                onGPSAvailable();
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"GPS not enabled",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            });
+            alertDialog.show();
+        }
+    }
+
+    public boolean isGPSEnabled()
+    {
+        provider = locationManager.getBestProvider(new Criteria(),true);
+        if(provider.contains("gps"))
+        {
+            return true;
+        }
+        else
+        {
+            return  false;
+        }
+    }
+
+    public void onGPSAvailable()
+    {
+        locationManager.requestLocationUpdates(provider, 400, 0.1f, this);
+        location = locationManager.getLastKnownLocation(provider);
+        if (location != null) {
+            txtStatus.setText("Location Received");
+
+            String lat = String.valueOf(location.getLatitude());
+            String lon = String.valueOf(location.getLongitude());
+            updateAPI(lat, lon);
+
+            locationManager.removeUpdates(this);
+            onLocationReceived();
+        } else {
+            txtStatus.setText("Getting Location, Please Wait");
+        }
+    }
+
+    public void onLocationReceived()
+    {
         myProgressBar = (ProgressBar)findViewById(R.id.myProgressBar);
         myProgressBar.setMax(10);
         myProgressBar.setProgress(0);
@@ -281,5 +402,19 @@ public class MainActivity extends AppCompatActivity {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateAPI(String lat, String lon)
+    {
+        apiCampgrounds += "/" + lat + "/" + lon;
+        apiHostels += "/" + lat + "/" + lon;
+        apiDayUseArea += "/" + lat + "/" + lon;
+        apiPointsOfnterest += "/" + lat + "/" + lon;
+        apiInfoCenter += "/" + lat + "/" + lon;
+        apiToilets += "/" + lat + "/" + lon;
+        apiShowers += "/" + lat + "/" + lon;
+        apiDrinkingWater += "/" + lat + "/" + lon;
+        apiCaravanParks += "/" + lat + "/" + lon;
+        apiBBQSpots += "/" + lat + "/" + lon;
     }
 }
