@@ -213,6 +213,15 @@ public class CategoriesActivity extends AppCompatActivity {
 
             }
         });
+        galleryOne.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listCampgrounds);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
+            }
+        });
 
         Gallery galleryTwo = (Gallery)findViewById(R.id.galleryTwo);
         imgAdapterTwo = new PicAdapter(this,listHostels,2);
@@ -226,6 +235,15 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        galleryTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listHostels);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
             }
         });
 
@@ -243,6 +261,15 @@ public class CategoriesActivity extends AppCompatActivity {
 
             }
         });
+        galleryThree.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listDayUseArea);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
+            }
+        });
 
         Gallery galleryFour = (Gallery)findViewById(R.id.galleryFour);
         imgAdapterFour = new PicAdapter(this,listPointsOfInterest,4);
@@ -256,6 +283,15 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        galleryFour.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listPointsOfInterest);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
             }
         });
 
@@ -273,6 +309,16 @@ public class CategoriesActivity extends AppCompatActivity {
 
             }
         });
+        galleryFive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listInfocenter);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
+            }
+        });
+
         Gallery gallerySix = (Gallery)findViewById(R.id.gallerySix);
         imgAdapterSix = new PicAdapter(this,listToilets,6);
         gallerySix.setAdapter(imgAdapterSix);
@@ -285,6 +331,15 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        gallerySix.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listToilets);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
             }
         });
 
@@ -302,6 +357,15 @@ public class CategoriesActivity extends AppCompatActivity {
 
             }
         });
+        gallerySeven.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listShowers);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
+            }
+        });
 
         Gallery galleryEight = (Gallery)findViewById(R.id.galleryEight);
         imgAdapterEight = new PicAdapter(this,listDrinkingWater,8);
@@ -315,6 +379,15 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        galleryEight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listDrinkingWater);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
             }
         });
 
@@ -332,6 +405,15 @@ public class CategoriesActivity extends AppCompatActivity {
 
             }
         });
+        galleryNine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listCaravanParks);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
+            }
+        });
 
         Gallery galleryTen = (Gallery)findViewById(R.id.galleryTen);
         imgAdapterTen = new PicAdapter(this,listBBQSpots,10);
@@ -345,6 +427,15 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        galleryTen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails",(Serializable)listBBQSpots);
+                intent.putExtra("selectedIndex",position);
+                startActivity(intent);
             }
         });
 
