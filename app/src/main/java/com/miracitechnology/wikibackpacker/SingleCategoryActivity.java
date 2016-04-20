@@ -32,7 +32,7 @@ public class SingleCategoryActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     List<HashMap<String,String>> singleCategoryDetails;
-    int selectedIndex;
+    String category;
     LatLngBounds bounds;
     List<Marker> markers;
     Gallery gallery;
@@ -58,6 +58,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         });
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
+        category = getIntent().getStringExtra("category");
 
         customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
 
@@ -90,6 +91,7 @@ public class SingleCategoryActivity extends FragmentActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category",category);
                 startActivity(intent);
             }
         });
