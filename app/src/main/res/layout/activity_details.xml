@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.miracitechnology.wikibackpacker.DetailsActivity"
+    tools:context="com.wikibackpacker.DetailsActivity"
     android:id="@+id/mapActivityRelativeLayout">
 
     <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"

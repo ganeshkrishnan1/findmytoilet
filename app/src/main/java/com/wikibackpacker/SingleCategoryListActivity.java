@@ -1,4 +1,4 @@
-package com.miracitechnology.wikibackpacker;
+package com.wikibackpacker;
 
 import android.content.Intent;
 import android.graphics.Color;
