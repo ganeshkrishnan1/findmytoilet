@@ -26,4 +26,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.android.support:design:22.2.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
 }

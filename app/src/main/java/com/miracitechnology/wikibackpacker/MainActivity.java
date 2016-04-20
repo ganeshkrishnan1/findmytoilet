@@ -36,6 +36,10 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
@@ -55,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     String jsonFromFile;
 
     boolean isDownloadedJSONData = false;
-
-    static boolean activityChanged = false;
 
     Handler handler;
     Runnable runnable;
@@ -101,10 +103,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         @Override
         protected String doInBackground(String... urls) {
             JSONObject jsonObject = new JSONObject();
+            OkHttpClient client = new OkHttpClient();
             try {
                 for (int i = 0; i < urls.length; i++) {
                     String result = "";
-                    URL url = new URL(urls[i]);
+                    /*URL url = new URL(urls[i]);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     InputStream in = connection.getInputStream();
                     InputStreamReader reader = new InputStreamReader(in);
@@ -114,7 +117,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         result += currChar;
                         data = reader.read();
 
-                    }
+                    }*/
+                    Request request  = new Request.Builder().url(urls[i]).build();
+                    Response response = client.newCall(request).execute();
+                    result = response.body().string();
                     JSONArray jsonArray = new JSONArray(result);
                     switch (i)
                     {
@@ -149,10 +155,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                             jsonObject.put("bbqspots", jsonArray);
                             break;
                     }
-                    if(!activityChanged)
-                    {
-                        publishProgress(i + 1);
-                    }
+                    publishProgress(i + 1);
                 }
                 return jsonObject.toString();
             } catch (Exception e) {
@@ -163,30 +166,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         @Override
         protected void onPostExecute(String s) {
-            if(!activityChanged)
+
+            writeToFile(s);
+
+            downloadedJSONString = s;
+            if (downloadedJSONString.equals("") || downloadedJSONString.equals("Failed"))
             {
-                downloadedJSONString = s;
-                isDownloadedJSONData = true;
+                downloadedJSONString = readFromFile();
             }
-            else
-            {
-                try {
-                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("WikiBackPackerJSONData.txt", MODE_PRIVATE));
-                    outputStreamWriter.write(s);
-                    outputStreamWriter.close();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            isDownloadedJSONData = true;
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            if (!activityChanged)
-            {
-                myProgressBar.setProgress(values[0]);
-            }
+            myProgressBar.setProgress(values[0]);
         }
     }
 
@@ -275,57 +268,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         myProgressBar.setMax(10);
         myProgressBar.setProgress(0);
 
-        jsonFromFile = readFromFile();
-
-        if (jsonFromFile.equals("") || jsonFromFile.equals("Failed"))
-        {
-            JSONDownloader jsonDownloader = new JSONDownloader();
-            try {
-                jsonDownloader.execute(apiCampgrounds, apiHostels, apiDayUseArea, apiPointsOfnterest, apiInfoCenter, apiToilets, apiShowers, apiDrinkingWater, apiCaravanParks, apiBBQSpots);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            handler = new Handler();
-            runnable = new Runnable() {
-                @Override
-                public void run() {
-                    checkDownloadStatus();
-                    if (!isDownloadedJSONData) {
-                        handler.postDelayed(this, 1000);
-                    } else {
-                        handler.removeCallbacks(this);
-                    }
-                }
-            };
-
-            handler.post(runnable);
+        JSONDownloader jsonDownloader = new JSONDownloader();
+        try {
+            jsonDownloader.execute(apiCampgrounds, apiHostels, apiDayUseArea, apiPointsOfnterest, apiInfoCenter, apiToilets, apiShowers, apiDrinkingWater, apiCaravanParks, apiBBQSpots);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else
-        {
-            activityChanged = true;
-            JSONDownloader jsonDownloader = new JSONDownloader();
-            try {
-                jsonDownloader.execute(apiCampgrounds, apiHostels, apiDayUseArea, apiPointsOfnterest, apiInfoCenter, apiToilets, apiShowers, apiDrinkingWater, apiCaravanParks, apiBBQSpots);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            new CountDownTimer(3000,1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    myProgressBar.setProgress(myProgressBar.getProgress() + 3);
-                }
 
-                @Override
-                public void onFinish() {
-                    myProgressBar.setProgress(10);
-                    Intent intent = new Intent(getApplicationContext(),CategoriesActivity.class);
-                    intent.putExtra("jsonString",jsonFromFile);
-                    MainActivity.this.finish();
-                    startActivity(intent);
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                checkDownloadStatus();
+                if (!isDownloadedJSONData) {
+                    handler.postDelayed(this, 1000);
+                } else {
+                    handler.removeCallbacks(this);
                 }
-            }.start();
-        }
+            }
+        };
+
+        handler.post(runnable);
     }
 
     public void checkDownloadStatus()
