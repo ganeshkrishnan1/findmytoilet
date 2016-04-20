@@ -58,6 +58,9 @@
             android:label="@string/title_activity_single_category_list"
             android:parentActivityName=".CategoriesActivity">
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="39d74d47490634a038d17d557fe79cc9c03788f0" />
     </application>
 
 </manifest>

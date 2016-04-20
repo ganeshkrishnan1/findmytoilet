@@ -529,7 +529,7 @@ public class CategoriesActivity extends AppCompatActivity {
             }
         });
 
-        txtHomeMessage.setText("\nHi, Rent unique places to stay from local hosts all over the world");
+        txtHomeMessage.setText("\nLive Love Travel");
     }
 
 
