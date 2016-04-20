@@ -53,7 +53,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -61,6 +60,8 @@
                             android:layout_height="wrap_content"
                             android:text="Campgrounds\n"
                             android:id="@+id/txtCampgrounds"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -85,7 +86,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -93,6 +93,8 @@
                             android:layout_height="wrap_content"
                             android:text="Hostels\n"
                             android:id="@+id/txtHostels"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -117,7 +119,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -125,6 +126,8 @@
                             android:layout_height="wrap_content"
                             android:text="Day Use Area\n"
                             android:id="@+id/txtDayUseArea"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -148,7 +151,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -156,6 +158,8 @@
                             android:layout_height="wrap_content"
                             android:text="Points Of Interest\n"
                             android:id="@+id/txtPointsOfInterest"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -179,7 +183,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -187,6 +190,8 @@
                             android:layout_height="wrap_content"
                             android:text="Infocenter\n"
                             android:id="@+id/txtInfocenter"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -210,7 +215,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -218,6 +222,8 @@
                             android:layout_height="wrap_content"
                             android:text="Toilets\n"
                             android:id="@+id/txtToilets"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -241,7 +247,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -249,6 +254,8 @@
                             android:layout_height="wrap_content"
                             android:text="Showers\n"
                             android:id="@+id/txtShowers"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -272,7 +279,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -280,6 +286,8 @@
                             android:layout_height="wrap_content"
                             android:text="Drinking Water\n"
                             android:id="@+id/txtDrinkingWater"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -303,7 +311,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -311,6 +318,8 @@
                             android:layout_height="wrap_content"
                             android:text="Caravan Parks\n"
                             android:id="@+id/txtCaravanParks"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
@@ -334,7 +343,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@android:color/darker_gray"/>
 
                         <TextView
@@ -342,6 +350,8 @@
                             android:layout_height="wrap_content"
                             android:text="BBQ Spots\n"
                             android:id="@+id/txtBBQSpots"
+                            android:background="@color/title_background_color"
+                            android:paddingTop="20dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"

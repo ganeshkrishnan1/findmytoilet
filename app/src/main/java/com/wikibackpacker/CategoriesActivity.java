@@ -11,6 +11,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,33 +78,43 @@ public class CategoriesActivity extends AppCompatActivity {
         {
             case R.id.txtCampgrounds:
                 intent.putExtra("singleCategoryDetails",(Serializable)listCampgrounds);
+                intent.putExtra("category","campgrounds");
                 break;
             case R.id.txtHostels:
                 intent.putExtra("singleCategoryDetails",(Serializable)listHostels);
+                intent.putExtra("category","hostels");
                 break;
             case R.id.txtDayUseArea:
                 intent.putExtra("singleCategoryDetails",(Serializable)listDayUseArea);
+                intent.putExtra("category","dayusearea");
                 break;
             case R.id.txtPointsOfInterest:
                 intent.putExtra("singleCategoryDetails",(Serializable)listPointsOfInterest);
+                intent.putExtra("category","pois");
                 break;
             case R.id.txtInfocenter:
                 intent.putExtra("singleCategoryDetails",(Serializable)listInfocenter);
+                intent.putExtra("category","infocenter");
                 break;
             case R.id.txtToilets:
                 intent.putExtra("singleCategoryDetails",(Serializable)listToilets);
+                intent.putExtra("category","toilets");
                 break;
             case R.id.txtShowers:
                 intent.putExtra("singleCategoryDetails",(Serializable)listShowers);
+                intent.putExtra("category","showers");
                 break;
             case R.id.txtDrinkingWater:
                 intent.putExtra("singleCategoryDetails",(Serializable)listDrinkingWater);
+                intent.putExtra("category","drinkingwater");
                 break;
             case R.id.txtCaravanParks:
                 intent.putExtra("singleCategoryDetails",(Serializable)listCaravanParks);
+                intent.putExtra("category","caravanparks");
                 break;
             case R.id.txtBBQSpots:
                 intent.putExtra("singleCategoryDetails",(Serializable)listBBQSpots);
+                intent.putExtra("category","bbq");
                 break;
         }
 
@@ -125,10 +136,69 @@ public class CategoriesActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         List<String> listDrawer = new ArrayList<String>();
-        listDrawer.add("Option 1");
-        listDrawer.add("Option 2");
+        listDrawer.add("Campgroungs");
+        listDrawer.add("Hostels");
+        listDrawer.add("Day Use Area");
+        listDrawer.add("Points of Interest");
+        listDrawer.add("Infocenter");
+        listDrawer.add("Toilets");
+        listDrawer.add("Showers");
+        listDrawer.add("Drinking Water");
+        listDrawer.add("Caravan Parks");
+        listDrawer.add("BBQ Spots");
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,listDrawer);
         mDrawerList.setAdapter(arrayAdapter);
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
+                switch (position)
+                {
+                    case 0:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listCampgrounds);
+                        intent.putExtra("category","campgrounds");
+                        break;
+                    case 1:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listHostels);
+                        intent.putExtra("category","hostels");
+                        break;
+                    case 2:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listDayUseArea);
+                        intent.putExtra("category","dayusearea");
+                        break;
+                    case 3:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listPointsOfInterest);
+                        intent.putExtra("category","pois");
+                        break;
+                    case 4:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listInfocenter);
+                        intent.putExtra("category","infocenter");
+                        break;
+                    case 5:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listToilets);
+                        intent.putExtra("category","toilets");
+                        break;
+                    case 6:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listShowers);
+                        intent.putExtra("category","showers");
+                        break;
+                    case 7:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listDrinkingWater);
+                        intent.putExtra("category","drinkingwater");
+                        break;
+                    case 8:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listCaravanParks);
+                        intent.putExtra("category","caravanparks");
+                        break;
+                    case 9:
+                        intent.putExtra("singleCategoryDetails",(Serializable)listBBQSpots);
+                        intent.putExtra("category","bbq");
+                        break;
+                }
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                startActivity(intent);
+            }
+        });
         setupDrawer();
 
         WindowManager windowManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
@@ -160,24 +230,34 @@ public class CategoriesActivity extends AppCompatActivity {
 
         TextView txtCampgrounds = (TextView)findViewById(R.id.txtCampgrounds);
         txtCampgrounds.setTypeface(customFont);
+        txtCampgrounds.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtHostels = (TextView)findViewById(R.id.txtHostels);
         txtHostels.setTypeface(customFont);
+        txtHostels.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtDayUseArea = (TextView)findViewById(R.id.txtDayUseArea);
         txtDayUseArea.setTypeface(customFont);
+        txtDayUseArea.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtPointsOfInterest = (TextView)findViewById(R.id.txtPointsOfInterest);
         txtPointsOfInterest.setTypeface(customFont);
+        txtPointsOfInterest.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtInfocenter = (TextView)findViewById(R.id.txtInfocenter);
         txtInfocenter.setTypeface(customFont);
+        txtInfocenter.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtToilets = (TextView)findViewById(R.id.txtToilets);
         txtToilets.setTypeface(customFont);
+        txtToilets.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtShowers = (TextView)findViewById(R.id.txtShowers);
         txtShowers.setTypeface(customFont);
+        txtShowers.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtDrinkingWater = (TextView)findViewById(R.id.txtDrinkingWater);
         txtDrinkingWater.setTypeface(customFont);
+        txtDrinkingWater.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtCaravanParks = (TextView)findViewById(R.id.txtCaravanParks);
         txtCaravanParks.setTypeface(customFont);
+        txtCaravanParks.setTextColor(getResources().getColor(R.color.title_text_color));
         TextView txtBBQSpots = (TextView)findViewById(R.id.txtBBQSpots);
         txtBBQSpots.setTypeface(customFont);
+        txtBBQSpots.setTextColor(getResources().getColor(R.color.title_text_color));
 
         final TextView txtCampgroundsName = (TextView)findViewById(R.id.txtCampgroundsName);
         txtCampgroundsName.setTypeface(customFont);
@@ -220,6 +300,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listCampgrounds);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","campgrounds");
                 startActivity(intent);
             }
         });
@@ -244,6 +325,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listHostels);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","hostels");
                 startActivity(intent);
             }
         });
@@ -268,6 +350,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listDayUseArea);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","dayusearea");
                 startActivity(intent);
             }
         });
@@ -292,6 +375,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listPointsOfInterest);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","pois");
                 startActivity(intent);
             }
         });
@@ -316,6 +400,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listInfocenter);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","infocenter");
                 startActivity(intent);
             }
         });
@@ -340,6 +425,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listToilets);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","toilets");
                 startActivity(intent);
             }
         });
@@ -364,6 +450,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listShowers);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","showers");
                 startActivity(intent);
             }
         });
@@ -388,6 +475,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listDrinkingWater);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","drinkingwater");
                 startActivity(intent);
             }
         });
@@ -412,6 +500,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listCaravanParks);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","caravanparks");
                 startActivity(intent);
             }
         });
@@ -436,6 +525,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)listBBQSpots);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category","bbq");
                 startActivity(intent);
             }
         });
@@ -480,8 +570,10 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
                 hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=campgrounds");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -494,8 +586,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=hostels");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -508,8 +601,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=dayusearea");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -522,8 +616,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=pois");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -536,8 +631,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=infocenter");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -550,8 +646,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("tname"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=toilets");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -564,8 +661,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("tname"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=showers");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -578,8 +676,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("tname"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=drinkingwater");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -592,8 +691,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=caravanparks");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));
@@ -606,8 +706,9 @@ public class CategoriesActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++)
             {
                 HashMap<String,String> hm = new HashMap<String,String>();
+                hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("bbqName"));
-                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
+                hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=bbq");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                 hm.put("score",jsonArray.getJSONObject(i).optString("score"));

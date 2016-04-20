@@ -37,6 +37,7 @@ import java.util.List;
 public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     List<HashMap<String,String>> singleCategoryDetails;
+    String category;
     int selectedIndex;
     Toolbar mToolbarDetails;
     ImageView imgParallax;
@@ -68,7 +69,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
                 if(id == R.id.action_share)
                 {
                     String shareText = singleCategoryDetails.get(selectedIndex).get("name") + "\n";
-                    shareText += singleCategoryDetails.get(selectedIndex).get("url");
+                    shareText += "http://wikibackpacker.com/app/detail/" + category + "/" + singleCategoryDetails.get(selectedIndex).get("id");
 
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
@@ -84,6 +85,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
         selectedIndex = getIntent().getIntExtra("selectedIndex",0);
+        category = getIntent().getStringExtra("category");
 
         MapFragment mapFragment = (MapFragment)getFragmentManager().findFragmentById(R.id.mapDetails);
         mapFragment.getMapAsync(this);

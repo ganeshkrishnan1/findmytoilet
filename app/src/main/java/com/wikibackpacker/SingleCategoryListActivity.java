@@ -21,6 +21,7 @@ import java.util.List;
 public class SingleCategoryListActivity extends AppCompatActivity {
 
     List<HashMap<String,String>> singleCategoryDetails;
+    String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         setTitle("Wikibackpacker");
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
+        category = getIntent().getStringExtra("category");
 
         ListView listPlaces = (ListView)findViewById(R.id.listPlaces);
         CustomListViewAdapter customListViewAdapter = new CustomListViewAdapter(singleCategoryDetails,this);
@@ -42,6 +44,7 @@ public class SingleCategoryListActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
                 intent.putExtra("selectedIndex",position);
+                intent.putExtra("category",category);
                 startActivity(intent);
             }
         });
@@ -66,6 +69,7 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         if (id == R.id.action_map) {
             Intent intent = new Intent(getApplicationContext(),SingleCategoryActivity.class);
             intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
+            intent.putExtra("category",category);
             startActivity(intent);
         }
 
