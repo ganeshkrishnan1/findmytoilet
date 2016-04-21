@@ -1,7 +1,6 @@
 package com.wikibackpacker;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,10 +9,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -36,11 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import io.fabric.sdk.android.Fabric;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -112,17 +106,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             try {
                 for (int i = 0; i < urls.length; i++) {
                     String result = "";
-                    /*URL url = new URL(urls[i]);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    InputStream in = connection.getInputStream();
-                    InputStreamReader reader = new InputStreamReader(in);
-                    int data = reader.read();
-                    while (data != -1) {
-                        char currChar = (char) data;
-                        result += currChar;
-                        data = reader.read();
 
-                    }*/
                     Request request  = new Request.Builder().url(urls[i]).build();
                     Response response = client.newCall(request).execute();
                     result = response.body().string();

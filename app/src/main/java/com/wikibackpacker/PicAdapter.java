@@ -85,7 +85,7 @@ public class PicAdapter extends BaseAdapter {
         ImageView imageView = new ImageView(galleryContext);
         //specify the bitmap at this position in the array
         //imageView.setImageBitmap(imageBitmap);
-        Glide.with(galleryContext).load(images.get(position).get("url")).into(imageView);
+        Glide.with(galleryContext).load(images.get(position).get("url")).placeholder(R.drawable.spinner).into(imageView);
         //set layout options
         if (currentImgAdapter >= 11)
         {

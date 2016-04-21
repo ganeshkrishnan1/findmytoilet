@@ -136,7 +136,7 @@ public class CategoriesActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         List<String> listDrawer = new ArrayList<String>();
-        listDrawer.add("Campgroungs");
+        listDrawer.add("Campgrounds");
         listDrawer.add("Hostels");
         listDrawer.add("Day Use Area");
         listDrawer.add("Points of Interest");

@@ -66,7 +66,7 @@
                             android:paddingRight="10dp"
                             android:textSize="20dp"
                             android:onClick="onClickCategory"
-                            />
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/galleryOne"
@@ -98,7 +98,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/galleryTwo"
@@ -131,7 +132,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/galleryThree"
@@ -163,7 +165,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/galleryFour"
@@ -195,7 +198,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/galleryFive"
@@ -227,7 +231,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/gallerySix"
@@ -259,7 +264,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/gallerySeven"
@@ -291,7 +297,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/galleryEight"
@@ -323,7 +330,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/galleryNine"
@@ -355,7 +363,8 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:textSize="20dp"
-                            android:onClick="onClickCategory" />
+                            android:onClick="onClickCategory"
+                            android:layout_marginTop="20dp" />
 
                         <Gallery
                             android:id="@+id/galleryTen"
