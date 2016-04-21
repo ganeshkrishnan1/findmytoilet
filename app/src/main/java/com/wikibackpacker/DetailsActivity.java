@@ -1,4 +1,4 @@
-package com.miracitechnology.wikibackpacker;
+package com.wikibackpacker;
 
 import android.content.Context;
 import android.content.Intent;

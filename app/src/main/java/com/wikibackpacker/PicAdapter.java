@@ -1,4 +1,4 @@
-package com.miracitechnology.wikibackpacker;
+package com.wikibackpacker;
 
 /**
  * Created by soumyadip on 09-04-2016.

@@ -1,4 +1,4 @@
-package com.miracitechnology.wikibackpacker;
+package com.wikibackpacker;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -25,7 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
+import com.wikibackpacker.utils.Constant;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,6 +39,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import io.fabric.sdk.android.Fabric;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -45,16 +48,16 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
-    String apiCampgrounds = "http://api.wikibackpacker.com/api/findAmenity/1";
-    String apiHostels = "http://api.wikibackpacker.com/api/findAmenity/4";
-    String apiDayUseArea = "http://api.wikibackpacker.com/api/findAmenity/8";
-    String apiPointsOfnterest = "http://api.wikibackpacker.com/api/findAmenity/16";
-    String apiInfoCenter = "http://api.wikibackpacker.com/api/findAmenity/32";
-    String apiToilets = "http://api.wikibackpacker.com/api/findToilets/";
-    String apiShowers = "http://api.wikibackpacker.com/api/findToilets/2";
-    String apiDrinkingWater = "http://api.wikibackpacker.com/api/findToilets/1";
-    String apiCaravanParks = "http://api.wikibackpacker.com/api/findAmenity/2";
-    String apiBBQSpots = "http://api.wikibackpacker.com/api/findBBQLocations/";
+    String apiCampgrounds = Constant.HOSTNAME+ "findAmenity/1";
+    String apiHostels = Constant.HOSTNAME+"findAmenity/4";
+    String apiDayUseArea = Constant.HOSTNAME+"findAmenity/8";
+    String apiPointsOfnterest = Constant.HOSTNAME+"findAmenity/16";
+    String apiInfoCenter = Constant.HOSTNAME+"findAmenity/32";
+    String apiToilets =Constant.HOSTNAME+ "findToilets/";
+    String apiShowers =Constant.HOSTNAME+ "findToilets/2";
+    String apiDrinkingWater = Constant.HOSTNAME+"findToilets/1";
+    String apiCaravanParks = Constant.HOSTNAME+"findAmenity/2";
+    String apiBBQSpots = Constant.HOSTNAME+"findBBQLocations/";
 
     String downloadedJSONString;
 
@@ -199,7 +202,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(),true);
-        if(provider.contains("gps"))
+       //BUG provider can be null
+        if(null!=provider && provider.contains("gps"))
         {
             onGPSAvailable();
         }
@@ -237,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public boolean isGPSEnabled()
     {
         provider = locationManager.getBestProvider(new Criteria(),true);
-        if(provider.contains("gps"))
+        if(null!=provider && provider.contains("gps"))
         {
             return true;
         }

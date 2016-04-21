@@ -1,4 +1,4 @@
-package com.miracitechnology.wikibackpacker;
+package com.wikibackpacker;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.wikibackpacker.utils.Constant;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -209,7 +210,7 @@ public class CategoriesActivity extends AppCompatActivity {
         ImageView imgParallax = (ImageView)findViewById(R.id.imgParallax);
         imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth,deviceHeight*2/3));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(this).load("http://api.wikibackpacker.com/api/viewAmenityImage/1587").into(imgParallax);
+        Glide.with(this).load( Constant.HOSTNAME+ "viewAmenityImage/1587").into(imgParallax);
 
         listCampgrounds = new ArrayList<HashMap<String,String>>();
         listHostels = new ArrayList<HashMap<String,String>>();
@@ -571,6 +572,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 HashMap<String,String> hm = new HashMap<String,String>();
                 hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                 hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
+                hm.put("url", Constant.HOSTNAME+ "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
                 hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=campgrounds");
                 hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                 hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));

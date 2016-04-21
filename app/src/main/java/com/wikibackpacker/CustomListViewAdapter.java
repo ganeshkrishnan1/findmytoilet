@@ -1,4 +1,4 @@
-package com.miracitechnology.wikibackpacker;
+package com.wikibackpacker;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -82,7 +82,7 @@ public class CustomListViewAdapter extends BaseAdapter implements ListAdapter {
 
         TextView txtSecondary = (TextView)view.findViewById(R.id.txtSecondary);
         txtSecondary.setTypeface(customFont);
-        txtSecondary.setText(list.get(position).get("name") + "\n\n");
+        txtSecondary.setText(list.get(position).get("notes") + "\n\n");
 
         return view;
     }
