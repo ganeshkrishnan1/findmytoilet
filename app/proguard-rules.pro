@@ -49,8 +49,14 @@
    public static final ** CREATOR;
 }
 
--dontwarn com.squareup.okhttp3.**
--keep class com.squareup.okhttp3.** {
-*;
-}
+#-dontwarn com.squareup.okhttp3.**
+#-keep class com.squareup.okhttp3.** {
+#*;
+#}
 -dontwarn okio.*
+
+-keepattributes Signature
+-keepattributes Annotation
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.* { *; }
+-dontwarn okhttp3.*
