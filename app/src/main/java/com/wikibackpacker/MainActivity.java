@@ -42,16 +42,16 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
-    String apiCampgrounds = Constant.HOSTNAME+ "findAmenity/1";
-    String apiHostels = Constant.HOSTNAME+"findAmenity/4";
-    String apiDayUseArea = Constant.HOSTNAME+"findAmenity/8";
-    String apiPointsOfnterest = Constant.HOSTNAME+"findAmenity/16";
-    String apiInfoCenter = Constant.HOSTNAME+"findAmenity/32";
-    String apiToilets =Constant.HOSTNAME+ "findToilets/";
-    String apiShowers =Constant.HOSTNAME+ "findToilets/2";
-    String apiDrinkingWater = Constant.HOSTNAME+"findToilets/1";
-    String apiCaravanParks = Constant.HOSTNAME+"findAmenity/2";
-    String apiBBQSpots = Constant.HOSTNAME+"findBBQLocations/";
+    public static String apiCampgrounds = Constant.HOSTNAME+ "findAmenity/1";
+    public static String apiHostels = Constant.HOSTNAME+"findAmenity/4";
+    public static String apiDayUseArea = Constant.HOSTNAME+"findAmenity/8";
+    public static String apiPointsOfnterest = Constant.HOSTNAME+"findAmenity/16";
+    public static String apiInfoCenter = Constant.HOSTNAME+"findAmenity/32";
+    public static String apiToilets =Constant.HOSTNAME+ "findToilets/";
+    public static String apiShowers =Constant.HOSTNAME+ "findToilets/2";
+    public static String apiDrinkingWater = Constant.HOSTNAME+"findToilets/1";
+    public static String apiCaravanParks = Constant.HOSTNAME+"findAmenity/2";
+    public static String apiBBQSpots = Constant.HOSTNAME+"findBBQLocations/";
 
     String downloadedJSONString;
 
