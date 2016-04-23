@@ -212,7 +212,7 @@ public class SingleCategoryListActivity extends AppCompatActivity {
                     HashMap<String,String> hm = new HashMap<String,String>();
                     hm.put("id",jsonArray.getJSONObject(i).optString("id"));
                     hm.put("name",jsonArray.getJSONObject(i).optString("displayName"));
-                    hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=campgrounds");
+                    hm.put("url","http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default="+ category);
                     hm.put("lat",jsonArray.getJSONObject(i).optString("lat"));
                     hm.put("lon",jsonArray.getJSONObject(i).optString("lon"));
                     hm.put("score",jsonArray.getJSONObject(i).optString("score"));
