@@ -17,6 +17,18 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_below="@+id/mToolbar" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Redo"
+                android:id="@+id/btnResetMap"
+                android:layout_alignTop="@+id/map"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:onClick="resetMap" />
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"

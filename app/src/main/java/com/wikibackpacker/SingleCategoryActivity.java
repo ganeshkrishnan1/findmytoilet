@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,6 +41,12 @@ public class SingleCategoryActivity extends FragmentActivity {
     Toolbar mToolbar;
 
     Typeface customFont;
+
+    public void resetMap(View view)
+    {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,50));
+        Toast.makeText(this,"Map Recentered", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
