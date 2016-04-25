@@ -32,7 +32,7 @@ import java.util.List;
 public class SingleCategoryActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    List<HashMap<String,String>> singleCategoryDetails;
+    List<HashMap<String, String>> singleCategoryDetails;
     String category;
     LatLngBounds bounds;
     List<Marker> markers;
@@ -42,10 +42,9 @@ public class SingleCategoryActivity extends FragmentActivity {
 
     Typeface customFont;
 
-    public void resetMap(View view)
-    {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,50));
-        Toast.makeText(this,"Map Recentered", Toast.LENGTH_SHORT).show();
+    public void resetMap(View view) {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+        Toast.makeText(this, "Map Recentered", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_category);
 
-        mToolbar = (Toolbar)findViewById(R.id.mToolbar);
+        mToolbar = (Toolbar) findViewById(R.id.mToolbar);
         mToolbar.setTitle("Wikibackpacker");
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setNavigationIcon(R.drawable.ic_action_back);
@@ -64,18 +63,18 @@ public class SingleCategoryActivity extends FragmentActivity {
             }
         });
 
-        singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
+        singleCategoryDetails = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("singleCategoryDetails");
         category = getIntent().getStringExtra("category");
 
-        customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
+        customFont = Typeface.createFromAsset(getAssets(), "brown.ttf");
 
         setUpMapIfNeeded();
 
-        final TextView txtName = (TextView)findViewById(R.id.txtSelectedItemName);
+        final TextView txtName = (TextView) findViewById(R.id.txtSelectedItemName);
         txtName.setTypeface(customFont);
 
-        PicAdapter picAdapter = new PicAdapter(this,singleCategoryDetails,11);
-        gallery = (Gallery)findViewById(R.id.galleryOSelectedCategory);
+        PicAdapter picAdapter = new PicAdapter(this, singleCategoryDetails, 11);
+        gallery = (Gallery) findViewById(R.id.galleryOSelectedCategory);
         gallery.setAdapter(picAdapter);
         gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -83,7 +82,7 @@ public class SingleCategoryActivity extends FragmentActivity {
                 txtName.setText(singleCategoryDetails.get(position).get("name"));
                 Double lat = Double.parseDouble(singleCategoryDetails.get(position).get("lat"));
                 Double lon = Double.parseDouble(singleCategoryDetails.get(position).get("lon"));
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(lat,lon)));
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lon)));
                 markers.get(position).showInfoWindow();
             }
 
@@ -95,10 +94,10 @@ public class SingleCategoryActivity extends FragmentActivity {
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
-                intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
-                intent.putExtra("selectedIndex",position);
-                intent.putExtra("category",category);
+                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+                intent.putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails);
+                intent.putExtra("selectedIndex", position);
+                intent.putExtra("category", category);
                 startActivity(intent);
             }
         });
@@ -150,8 +149,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         adjustPadding();
 
         markers = new ArrayList<Marker>();
-        for (HashMap<String,String> hm : singleCategoryDetails)
-        {
+        for (HashMap<String, String> hm : singleCategoryDetails) {
             double lat = Double.parseDouble(hm.get("lat"));
             double lon = Double.parseDouble(hm.get("lon"));
             String title = hm.get("name");
@@ -160,8 +158,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         }
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (Marker marker : markers)
-        {
+        for (Marker marker : markers) {
             builder.include(marker.getPosition());
         }
 
@@ -170,9 +167,10 @@ public class SingleCategoryActivity extends FragmentActivity {
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,50));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
             }
         });
+        mMap.setMyLocationEnabled(true);
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -185,15 +183,14 @@ public class SingleCategoryActivity extends FragmentActivity {
                         break;
                     }
                 }
-                gallery.setSelection(markerIndex,true);
+                gallery.setSelection(markerIndex, true);
                 return true;
             }
         });
     }
 
-    public void adjustPadding()
-    {
-        WindowManager windowManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+    public void adjustPadding() {
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
