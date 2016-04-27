@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -70,8 +71,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     TextView txtStatus;
 
+    CountDownTimer countDownTimer;
+
     @Override
     public void onLocationChanged(Location location) {
+
+        countDownTimer.cancel();
+
         String lat = String.valueOf(location.getLatitude());
         String lon = String.valueOf(location.getLongitude());
         updateAPI(lat,lon);
@@ -250,6 +256,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             onLocationReceived();
         } else {
             txtStatus.setText("Getting Location, Please Wait");
+            countDownTimer = new CountDownTimer(5000,1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    Location location = new Location("dummyprovider");
+                    location.setLatitude(0);
+                    location.setLongitude(0);
+                    onLocationChanged(location);
+                }
+            }.start();
         }
     }
 
