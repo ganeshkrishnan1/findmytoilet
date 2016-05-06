@@ -10,4 +10,17 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="title_activity_single_category_list">SingleCategoryListActivity</string>
+
+<!--Menu Title-->
+    <string name="Campgrounds">Campgrounds</string>
+    <string name="Hostels">Hostels</string>
+    <string name="Day_Use_Area">Day Use Area</string>
+    <string name="Points_of_Interest">Points of Interest</string>
+    <string name="Infocenter">Infocenter</string>
+    <string name="Toilets">Toilets</string>
+    <string name="Showers">Showers</string>
+    <string name="Drinking_Water">Drinking Water</string>
+    <string name="Caravan_Parks">Caravan Parks</string>
+    <string name="BBQ_Spots">BBQ Spots</string>
+
 </resources>

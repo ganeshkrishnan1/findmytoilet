@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<group android:checkableBehavior="single">-->
+        <item
+            android:id="@+id/nav_Campgrounds"
+            android:icon="@drawable/ic_menu_campgrounds"
+            android:title="@string/Campgrounds"
+            />
+        <item
+            android:id="@+id/nav_Hostels"
+            android:icon="@drawable/ic_menu_hotels"
+            android:title="@string/Hostels" />
+        <item
+            android:id="@+id/nav_Day_Use_Area"
+            android:icon="@drawable/ic_menu_dayuse"
+            android:title="@string/Day_Use_Area" />
+        <item
+            android:id="@+id/nav_Points_of_Interest"
+            android:icon="@drawable/ic_menu_parks"
+            android:title="@string/Points_of_Interest" />
+        <item
+            android:id="@+id/nav_Infocenter"
+            android:icon="@drawable/ic_menu_infocenter"
+            android:title="@string/Infocenter" />
+        <item
+            android:id="@+id/nav_Toilets"
+            android:icon="@drawable/ic_menu_toilets"
+            android:title="@string/Toilets" />
+        <item
+            android:id="@+id/nav_Showers"
+            android:icon="@drawable/ic_menu_showers"
+            android:title="@string/Showers" />
+        <item
+            android:id="@+id/nav_Drinking_Water"
+            android:icon="@drawable/ic_menu_water"
+            android:title="@string/Drinking_Water" />
+        <item
+            android:id="@+id/nav_Caravan_Parks"
+            android:icon="@drawable/ic_menu_caravan"
+            android:title="@string/Caravan_Parks" />
+        <item
+            android:id="@+id/nav_BBQ_Spots"
+            android:icon="@drawable/ic_menu_bbq"
+            android:title="@string/BBQ_Spots" />
+    <!--</group>-->
+
+</menu>
