@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     String downloadedJSONString;
 
-    String jsonFromFile;
-
     boolean isDownloadedJSONData = false;
 
     Handler handler;

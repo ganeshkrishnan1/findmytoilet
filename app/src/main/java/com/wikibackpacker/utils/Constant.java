@@ -6,4 +6,16 @@ package com.wikibackpacker.utils;
 public class Constant {
 
     public static final String HOSTNAME="http://www.backpackwiki.com/api/";
+
+    public static final String getAPIByLatLon(float lat, float lon)
+    {
+
+        return HOSTNAME + "/" + lat + "/" + lon;
+    }
+
+    //Eg "Melbourne,AU"
+    public static final String getAPIByCityAndCountry(String city, String country)
+    {
+        return HOSTNAME+"?location="+city + "," + country;
+    }
 }
