@@ -173,20 +173,7 @@ public class CategoriesActivity extends AppCompatActivity {
         });
         adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
         mDrawerList.setAdapter(adapter);
-       /* List<String> listDrawer = new ArrayList<String>();
-        listDrawer.add("Campgrounds");
-        listDrawer.add("Hostels");
-        listDrawer.add("Day Use Area");
-        listDrawer.add("Points of Interest");
-        listDrawer.add("Infocenter");
-        listDrawer.add("Toilets");
-        listDrawer.add("Showers");
-        listDrawer.add("Drinking Water");
-        listDrawer.add("Caravan Parks");
-        listDrawer.add("BBQ Spots");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listDrawer);
-        mDrawerList.setAdapter(arrayAdapter);
-        */
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -57,8 +57,9 @@ public class NavDrawerListAdapter extends BaseAdapter {
 
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         txtTitle.setText(navDrawerItems.get(position).getTitle());
-        typeface = Typeface.createFromAsset(context.getAssets(), "brown.ttf");
-        txtTitle.setTypeface(typeface);
+       typeface = Typeface.createFromAsset(context.getAssets(), "brown.ttf");
+
+       txtTitle.setTypeface(typeface);
 
         return convertView;
     }

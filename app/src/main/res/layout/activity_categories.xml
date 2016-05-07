@@ -3,7 +3,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_floating_material_light">
+    android:background="@color/lightbackground">
 
     <!-- The main content view -->
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -55,7 +55,7 @@
                         android:id="@+id/scrollView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/background_floating_material_light">
+                        android:background="@color/lightbackground">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
                                 android:text="Welcome Message"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -82,13 +82,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Campgrounds\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/galleryOne"
@@ -102,7 +102,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -115,14 +115,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Hostels\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/galleryTwo"
@@ -137,7 +137,7 @@
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
                                 android:spacing="5dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -150,14 +150,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Day Use Area\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/galleryThree"
@@ -171,7 +171,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -184,7 +184,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
@@ -192,7 +192,7 @@
 
                                 android:text="Points Of Interest\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/galleryFour"
@@ -206,7 +206,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -219,7 +219,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
@@ -227,7 +227,7 @@
                                 android:text="Infocenter\n"
 
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/galleryFive"
@@ -241,7 +241,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -254,7 +254,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
@@ -262,7 +262,7 @@
                                 android:paddingTop="20dp"
                                 android:text="Toilets\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/gallerySix"
@@ -276,7 +276,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -289,14 +289,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Showers\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/gallerySeven"
@@ -310,7 +310,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -323,14 +323,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Drinking Water\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/galleryEight"
@@ -344,7 +344,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -357,14 +357,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Caravan Parks\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/galleryNine"
@@ -378,7 +378,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -391,14 +391,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:background="@color/background_floating_material_light"
+                                android:background="@color/lightbackground"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="BBQ Spots\n"
                                 android:textColor="@color/cFont"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/galleryTen"
@@ -412,7 +412,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                         </LinearLayout>
                     </ScrollView>
