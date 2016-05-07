@@ -3,25 +3,27 @@
     android:id="@+id/mapActivityRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wikibackpacker.DetailsActivity">
+    tools:context="com.wikibackpacker.DetailsActivity"
+    android:paddingTop="120dp">
 
     <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_floating_material_light"
         app:parallax_factor="1.9"
         tools:context=".MainActivity">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:id="@+id/rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/imgParallaxTwo"
@@ -34,72 +36,78 @@
 
             </RelativeLayout>
 
-            <ScrollView
-                android:id="@+id/scrollView"
+            <LinearLayout
+                android:id="@+id/scrollViewBase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/background_floating_material_light">
+                android:layout_below="@+id/rl">
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txtName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="New Text"
-                        android:textSize="20dp" />
+                <ScrollView
+                    android:id="@+id/scrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background_floating_material_light">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:id="@+id/mapDetails"
-                            android:name="com.google.android.gms.maps.MapFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="300dp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/material_grey_600"
-                        android:orientation="vertical"
-                        android:paddingBottom="16dp"
-                        android:paddingTop="16dp">
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/txtSimilarItem"
+                            android:id="@+id/txtName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="Similar Items"
+                            android:text="New Text"
                             android:textSize="20dp" />
 
-                        <Gallery
-                            android:id="@+id/gallerySimilarPlaces"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/mapDetails"
+                                android:name="com.google.android.gms.maps.MapFragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="300dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:spacing="5dp" />
+                            android:background="@color/material_grey_600"
+                            android:orientation="vertical"
+                            android:paddingBottom="16dp"
+                            android:paddingTop="16dp">
 
-                        <TextView
-                            android:id="@+id/txtSimilarItemName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text=""
-                            android:textSize="20dp" />
+                            <TextView
+                                android:id="@+id/txtSimilarItem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="Similar Items"
+                                android:textSize="20dp" />
 
+                            <Gallery
+                                android:id="@+id/gallerySimilarPlaces"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:spacing="5dp" />
+
+                            <TextView
+                                android:id="@+id/txtSimilarItemName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text=""
+                                android:textSize="20dp" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </ScrollView>
-
-        </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+        </FrameLayout>
 
     </com.nirhart.parallaxscroll.views.ParallaxScrollView>
 </RelativeLayout>

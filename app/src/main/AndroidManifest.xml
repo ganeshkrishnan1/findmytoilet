@@ -46,16 +46,17 @@
         <activity
             android:name=".SingleCategoryActivity"
             android:label="@string/title_activity_single_category"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".SingleCategoryListActivity"
             android:label="@string/title_activity_single_category_list"
             android:parentActivityName=".CategoriesActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
