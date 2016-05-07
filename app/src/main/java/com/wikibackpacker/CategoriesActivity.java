@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +38,6 @@ import java.util.List;
 
 
 public class CategoriesActivity extends AppCompatActivity {
-
     PicAdapter imgAdapterOne;
     PicAdapter imgAdapterTwo;
     PicAdapter imgAdapterThree;
@@ -325,13 +323,17 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryOne.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listCampgrounds);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "campgrounds");
-                startActivity(intent);
+                startActivity(intent);*/
+
+                pageTransform(view, listCampgrounds, position, "campgrounds");
+
             }
         });
+
 
         Gallery galleryTwo = (Gallery) findViewById(R.id.galleryTwo);
         imgAdapterTwo = new PicAdapter(this, listHostels, 2);
@@ -350,11 +352,13 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listHostels);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "hostels");
-                startActivity(intent);
+                startActivity(intent);*/
+                pageTransform(view, listHostels, position, "hostels");
+
             }
         });
 
@@ -375,11 +379,13 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryThree.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listDayUseArea);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "dayusearea");
-                startActivity(intent);
+                startActivity(intent);*/
+                pageTransform(view, listDayUseArea, position, "dayusearea");
+
             }
         });
 
@@ -400,11 +406,14 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryFour.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listPointsOfInterest);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "pois");
-                startActivity(intent);
+                startActivity(intent);*/
+
+                pageTransform(view, listPointsOfInterest, position, "pois");
+
             }
         });
 
@@ -425,11 +434,13 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryFive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listInfocenter);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "infocenter");
-                startActivity(intent);
+                startActivity(intent);*/
+                pageTransform(view, listInfocenter, position, "infocenter");
+
             }
         });
 
@@ -450,11 +461,14 @@ public class CategoriesActivity extends AppCompatActivity {
         gallerySix.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listToilets);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "toilets");
-                startActivity(intent);
+                startActivity(intent);*/
+
+                pageTransform(view, listToilets, position, "toilets");
+
             }
         });
 
@@ -475,11 +489,14 @@ public class CategoriesActivity extends AppCompatActivity {
         gallerySeven.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listShowers);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "showers");
-                startActivity(intent);
+                startActivity(intent);*/
+
+                pageTransform(view, listShowers, position, "showers");
+
             }
         });
 
@@ -500,11 +517,14 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryEight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-                intent.putExtra("singleCategoryDetails", (Serializable) listDrinkingWater);
-                intent.putExtra("selectedIndex", position);
-                intent.putExtra("category", "drinkingwater");
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+//                intent.putExtra("singleCategoryDetails", (Serializable) listDrinkingWater);
+//                intent.putExtra("selectedIndex", position);
+//                intent.putExtra("category", "drinkingwater");
+//                startActivity(intent);
+
+                pageTransform(view, listDrinkingWater, position, "drinkingwater");
+
             }
         });
 
@@ -525,11 +545,14 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryNine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listCaravanParks);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "caravanparks");
-                startActivity(intent);
+                startActivity(intent);*/
+
+                pageTransform(view, listCaravanParks, position, "caravanparks");
+
             }
         });
 
@@ -550,15 +573,38 @@ public class CategoriesActivity extends AppCompatActivity {
         galleryTen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+/*                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails", (Serializable) listBBQSpots);
                 intent.putExtra("selectedIndex", position);
                 intent.putExtra("category", "bbq");
-                startActivity(intent);
+                startActivity(intent);*/
+
+                pageTransform(view, listBBQSpots, position, "bbq");
+
             }
         });
 
         txtHomeMessage.setText("\nLive Love Travel");
+    }
+
+    private void pageTransform(View view, List<HashMap<String, String>> mList, int mPosition, String strCat) {
+        int[] screenLocation = new int[2];
+        view.getLocationOnScreen(screenLocation);
+        Intent subActivity = new Intent(CategoriesActivity.this,
+                DetailsActivity.class);
+        int orientation = getResources().getConfiguration().orientation;
+        subActivity.
+                putExtra("singleCategoryDetails", (Serializable) mList).
+                putExtra("selectedIndex", mPosition).
+                putExtra("category", strCat).
+
+                putExtra("IMG_orientation", orientation).
+                putExtra("IMG_left", screenLocation[0]).
+                putExtra("IMG_top", screenLocation[1]).
+                putExtra("IMG_width", view.getWidth()).
+                putExtra("IMG_height", view.getHeight());
+        startActivity(subActivity);
+        overridePendingTransition(0, 0);
     }
 
 
@@ -778,4 +824,5 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }*/
+
 }
