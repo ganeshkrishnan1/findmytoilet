@@ -11,16 +11,31 @@
     <string name="title_activity_details">DetailsActivity</string>
     <string name="title_activity_single_category_list">SingleCategoryListActivity</string>
 
-<!--Menu Title-->
-    <string name="Campgrounds">Campgrounds</string>
-    <string name="Hostels">Hostels</string>
-    <string name="Day_Use_Area">Day Use Area</string>
-    <string name="Points_of_Interest">Points of Interest</string>
-    <string name="Infocenter">Infocenter</string>
-    <string name="Toilets">Toilets</string>
-    <string name="Showers">Showers</string>
-    <string name="Drinking_Water">Drinking Water</string>
-    <string name="Caravan_Parks">Caravan Parks</string>
-    <string name="BBQ_Spots">BBQ Spots</string>
 
+    <!--Drawer Menu Array-->
+    <string-array name="nav_drawer_items">
+        <item>Campgrounds</item>
+        <item>Hostels</item>
+        <item>Day Use Area</item>
+        <item>Points of Interest</item>
+        <item>Infocenter</item>
+        <item>Toilets</item>
+        <item>Showers</item>
+        <item>Drinking Water</item>
+        <item>Caravan Parks</item>
+        <item>BBQ Spots</item>
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_menu_campgrounds</item>
+        <item>@drawable/ic_menu_hotels</item>
+        <item>@drawable/ic_menu_dayuse</item>
+        <item>@drawable/ic_menu_parks</item>
+        <item>@drawable/ic_menu_infocenter</item>
+        <item>@drawable/ic_menu_toilets</item>
+        <item>@drawable/ic_menu_showers</item>
+        <item>@drawable/ic_menu_water</item>
+        <item>@drawable/ic_menu_caravan</item>
+        <item>@drawable/ic_menu_bbq</item>
+    </array>
 </resources>
