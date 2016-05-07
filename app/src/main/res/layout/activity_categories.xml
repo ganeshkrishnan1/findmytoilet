@@ -115,13 +115,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:textColor="@color/cFont"
                                 android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Hostels\n"
+                                android:textColor="@color/cFont"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -150,13 +150,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
-                                android:textColor="@color/cFont"
-                                android:background="@color/background_floating_material_light"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Day Use Area\n"
+                                android:textColor="@color/cFont"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -184,14 +184,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
-                                android:textColor="@color/cFont"
-                                android:background="@color/background_floating_material_light"
-
                                 android:paddingTop="20dp"
+
                                 android:text="Points Of Interest\n"
+                                android:textColor="@color/cFont"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -219,14 +219,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
-                                android:textColor="@color/cFont"
-                                android:background="@color/background_floating_material_light"
-
                                 android:text="Infocenter\n"
+
+                                android:textColor="@color/cFont"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -254,14 +254,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
-                                android:textColor="@color/cFont"
-                                android:background="@color/background_floating_material_light"
-
                                 android:paddingRight="10dp"
+
                                 android:paddingTop="20dp"
                                 android:text="Toilets\n"
+                                android:textColor="@color/cFont"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -289,13 +289,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
-                                android:textColor="@color/cFont"
-                                android:background="@color/background_floating_material_light"
                                 android:text="Showers\n"
+                                android:textColor="@color/cFont"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -323,13 +323,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
-                                android:textColor="@color/cFont"
-                                android:background="@color/background_floating_material_light"
                                 android:text="Drinking Water\n"
+                                android:textColor="@color/cFont"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -357,13 +357,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
                                 android:text="Caravan Parks\n"
                                 android:textColor="@color/cFont"
-                                android:background="@color/background_floating_material_light"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -391,13 +391,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
+                                android:background="@color/background_floating_material_light"
                                 android:onClick="onClickCategory"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
                                 android:paddingTop="20dp"
-                                android:textColor="@color/cFont"
-                                android:background="@color/background_floating_material_light"
                                 android:text="BBQ Spots\n"
+                                android:textColor="@color/cFont"
                                 android:textSize="20dp" />
 
                             <Gallery
@@ -426,23 +426,16 @@
     </android.support.design.widget.CoordinatorLayout>
 
 
-    <!-- The navigation drawer -->
-    <!--<ListView android:id="@+id/left_drawer"-->
-    <!--android:layout_width="240dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:choiceMode="singleChoice"-->
-    <!--android:divider="@android:color/transparent"-->
-    <!--android:dividerHeight="0dp"-->
-    <!--android:background="#ffffff"/>-->
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+    <!--The navigation drawer -->
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="270dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:itemTextColor="@color/cFont"
-        app:menu="@menu/categories_drawer" />
+        android:background="#ffffff"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+
 </android.support.v4.widget.DrawerLayout>
 

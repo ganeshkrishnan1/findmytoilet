@@ -2,16 +2,17 @@ package com.wikibackpacker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +21,13 @@ import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.wikibackpacker.adapter.NavDrawerListAdapter;
 import com.wikibackpacker.utils.Constant;
+import com.wikibackpacker.utils.NavDrawerItem;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class CategoriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CategoriesActivity extends AppCompatActivity {
 
     PicAdapter imgAdapterOne;
     PicAdapter imgAdapterTwo;
@@ -60,9 +64,12 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
     List<HashMap<String, String>> listCaravanParks;
     List<HashMap<String, String>> listBBQSpots;
     Typeface customFont;
-    //    private ListView mDrawerList;
-//    private ActionBarDrawerToggle mDrawerToggle;
+    private ListView mDrawerList;
+    //    private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+
+    private ArrayList<NavDrawerItem> navDrawerItems;
+    private NavDrawerListAdapter adapter;
 
     public void onClickCategory(View view) {
         Intent intent = new Intent(getApplicationContext(), SingleCategoryListActivity.class);
@@ -127,7 +134,6 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         jsonString = getIntent().getStringExtra("jsonString");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//s----------
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new android.support.v7.app.ActionBarDrawerToggle(
@@ -135,16 +141,29 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-// -- change toggle button icon
-//        toggle.setDrawerIndicatorEnabled(false);
-//        toolbar.setNavigationIcon(R.drawable.ic_drawer);
+        String[] navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
+        TypedArray navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navDrawerItems = new ArrayList<NavDrawerItem>();
 
-        View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        // list item in slider at  details
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[9], navMenuIcons.getResourceId(9, -1)));
 
+
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        navMenuIcons.recycle();
+        View headerView = getLayoutInflater().inflate(R.layout.nav_header_main, null, false);
+        mDrawerList.addHeaderView(headerView, null, false);
         LinearLayout navHeader = (LinearLayout) headerView.findViewById(R.id.navHeader);
         navHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,11 +171,9 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
                 mDrawerLayout.closeDrawer(GravityCompat.START);
             }
         });
-//--------------
-
-  /*
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        List<String> listDrawer = new ArrayList<String>();
+        adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
+        mDrawerList.setAdapter(adapter);
+       /* List<String> listDrawer = new ArrayList<String>();
         listDrawer.add("Campgrounds");
         listDrawer.add("Hostels");
         listDrawer.add("Day Use Area");
@@ -167,59 +184,60 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         listDrawer.add("Drinking Water");
         listDrawer.add("Caravan Parks");
         listDrawer.add("BBQ Spots");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,listDrawer);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listDrawer);
         mDrawerList.setAdapter(arrayAdapter);
+        */
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),SingleCategoryListActivity.class);
-                switch (position)
-                {
+                Intent intent = new Intent(getApplicationContext(), SingleCategoryListActivity.class);
+                switch (position) {
                     case 0:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listCampgrounds);
-                        intent.putExtra("category","campgrounds");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listCampgrounds);
+                        intent.putExtra("category", "campgrounds");
                         break;
                     case 1:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listHostels);
-                        intent.putExtra("category","hostels");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listHostels);
+                        intent.putExtra("category", "hostels");
                         break;
                     case 2:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listDayUseArea);
-                        intent.putExtra("category","dayusearea");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listDayUseArea);
+                        intent.putExtra("category", "dayusearea");
                         break;
                     case 3:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listPointsOfInterest);
-                        intent.putExtra("category","pois");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listPointsOfInterest);
+                        intent.putExtra("category", "pois");
                         break;
                     case 4:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listInfocenter);
-                        intent.putExtra("category","infocenter");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listInfocenter);
+                        intent.putExtra("category", "infocenter");
                         break;
                     case 5:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listToilets);
-                        intent.putExtra("category","toilets");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listToilets);
+                        intent.putExtra("category", "toilets");
                         break;
                     case 6:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listShowers);
-                        intent.putExtra("category","showers");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listShowers);
+                        intent.putExtra("category", "showers");
                         break;
                     case 7:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listDrinkingWater);
-                        intent.putExtra("category","drinkingwater");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listDrinkingWater);
+                        intent.putExtra("category", "drinkingwater");
                         break;
                     case 8:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listCaravanParks);
-                        intent.putExtra("category","caravanparks");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listCaravanParks);
+                        intent.putExtra("category", "caravanparks");
                         break;
                     case 9:
-                        intent.putExtra("singleCategoryDetails",(Serializable)listBBQSpots);
-                        intent.putExtra("category","bbq");
+                        intent.putExtra("singleCategoryDetails", (Serializable) listBBQSpots);
+                        intent.putExtra("category", "bbq");
                         break;
                 }
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+
                 startActivity(intent);
             }
-        });*/
+        });
 /*
         setupDrawer();
 */
@@ -773,60 +791,4 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }*/
-//s---
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        Intent intent = new Intent(getApplicationContext(), SingleCategoryListActivity.class);
-        switch (id) {
-            case R.id.nav_Campgrounds:
-                intent.putExtra("singleCategoryDetails", (Serializable) listCampgrounds);
-                intent.putExtra("category", "campgrounds");
-                break;
-            case R.id.nav_Hostels:
-                intent.putExtra("singleCategoryDetails", (Serializable) listHostels);
-                intent.putExtra("category", "hostels");
-                break;
-            case R.id.nav_Day_Use_Area:
-                intent.putExtra("singleCategoryDetails", (Serializable) listDayUseArea);
-                intent.putExtra("category", "dayusearea");
-                break;
-            case R.id.nav_Points_of_Interest:
-                intent.putExtra("singleCategoryDetails", (Serializable) listPointsOfInterest);
-                intent.putExtra("category", "pois");
-                break;
-            case R.id.nav_Infocenter:
-                intent.putExtra("singleCategoryDetails", (Serializable) listInfocenter);
-                intent.putExtra("category", "infocenter");
-                break;
-            case R.id.nav_Toilets:
-                intent.putExtra("singleCategoryDetails", (Serializable) listToilets);
-                intent.putExtra("category", "toilets");
-                break;
-            case R.id.nav_Showers:
-                intent.putExtra("singleCategoryDetails", (Serializable) listShowers);
-                intent.putExtra("category", "showers");
-                break;
-            case R.id.nav_Drinking_Water:
-                intent.putExtra("singleCategoryDetails", (Serializable) listDrinkingWater);
-                intent.putExtra("category", "drinkingwater");
-                break;
-            case R.id.nav_Caravan_Parks:
-                intent.putExtra("singleCategoryDetails", (Serializable) listCaravanParks);
-                intent.putExtra("category", "caravanparks");
-                break;
-            case R.id.nav_BBQ_Spots:
-                intent.putExtra("singleCategoryDetails", (Serializable) listBBQSpots);
-                intent.putExtra("category", "bbq");
-                break;
-        }
-
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-//        mDrawerLayout.closeDrawer(Gravity.LEFT);
-        startActivity(intent);
-        return true;
-    }
-//---
 }
