@@ -28,7 +28,9 @@
                 <ImageView
                     android:id="@+id/imgParallaxTwo"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+
+                    />
 
                 <include
                     android:id="@+id/mToolbarDetais"
@@ -61,7 +63,8 @@
                             android:text="New Text"
                             android:textSize="20dp" />
 
-                        <LinearLayout
+                        <com.wikibackpacker.utils.MapFragmentContainer
+                            android:id="@+id/llMap"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -71,7 +74,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="300dp" />
 
-                        </LinearLayout>
+                        </com.wikibackpacker.utils.MapFragmentContainer>
 
                         <LinearLayout
                             android:layout_width="match_parent"

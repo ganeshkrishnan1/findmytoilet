@@ -5,13 +5,12 @@ import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +29,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -44,7 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     //--
     private static final TimeInterpolator sDecelerator = new DecelerateInterpolator();
@@ -62,8 +64,8 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     float mHeightScale;
     ScrollView scrollView;
     LinearLayout scrollViewBase;
-    private BitmapDrawable mBitmapDrawable;
-    private ColorMatrix colorizerMatrix = new ColorMatrix();
+    Marker marker;
+    GoogleMap mGoogleMap;
     //    private TextView mTextView;
     private int mOriginalOrientation;
 
@@ -120,8 +122,6 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         final int thumbnailTop = getIntent().getIntExtra("IMG_top", 0);
         final int thumbnailWidth = getIntent().getIntExtra("IMG_width", 0);
         final int thumbnailHeight = getIntent().getIntExtra("IMG_height", 0);
-//        mBitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-//        mImageView.setImageDrawable(mBitmapDrawable);
 
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
@@ -131,7 +131,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         int deviceHeight = size.y;
         imgParallax.setLayoutParams(new RelativeLayout.LayoutParams(deviceWidth, deviceHeight * 4 / 10));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).into(imgParallax);
+        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(R.drawable.spinner).into(imgParallax);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
@@ -147,14 +147,12 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
                 public boolean onPreDraw() {
                     imgParallax.getViewTreeObserver().removeOnPreDrawListener(this);
 
-                    // Figure out where the thumbnail and full size versions are, relative
-                    // to the screen and each other
+
                     int[] screenLocation = new int[2];
                     imgParallax.getLocationOnScreen(screenLocation);
                     mLeftDelta = thumbnailLeft - screenLocation[0];
                     mTopDelta = thumbnailTop - screenLocation[1];
 
-                    // Scale factors to make the large version the same size as the thumbnail
                     mWidthScale = (float) thumbnailWidth / imgParallax.getWidth();
                     mHeightScale = (float) thumbnailHeight / imgParallax.getHeight();
 
@@ -207,7 +205,6 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -232,12 +229,28 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
         double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
         double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
         String title = singleCategoryDetails.get(selectedIndex).get("name");
-        Marker marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
+        marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
         marker.showInfoWindow();
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15));
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15));
+
+        mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker mMarker) {
+
+                if (mMarker.isInfoWindowShown()) {
+                    mMarker.hideInfoWindow();
+                } else {
+                    mGoogleMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+                    mGoogleMap.setOnInfoWindowClickListener(DetailsActivity.this);
+                    mMarker.showInfoWindow();
+                }
+                return true;
+            }
+        });
     }
 
     public void runEnterAnimation() {
@@ -322,5 +335,35 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     public void finish() {
         super.finish();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+    }
+
+
+    class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+
+        private final View myContentsView;
+
+        MyInfoWindowAdapter() {
+            myContentsView = getLayoutInflater().inflate(R.layout.map_info_contents, null);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            ImageView img = ((ImageView) myContentsView.findViewById(R.id.img));
+
+            String strURL="http://api.wikibackpacker.com/api/viewAmenityImage/" + singleCategoryDetails.get(selectedIndex).get("id");
+            //            Log.e("URL","TEST "+strURL);
+            Glide.with(DetailsActivity.this).load(strURL).placeholder(R.drawable.spinner).into(img);
+            return myContentsView;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
     }
 }
