@@ -232,6 +232,10 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        googleMap.setMyLocationEnabled(true);
+
         double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
         double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
         String title = singleCategoryDetails.get(selectedIndex).get("name");
