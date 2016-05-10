@@ -5,11 +5,8 @@ import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
@@ -66,8 +63,12 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     float mHeightScale;
     ScrollView scrollView;
     LinearLayout scrollViewBase;
-    //    private TextView mTextView;
     private int mOriginalOrientation;
+
+    MapFragment mapFragment;
+    TextView txtName;
+    Gallery gallerySimilarPlaces ;
+    PicAdapter picAdapterSimilarPlaces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,18 +132,8 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         int deviceHeight = size.y;
         imgParallax.setLayoutParams(new RelativeLayout.LayoutParams(deviceWidth, deviceHeight * 4 / 10));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(R.drawable.spinner).listener(new RequestListener<String, GlideDrawable>() {
-            @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                return false;
-            }
 
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-
-                return false;
-            }
-        }).into(imgParallax);
+// Top Image set here
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
@@ -176,13 +167,16 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
             });
         }
 //--
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapDetails);
-        mapFragment.getMapAsync(this);
 
 
-        TextView txtName = (TextView) findViewById(R.id.txtName);
+        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapDetails);
+        txtName = (TextView) findViewById(R.id.txtName);
+        gallerySimilarPlaces = (Gallery) findViewById(R.id.gallerySimilarPlaces);
+
         txtName.setTypeface(customFont);
-        txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
+
+        loadDefaultData();
+
 
         TextView txtSimilarItem = (TextView) findViewById(R.id.txtSimilarItem);
         txtSimilarItem.setTypeface(customFont);
@@ -191,8 +185,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         txtSimilarItemName.setTypeface(customFont);
         txtSimilarItemName.setTextColor(Color.WHITE);
 
-        Gallery gallerySimilarPlaces = (Gallery) findViewById(R.id.gallerySimilarPlaces);
-        PicAdapter picAdapterSimilarPlaces = new PicAdapter(this, singleCategoryDetails, 12);
+        picAdapterSimilarPlaces = new PicAdapter(this, singleCategoryDetails, 12);
         gallerySimilarPlaces.setAdapter(picAdapterSimilarPlaces);
         gallerySimilarPlaces.setFocusable(false);
         gallerySimilarPlaces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -209,13 +202,22 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         gallerySimilarPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = getIntent();
-                intent.putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails);
-                intent.putExtra("selectedIndex", position);
-                finish();
-                startActivity(intent);
+                selectedIndex=position;
+                loadDefaultData();
+//                Intent intent = getIntent();
+//                intent.putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails);
+//                intent.putExtra("selectedIndex", position);
+//                finish();
+//                startActivity(intent);
             }
         });
+    }
+
+    private void loadDefaultData() {
+        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(R.drawable.spinner).into(imgParallax);
+        mapFragment.getMapAsync(this);
+
+        txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
     }
 
 
@@ -344,9 +346,9 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-        private View myContentsView;
-Marker mSelectedMarker;
+        Marker mSelectedMarker;
         ImageView img;
+        private View myContentsView;
 
         MyInfoWindowAdapter() {
             myContentsView = getLayoutInflater().inflate(R.layout.map_info_contents, null);
@@ -354,10 +356,10 @@ Marker mSelectedMarker;
 
         @Override
         public View getInfoContents(Marker marker) {
-            mSelectedMarker=marker;
+            mSelectedMarker = marker;
             img = ((ImageView) myContentsView.findViewById(R.id.img));
 
-            String strURL="http://api.wikibackpacker.com/api/viewAmenityImage/" + singleCategoryDetails.get(selectedIndex).get("id");
+            String strURL = "http://api.wikibackpacker.com/api/viewAmenityImage/" + singleCategoryDetails.get(selectedIndex).get("id");
             //            Log.e("URL","TEST "+strURL);
             Glide.with(DetailsActivity.this).load(strURL).listener(new RequestListener<String, GlideDrawable>() {
                 @Override
@@ -374,18 +376,10 @@ Marker mSelectedMarker;
 
             return myContentsView;
         }
-        private void refreshInfoWindow() {
-            if (mSelectedMarker == null) {
-                return;
-            }
-//            mRefreshingInfoWindow = true;
-            mSelectedMarker.showInfoWindow();
-//            mRefreshingInfoWindow = false;
-        }
 
         @Override
         public View getInfoWindow(Marker marker) {
-return  null;
+            return null;
         }
 
     }
