@@ -17,15 +17,6 @@
 #}
 
 
-# For Google Play Services
--keep public class com.google.android.gms.ads.**{
-   public *;
-}
-
-# For old ads classes
--keep public class com.google.ads.**{
-   public *;
-}
 
 # For mediation
 -keepattributes *Annotation*
@@ -54,9 +45,14 @@
 #*;
 #}
 -dontwarn okio.*
-
+-keepattributes SourceFile,LineNumberTable
 -keepattributes Signature
--keepattributes Annotation
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.* { *; }
 -dontwarn okhttp3.*
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}

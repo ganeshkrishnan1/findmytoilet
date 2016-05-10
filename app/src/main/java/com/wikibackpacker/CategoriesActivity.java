@@ -177,43 +177,43 @@ public class CategoriesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), SingleCategoryListActivity.class);
                 switch (position) {
-                    case 0:
+                    case 1:
                         intent.putExtra("singleCategoryDetails", (Serializable) listCampgrounds);
                         intent.putExtra("category", "campgrounds");
                         break;
-                    case 1:
+                    case 2:
                         intent.putExtra("singleCategoryDetails", (Serializable) listHostels);
                         intent.putExtra("category", "hostels");
                         break;
-                    case 2:
+                    case 3:
                         intent.putExtra("singleCategoryDetails", (Serializable) listDayUseArea);
                         intent.putExtra("category", "dayusearea");
                         break;
-                    case 3:
+                    case 4:
                         intent.putExtra("singleCategoryDetails", (Serializable) listPointsOfInterest);
                         intent.putExtra("category", "pois");
                         break;
-                    case 4:
+                    case 5:
                         intent.putExtra("singleCategoryDetails", (Serializable) listInfocenter);
                         intent.putExtra("category", "infocenter");
                         break;
-                    case 5:
+                    case 6:
                         intent.putExtra("singleCategoryDetails", (Serializable) listToilets);
                         intent.putExtra("category", "toilets");
                         break;
-                    case 6:
+                    case 7:
                         intent.putExtra("singleCategoryDetails", (Serializable) listShowers);
                         intent.putExtra("category", "showers");
                         break;
-                    case 7:
+                    case 8:
                         intent.putExtra("singleCategoryDetails", (Serializable) listDrinkingWater);
                         intent.putExtra("category", "drinkingwater");
                         break;
-                    case 8:
+                    case 9:
                         intent.putExtra("singleCategoryDetails", (Serializable) listCaravanParks);
                         intent.putExtra("category", "caravanparks");
                         break;
-                    case 9:
+                    case 10:
                         intent.putExtra("singleCategoryDetails", (Serializable) listBBQSpots);
                         intent.putExtra("category", "bbq");
                         break;

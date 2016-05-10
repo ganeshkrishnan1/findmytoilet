@@ -131,7 +131,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         int deviceHeight = size.y;
         imgParallax.setLayoutParams(new RelativeLayout.LayoutParams(deviceWidth, deviceHeight * 4 / 10));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).into(imgParallax);
+        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgParallax);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
