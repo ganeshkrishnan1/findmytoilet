@@ -30,6 +30,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -44,7 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback ,GoogleMap.OnInfoWindowClickListener{
 
     //--
     private static final TimeInterpolator sDecelerator = new DecelerateInterpolator();
@@ -62,10 +65,12 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     float mHeightScale;
     ScrollView scrollView;
     LinearLayout scrollViewBase;
-    private BitmapDrawable mBitmapDrawable;
-    private ColorMatrix colorizerMatrix = new ColorMatrix();
-    //    private TextView mTextView;
     private int mOriginalOrientation;
+
+    MapFragment mapFragment;
+    TextView txtName;
+    Gallery gallerySimilarPlaces ;
+    PicAdapter picAdapterSimilarPlaces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +125,6 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         final int thumbnailTop = getIntent().getIntExtra("IMG_top", 0);
         final int thumbnailWidth = getIntent().getIntExtra("IMG_width", 0);
         final int thumbnailHeight = getIntent().getIntExtra("IMG_height", 0);
-//        mBitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-//        mImageView.setImageDrawable(mBitmapDrawable);
 
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
@@ -131,7 +134,8 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         int deviceHeight = size.y;
         imgParallax.setLayoutParams(new RelativeLayout.LayoutParams(deviceWidth, deviceHeight * 4 / 10));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgParallax);
+
+// Top Image set here
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
@@ -165,13 +169,16 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
             });
         }
 //--
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapDetails);
-        mapFragment.getMapAsync(this);
 
 
-        TextView txtName = (TextView) findViewById(R.id.txtName);
+        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapDetails);
+        txtName = (TextView) findViewById(R.id.txtName);
+        gallerySimilarPlaces = (Gallery) findViewById(R.id.gallerySimilarPlaces);
+
         txtName.setTypeface(customFont);
-        txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
+
+        loadDefaultData();
+
 
         TextView txtSimilarItem = (TextView) findViewById(R.id.txtSimilarItem);
         txtSimilarItem.setTypeface(customFont);
@@ -180,8 +187,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         txtSimilarItemName.setTypeface(customFont);
         txtSimilarItemName.setTextColor(Color.WHITE);
 
-        Gallery gallerySimilarPlaces = (Gallery) findViewById(R.id.gallerySimilarPlaces);
-        PicAdapter picAdapterSimilarPlaces = new PicAdapter(this, singleCategoryDetails, 12);
+        picAdapterSimilarPlaces = new PicAdapter(this, singleCategoryDetails, 12);
         gallerySimilarPlaces.setAdapter(picAdapterSimilarPlaces);
         gallerySimilarPlaces.setFocusable(false);
         gallerySimilarPlaces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -198,13 +204,22 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         gallerySimilarPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = getIntent();
-                intent.putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails);
-                intent.putExtra("selectedIndex", position);
-                finish();
-                startActivity(intent);
+                selectedIndex=position;
+                loadDefaultData();
+//                Intent intent = getIntent();
+//                intent.putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails);
+//                intent.putExtra("selectedIndex", position);
+//                finish();
+//                startActivity(intent);
             }
         });
+    }
+
+    private void loadDefaultData() {
+        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(R.drawable.spinner).into(imgParallax);
+        mapFragment.getMapAsync(this);
+
+        txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
     }
 
 
@@ -229,19 +244,34 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
         return super.onOptionsItemSelected(item);
     }
+    GoogleMap mGoogleMap;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.getUiSettings().setAllGesturesEnabled(false);
-        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-        googleMap.setMyLocationEnabled(true);
+        mGoogleMap = googleMap;
 
         double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
         double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
         String title = singleCategoryDetails.get(selectedIndex).get("name");
-        Marker marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
+        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
         marker.showInfoWindow();
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15));
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15));
+
+        mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker mMarker) {
+
+                if (mMarker.isInfoWindowShown()) {
+                    mMarker.hideInfoWindow();
+                } else {
+                    mGoogleMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+                    mGoogleMap.setOnInfoWindowClickListener(DetailsActivity.this);
+                    mMarker.showInfoWindow();
+
+                }
+                return true;
+            }
+        });
     }
 
     public void runEnterAnimation() {
@@ -311,6 +341,50 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+    }
+
+    class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+
+        Marker mSelectedMarker;
+        ImageView img;
+        private View myContentsView;
+
+        MyInfoWindowAdapter() {
+            myContentsView = getLayoutInflater().inflate(R.layout.map_info_contents, null);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            mSelectedMarker = marker;
+            img = ((ImageView) myContentsView.findViewById(R.id.img));
+
+            String strURL = "http://api.wikibackpacker.com/api/viewAmenityImage/" + singleCategoryDetails.get(selectedIndex).get("id");
+            //            Log.e("URL","TEST "+strURL);
+            Glide.with(DetailsActivity.this).load(strURL).listener(new RequestListener<String, GlideDrawable>() {
+                @Override
+                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                    img.setImageDrawable(resource);
+                    return false;
+                }
+            }).into(img);
+
+            return myContentsView;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
+    }
 
     @Override
     public void onBackPressed() {
