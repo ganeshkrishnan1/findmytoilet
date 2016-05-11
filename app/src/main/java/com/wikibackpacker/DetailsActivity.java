@@ -5,10 +5,8 @@ import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,17 +35,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.Serializable;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback ,GoogleMap.OnInfoWindowClickListener{
+public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     //--
     private static final TimeInterpolator sDecelerator = new DecelerateInterpolator();
@@ -65,12 +65,12 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     float mHeightScale;
     ScrollView scrollView;
     LinearLayout scrollViewBase;
-    private int mOriginalOrientation;
-
     MapFragment mapFragment;
     TextView txtName;
-    Gallery gallerySimilarPlaces ;
+    Gallery gallerySimilarPlaces;
     PicAdapter picAdapterSimilarPlaces;
+    GoogleMap mGoogleMap;
+    private int mOriginalOrientation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,7 +204,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         gallerySimilarPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedIndex=position;
+                selectedIndex = position;
                 loadDefaultData();
 //                Intent intent = getIntent();
 //                intent.putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails);
@@ -221,7 +221,6 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
         txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -244,7 +243,6 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
         return super.onOptionsItemSelected(item);
     }
-    GoogleMap mGoogleMap;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -255,7 +253,8 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
         double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
         String title = singleCategoryDetails.get(selectedIndex).get("name");
-        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(title));
+        Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).icon(BitmapDescriptorFactory
+                .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)).title(title));
         marker.showInfoWindow();
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15));
 
@@ -348,6 +347,21 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
+    @Override
+    public void onBackPressed() {
+        runExitAnimation(new Runnable() {
+            public void run() {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
+    }
+
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         Marker mSelectedMarker;
@@ -360,9 +374,15 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
         @Override
         public View getInfoContents(Marker marker) {
+            return null;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
             mSelectedMarker = marker;
             img = ((ImageView) myContentsView.findViewById(R.id.img));
-
+            TextView txtMarkerTitle = ((TextView) myContentsView.findViewById(R.id.txtMarkerTitle));
+            txtMarkerTitle.setText(marker.getTitle());
             String strURL = "http://api.wikibackpacker.com/api/viewAmenityImage/" + singleCategoryDetails.get(selectedIndex).get("id");
             //            Log.e("URL","TEST "+strURL);
             Glide.with(DetailsActivity.this).load(strURL).listener(new RequestListener<String, GlideDrawable>() {
@@ -376,31 +396,10 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 //                    img.setImageDrawable(resource);
                     return false;
                 }
-            }).into(img);
+            }).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(img);
 
             return myContentsView;
         }
 
-        @Override
-        public View getInfoWindow(Marker marker) {
-            return null;
-        }
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        runExitAnimation(new Runnable() {
-            public void run() {
-                finish();
-            }
-        });
-    }
-
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(0, 0);
     }
 }
