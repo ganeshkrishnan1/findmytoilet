@@ -133,43 +133,43 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         String apiToCall = "";
         if (category.equals("campgrounds"))
         {
-            apiToCall = MainActivity.apiCampgrounds + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiCampgrounds() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("hostels"))
         {
-            apiToCall = MainActivity.apiHostels + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiHostels() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("dayusearea"))
         {
-            apiToCall = MainActivity.apiDayUseArea + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiDayUseArea() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("pois"))
         {
-            apiToCall = MainActivity.apiPointsOfnterest + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiPointsOfnterest() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("infocenter"))
         {
-            apiToCall = MainActivity.apiInfoCenter + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiInfoCenter() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("toilets"))
         {
-            apiToCall = MainActivity.apiToilets + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiToilets() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("showers"))
         {
-            apiToCall = MainActivity.apiShowers + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiShowers() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("drinkingwater"))
         {
-            apiToCall = MainActivity.apiDrinkingWater + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiDrinkingWater() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("caravanparks"))
         {
-            apiToCall = MainActivity.apiCaravanParks + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiCaravanParks() + "?page=" + String.valueOf(pageNo);
         }
         else if (category.equals("bbq"))
         {
-            apiToCall = MainActivity.apiBBQSpots + "?page=" + String.valueOf(pageNo);
+            apiToCall = MainActivity.getApiBBQSpots() + "?page=" + String.valueOf(pageNo);
         }
 
         SingleCategoryJSONDownloader jsonDownloader = new SingleCategoryJSONDownloader();

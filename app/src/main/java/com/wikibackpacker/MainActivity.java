@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static String apiCaravanParks = Constant.HOSTNAME+"findAmenity/2";
     public static String apiBBQSpots = Constant.HOSTNAME+"findBBQLocations/";
 
+    public static boolean bolLocationType = true;
+    public static String lat = "";
+    public static String lon = "";
+    public static String cityName = "";
+
     String downloadedJSONString;
 
     boolean isDownloadedJSONData = false;
@@ -76,9 +81,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         countDownTimer.cancel();
 
-        String lat = String.valueOf(location.getLatitude());
-        String lon = String.valueOf(location.getLongitude());
-        updateAPI(lat,lon);
+        lat = String.valueOf(location.getLatitude());
+        lon = String.valueOf(location.getLongitude());
+
+//        updateAPI(lat,lon);
 
         txtStatus.setText("Location Received");
 
@@ -183,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().hide();
+        bolLocationType=true;
 
         txtStatus = (TextView)findViewById(R.id.txtStatus);
         Typeface customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
@@ -246,9 +253,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (location != null) {
             txtStatus.setText("Location Received");
 
-            String lat = String.valueOf(location.getLatitude());
-            String lon = String.valueOf(location.getLongitude());
-            updateAPI(lat, lon);
+             lat = String.valueOf(location.getLatitude());
+             lon = String.valueOf(location.getLongitude());
+//            updateAPI(lat, lon);
 
             locationManager.removeUpdates(this);
             onLocationReceived();
@@ -279,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         JSONDownloader jsonDownloader = new JSONDownloader();
         try {
-            jsonDownloader.execute(apiCampgrounds, apiHostels, apiDayUseArea, apiPointsOfnterest, apiInfoCenter, apiToilets, apiShowers, apiDrinkingWater, apiCaravanParks, apiBBQSpots);
+            jsonDownloader.execute(getApiCampgrounds(), getApiHostels(), getApiDayUseArea(), getApiPointsOfnterest(), getApiInfoCenter(), getApiToilets(), getApiShowers(), getApiDrinkingWater(), getApiCaravanParks(), getApiBBQSpots());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -376,6 +383,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
     }
 
+/*
     public void updateAPI(String lat, String lon)
     {
         apiCampgrounds += "/" + lat + "/" + lon;
@@ -388,5 +396,86 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         apiDrinkingWater += "/" + lat + "/" + lon;
         apiCaravanParks += "/" + lat + "/" + lon;
         apiBBQSpots += "/" + lat + "/" + lon;
+    }
+*/
+
+    public static String getApiCampgrounds() {
+        if (bolLocationType) {
+            return apiCampgrounds + "/" + lat + "/" + lon;
+        } else {
+            return apiCampgrounds + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiHostels() {
+        if (bolLocationType) {
+            return apiHostels + "/" + lat + "/" + lon;
+        } else {
+            return apiHostels + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiDayUseArea() {
+        if (bolLocationType) {
+            return apiDayUseArea + "/" + lat + "/" + lon;
+        } else {
+            return apiDayUseArea + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiPointsOfnterest() {
+        if (bolLocationType) {
+            return apiPointsOfnterest + "/" + lat + "/" + lon;
+        } else {
+            return apiPointsOfnterest + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiInfoCenter() {
+        if (bolLocationType) {
+            return apiInfoCenter + "/" + lat + "/" + lon;
+        } else {
+            return apiInfoCenter + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiToilets() {
+        if (bolLocationType) {
+            return apiToilets + "/" + lat + "/" + lon;
+        } else {
+            return apiToilets + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiShowers() {
+        if (bolLocationType) {
+            return apiShowers + "/" + lat + "/" + lon;
+        } else {
+            return apiShowers + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiCaravanParks() {
+        if (bolLocationType) {
+            return apiCaravanParks + "/" + lat + "/" + lon;
+        } else {
+            return apiCaravanParks + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiDrinkingWater() {
+        if (bolLocationType) {
+            return apiDrinkingWater + "/" + lat + "/" + lon;
+        } else {
+            return apiDrinkingWater + "?location=" + cityName;
+        }
+    }
+
+    public static String getApiBBQSpots() {
+        if (bolLocationType) {
+            return apiBBQSpots + "/" + lat + "/" + lon;
+        } else {
+            return apiBBQSpots + "?location=" + cityName;
+        }
     }
 }

@@ -1,40 +1,59 @@
 package com.wikibackpacker;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wikibackpacker.adapter.NavDrawerListAdapter;
+import com.wikibackpacker.adapter.SuggestionAdapter;
 import com.wikibackpacker.utils.Constant;
 import com.wikibackpacker.utils.NavDrawerItem;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class CategoriesActivity extends AppCompatActivity {
@@ -62,10 +81,15 @@ public class CategoriesActivity extends AppCompatActivity {
     List<HashMap<String, String>> listCaravanParks;
     List<HashMap<String, String>> listBBQSpots;
     Typeface customFont;
+    AutoCompleteTextView acTextView;
+    Button btnExploreAroundMe;
+    //-- load data again var
+    ProgressDialog pDialog = null;
+    //- Gallery current Image Name
+    TextView txtCampgroundsName, txtHostelsName, txtDayUseAreaName, txtPointsOfInterestName, txtInfocenterName, txtToiletsName, txtShowersName, txtDrinkingWaterName, txtCaravanParksName, txtBBQSpotsName;
     private ListView mDrawerList;
     //    private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
@@ -234,23 +258,57 @@ public class CategoriesActivity extends AppCompatActivity {
         int deviceWidth = size.x;
         int deviceHeight = size.y;
         ImageView imgParallax = (ImageView) findViewById(R.id.imgParallax);
-        imgParallax.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth, deviceHeight * 2 / 3));
+        imgParallax.setLayoutParams(new RelativeLayout.LayoutParams(deviceWidth, deviceHeight * 2 / 3));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(this).load(Constant.HOSTNAME + "viewAmenityImage/1587").into(imgParallax);
 
-        listCampgrounds = new ArrayList<HashMap<String, String>>();
-        listHostels = new ArrayList<HashMap<String, String>>();
-        listDayUseArea = new ArrayList<HashMap<String, String>>();
-        listPointsOfInterest = new ArrayList<HashMap<String, String>>();
-        listInfocenter = new ArrayList<HashMap<String, String>>();
-        listToilets = new ArrayList<HashMap<String, String>>();
-        listShowers = new ArrayList<HashMap<String, String>>();
-        listDrinkingWater = new ArrayList<HashMap<String, String>>();
-        listCaravanParks = new ArrayList<HashMap<String, String>>();
-        listBBQSpots = new ArrayList<HashMap<String, String>>();
 
         parseJSONString(jsonString);
 
+        acTextView = (AutoCompleteTextView) findViewById(R.id.autoComplete);
+        acTextView.setAdapter(new SuggestionAdapter(this, acTextView.getText().toString()));
+        btnExploreAroundMe = (Button) findViewById(R.id.btnExploreAroundMe);
+//        Typeface typeface = Typeface.createFromAsset(getAssets(), "brown.ttf");
+//        acTextView.setTypeface(typeface);
+        acTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strCityGet = parent.getItemAtPosition(position).toString();
+
+//                String filenameArray[] = strCityGet.split("\\,");
+//                String strCity = filenameArray[0];
+//                String strCountry = filenameArray[1];
+//                String text = "<font color=#a9a9a9 >" + strCity + "</font> <font color=#000000>" + "," + strCountry + "</font>";
+//                acTextView.setText(Html.fromHtml(text));
+                hideKeyboard(acTextView);
+                btnExploreAroundMe.setVisibility(View.VISIBLE);
+//                Toast.makeText(CategoriesActivity.this, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                MainActivity.bolLocationType = false;
+                MainActivity.cityName = strCityGet;
+                JSONDownloader jsonDownloader = new JSONDownloader();
+                try {
+                    jsonDownloader.execute(MainActivity.getApiCampgrounds(), MainActivity.getApiHostels(), MainActivity.getApiDayUseArea(), MainActivity.getApiPointsOfnterest(), MainActivity.getApiInfoCenter(), MainActivity.getApiToilets(), MainActivity.getApiShowers(), MainActivity.getApiDrinkingWater(), MainActivity.getApiCaravanParks(), MainActivity.getApiBBQSpots());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnExploreAroundMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acTextView.setText("");
+                btnExploreAroundMe.setVisibility(View.GONE);
+                hideKeyboard(acTextView);
+                MainActivity.bolLocationType = true;
+                JSONDownloader jsonDownloader = new JSONDownloader();
+                try {
+                    jsonDownloader.execute(MainActivity.getApiCampgrounds(), MainActivity.getApiHostels(), MainActivity.getApiDayUseArea(), MainActivity.getApiPointsOfnterest(), MainActivity.getApiInfoCenter(), MainActivity.getApiToilets(), MainActivity.getApiShowers(), MainActivity.getApiDrinkingWater(), MainActivity.getApiCaravanParks(), MainActivity.getApiBBQSpots());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
         TextView txtHomeMessage = (TextView) findViewById(R.id.txtHomeMessage);
         txtHomeMessage.setTypeface(customFont);
 
@@ -285,27 +343,36 @@ public class CategoriesActivity extends AppCompatActivity {
         txtBBQSpots.setTypeface(customFont);
         txtBBQSpots.setTextColor(getResources().getColor(R.color.title_text_color));
 
-        final TextView txtCampgroundsName = (TextView) findViewById(R.id.txtCampgroundsName);
+
+        txtCampgroundsName = (TextView) findViewById(R.id.txtCampgroundsName);
         txtCampgroundsName.setTypeface(customFont);
-        final TextView txtHostelsName = (TextView) findViewById(R.id.txtHostelsName);
+        txtHostelsName = (TextView) findViewById(R.id.txtHostelsName);
         txtHostelsName.setTypeface(customFont);
-        final TextView txtDayUseAreaName = (TextView) findViewById(R.id.txtDayUseAreaName);
+        txtDayUseAreaName = (TextView) findViewById(R.id.txtDayUseAreaName);
         txtDayUseAreaName.setTypeface(customFont);
-        final TextView txtPointsOfInterestName = (TextView) findViewById(R.id.txtPointsOfInterestName);
-        txtPointsOfInterest.setTypeface(customFont);
-        final TextView txtInfocenterName = (TextView) findViewById(R.id.txtInfocenterName);
+        txtPointsOfInterestName = (TextView) findViewById(R.id.txtPointsOfInterestName);
+        txtPointsOfInterestName.setTypeface(customFont);
+        txtInfocenterName = (TextView) findViewById(R.id.txtInfocenterName);
         txtInfocenterName.setTypeface(customFont);
-        final TextView txtToiletsName = (TextView) findViewById(R.id.txtToiletsName);
+        txtToiletsName = (TextView) findViewById(R.id.txtToiletsName);
         txtToiletsName.setTypeface(customFont);
-        final TextView txtShowersName = (TextView) findViewById(R.id.txtShowersName);
+        txtShowersName = (TextView) findViewById(R.id.txtShowersName);
         txtShowersName.setTypeface(customFont);
-        final TextView txtDrinkingWaterName = (TextView) findViewById(R.id.txtDrinkingWaterName);
+        txtDrinkingWaterName = (TextView) findViewById(R.id.txtDrinkingWaterName);
         txtDrinkingWaterName.setTypeface(customFont);
-        final TextView txtCaravanParksName = (TextView) findViewById(R.id.txtCaravanParksName);
+        txtCaravanParksName = (TextView) findViewById(R.id.txtCaravanParksName);
         txtCaravanParksName.setTypeface(customFont);
-        final TextView txtBBQSpotsName = (TextView) findViewById(R.id.txtBBQSpotsName);
+        txtBBQSpotsName = (TextView) findViewById(R.id.txtBBQSpotsName);
         txtBBQSpotsName.setTypeface(customFont);
 
+
+        loadGalleryData();
+
+
+        txtHomeMessage.setText("\nLive Love Travel");
+    }
+
+    private void loadGalleryData() {
         Gallery galleryOne = (Gallery) findViewById(R.id.galleryOne);
         imgAdapterOne = new PicAdapter(this, listCampgrounds, 1);
         galleryOne.setAdapter(imgAdapterOne);
@@ -583,8 +650,6 @@ public class CategoriesActivity extends AppCompatActivity {
 
             }
         });
-
-        txtHomeMessage.setText("\nLive Love Travel");
     }
 
     private void pageTransform(View view, List<HashMap<String, String>> mList, int mPosition, String strCat) {
@@ -635,6 +700,17 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     public void parseJSONString(String jsonString) {
+        listCampgrounds = new ArrayList<>();
+        listHostels = new ArrayList<>();
+        listDayUseArea = new ArrayList<>();
+        listPointsOfInterest = new ArrayList<>();
+        listInfocenter = new ArrayList<>();
+        listToilets = new ArrayList<>();
+        listShowers = new ArrayList<>();
+        listDrinkingWater = new ArrayList<>();
+        listCaravanParks = new ArrayList<>();
+        listBBQSpots = new ArrayList<>();
+
         try {
             JSONObject jsonRootObject = new JSONObject(jsonString);
             JSONArray jsonArray = new JSONArray();
@@ -824,5 +900,133 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }*/
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+//-- Load Data Again
 
+    public void writeToFile(String data) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("WikiBackPackerJSONData.txt", MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String readFromFile() {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput("WikiBackPackerJSONData.txt");
+
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((receiveString = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+    }
+
+    public class JSONDownloader extends AsyncTask<String, Integer, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            JSONObject jsonObject = new JSONObject();
+            OkHttpClient client = new OkHttpClient();
+            try {
+                for (int i = 0; i < urls.length; i++) {
+                    String result = "";
+
+                    Request request = new Request.Builder().url(urls[i]).build();
+                    Response response = client.newCall(request).execute();
+                    result = response.body().string();
+                    JSONArray jsonArray = new JSONArray(result);
+                    switch (i) {
+                        case 0:
+                            jsonObject.put("campgrounds", jsonArray);
+                            break;
+                        case 1:
+                            jsonObject.put("hostels", jsonArray);
+                            break;
+                        case 2:
+                            jsonObject.put("dayusearea", jsonArray);
+                            break;
+                        case 3:
+                            jsonObject.put("pointsofinterest", jsonArray);
+                            break;
+                        case 4:
+                            jsonObject.put("infocenter", jsonArray);
+                            break;
+                        case 5:
+                            jsonObject.put("toilets", jsonArray);
+                            break;
+                        case 6:
+                            jsonObject.put("showers", jsonArray);
+                            break;
+                        case 7:
+                            jsonObject.put("drinkingwater", jsonArray);
+                            break;
+                        case 8:
+                            jsonObject.put("caravanparks", jsonArray);
+                            break;
+                        case 9:
+                            jsonObject.put("bbqspots", jsonArray);
+                            break;
+                    }
+                    publishProgress(i + 1);
+                }
+                return jsonObject.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Failed";
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            pDialog = new ProgressDialog(CategoriesActivity.this);
+            pDialog.setMessage("Loading...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            writeToFile(s);
+
+            jsonString = s;
+            if (jsonString.equals("") || jsonString.equals("Failed")) {
+                jsonString = readFromFile();
+            }
+            parseJSONString(jsonString);
+            loadGalleryData();
+            if (pDialog != null && pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+//            isDownloadedJSONData = true;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+//            myProgressBar.setProgress(values[0]);
+        }
+    }
 }

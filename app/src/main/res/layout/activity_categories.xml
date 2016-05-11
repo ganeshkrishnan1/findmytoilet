@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -41,7 +42,7 @@
                 app:parallax_factor="1.9"
                 tools:context=".MainActivity">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -51,10 +52,52 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="?attr/actionBarSize"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="0px"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/autoComplete"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ems="10"
+                            android:textSize="20sp"
+                            android:hint="@string/search_hint"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:textColor="#FF5A5E"
+                            android:textStyle="bold"
+                            android:textColorHint="#bebebe" />
+
+                        <Button
+                            android:id="@+id/btnExploreAroundMe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/autoComplete"
+                            android:background="@drawable/shape_roundedbutton"
+                            android:padding="8dp"
+                            android:text="@string/Explore_Around_Me"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
                     <ScrollView
                         android:id="@+id/scrollView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgParallax"
                         android:background="@color/lightbackground">
 
                         <LinearLayout
@@ -417,9 +460,10 @@
                         </LinearLayout>
                     </ScrollView>
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </com.nirhart.parallaxscroll.views.ParallaxScrollView>
+
 
         </FrameLayout>
 

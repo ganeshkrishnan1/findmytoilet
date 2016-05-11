@@ -10,6 +10,8 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="title_activity_single_category_list">SingleCategoryListActivity</string>
+    <string name="search_hint">Where are you going?</string>
+    <string name="Explore_Around_Me">Explore Around Me</string>
 
 
     <!--Drawer Menu Array-->
