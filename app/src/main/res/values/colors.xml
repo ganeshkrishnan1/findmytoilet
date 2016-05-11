@@ -2,7 +2,4 @@
 <resources>
     <color name="cFont">#616161</color>
 
-    <color name="cTextGreyDark">#696969</color>
-    <color name="cTextGrey">#a9a9a9</color>
-    <color name="cTextBlack">#000000</color>
 </resources>

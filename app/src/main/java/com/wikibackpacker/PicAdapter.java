@@ -30,7 +30,7 @@ public class PicAdapter extends BaseAdapter {
     int deviceHeight;
 
     //gallery context
-    private Context galleryContext;
+    private  Context galleryContext;
 
     //placeholder bitmap for empty spaces in gallery
     Bitmap placeholder;
@@ -85,7 +85,7 @@ public class PicAdapter extends BaseAdapter {
         ImageView imageView = new ImageView(galleryContext);
         //specify the bitmap at this position in the array
         //imageView.setImageBitmap(imageBitmap);
-        Glide.with(galleryContext).load(images.get(position).get("url")).placeholder(R.drawable.spinner).into(imageView);
+        Glide.with(galleryContext).load(images.get(position).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imageView);
         //set layout options
         if (currentImgAdapter >= 11)
         {

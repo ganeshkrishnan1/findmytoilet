@@ -3,15 +3,16 @@
     android:id="@+id/mapActivityRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#7F000000"
     tools:context="com.wikibackpacker.DetailsActivity"
-    android:paddingTop="120dp">
+    android:paddingTop="50dp">
 
     <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:parallax_factor="1.9"
+        app:parallax_factor="1.5"
         tools:context=".MainActivity">
 
         <FrameLayout
@@ -48,7 +49,7 @@
                     android:id="@+id/scrollView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/background_floating_material_light">
+                    android:background="@color/lightbackground">
 
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -61,7 +62,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="New Text"
-                            android:textSize="20dp" />
+                            android:textSize="20sp" />
 
                         <com.wikibackpacker.utils.MapFragmentContainer
                             android:id="@+id/llMap"
@@ -79,7 +80,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/material_grey_600"
+                            android:background="@color/main_color_500"
                             android:orientation="vertical"
                             android:paddingBottom="16dp"
                             android:paddingTop="16dp">
@@ -90,7 +91,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:text="Similar Items"
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                             <Gallery
                                 android:id="@+id/gallerySimilarPlaces"
@@ -104,7 +105,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:text=""
-                                android:textSize="20dp" />
+                                android:textSize="20sp" />
 
                         </LinearLayout>
                     </LinearLayout>

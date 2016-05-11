@@ -74,7 +74,7 @@ public class CustomListViewAdapter extends BaseAdapter implements ListAdapter {
         ImageView imgPlace = (ImageView)view.findViewById(R.id.imgPlace);
         imgPlace.setLayoutParams(new LinearLayout.LayoutParams(deviceWidth, deviceHeight *4/10));
         imgPlace.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(context).load(list.get(position).get("url")).into(imgPlace);
+        Glide.with(context).load(list.get(position).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgPlace);
 
         TextView txtPrimary = (TextView)view.findViewById(R.id.txtPrimary);
         txtPrimary.setTypeface(customFont);

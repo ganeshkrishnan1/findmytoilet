@@ -5,8 +5,10 @@ import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
@@ -214,7 +216,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private void loadDefaultData() {
-        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(R.drawable.spinner).into(imgParallax);
+        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgParallax);
         mapFragment.getMapAsync(this);
 
         txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
@@ -247,6 +249,8 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
+
+        mGoogleMap.setMyLocationEnabled(true);
 
         double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
         double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
