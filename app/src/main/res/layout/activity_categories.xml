@@ -89,9 +89,8 @@
                             android:text="@string/Explore_Around_Me"
                             android:textAllCaps="false"
                             android:textColor="#FFFFFF"
-
                             android:textSize="16sp"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
                     </RelativeLayout>
 
                     <ScrollView
