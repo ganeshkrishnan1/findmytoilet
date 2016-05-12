@@ -43,8 +43,8 @@ public class SingleCategoryActivity extends FragmentActivity {
     Typeface customFont;
 
     public void resetMap(View view) {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-        Toast.makeText(this, "Map Recentered", Toast.LENGTH_SHORT).show();
+       // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+       // Toast.makeText(this, "Map Recentered", Toast.LENGTH_SHORT).show();
     }
 
     @Override

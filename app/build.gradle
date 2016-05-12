@@ -22,25 +22,34 @@ android {
     defaultConfig {
         applicationId "com.wikibackpacker"
         minSdkVersion 15
+        //We must keep this as 22. Making this as 23 would crash on devices which have android 23 because of permissions
         targetSdkVersion 22
-        versionCode 6
-        versionName "1.6"
+        versionCode 9
+        versionName "1.9"
     }
     buildTypes {
+        debug
+                {
+                    minifyEnabled true
+                    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                    ext.enableCrashlytics = false
+                    versionNameSuffix "-DEBUG"
+                }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.enableCrashlytics = true
         }
     }
 }
 
 dependencies {
-     compile 'com.android.support:appcompat-v7:+'
+     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:support-v4:23.3.0'
     compile 'com.google.android.gms:play-services-location:8.4.0'
     compile 'com.google.android.gms:play-services-maps:8.4.0'
-    compile 'com.android.support:design:+'
+    compile 'com.android.support:design:23.3.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {

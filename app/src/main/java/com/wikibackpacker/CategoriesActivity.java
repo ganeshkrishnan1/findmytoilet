@@ -258,7 +258,7 @@ public class CategoriesActivity extends AppCompatActivity {
         int deviceWidth = size.x;
         int deviceHeight = size.y;
         ImageView imgParallax = (ImageView) findViewById(R.id.imgParallax);
-        imgParallax.setLayoutParams(new RelativeLayout.LayoutParams(deviceWidth, deviceHeight * 2 / 3));
+        imgParallax.setLayoutParams(new RelativeLayout.LayoutParams(deviceWidth, deviceHeight  / 2));
         imgParallax.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(this).load(Constant.HOSTNAME + "viewAmenityImage/1587").into(imgParallax);
 
