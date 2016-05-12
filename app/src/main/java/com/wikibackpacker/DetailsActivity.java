@@ -40,8 +40,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -276,7 +274,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     public void runEnterAnimation() {
-        final long duration = (long) (ANIM_DURATION * 1);
+        final long duration = (long) (ANIM_DURATION * 1.5);
         imgParallax.setPivotX(0);
         imgParallax.setPivotY(0);
         imgParallax.setScaleX(mWidthScale);
@@ -288,7 +286,6 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
                 scaleX(1).scaleY(1).
                 translationX(0).translationY(0).
                 setInterpolator(sDecelerator).
-
                 withEndAction(new Runnable() {
                     public void run() {
                         scrollView.setTranslationY(-scrollView.getHeight());
@@ -307,7 +304,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     public void runExitAnimation(final Runnable endAction) {
-        final long duration = (long) (ANIM_DURATION * 1);
+        final long duration = (long) (ANIM_DURATION * 1.5);
         final boolean fadeOut;
         if (getResources().getConfiguration().orientation != mOriginalOrientation) {
             imgParallax.setPivotX(imgParallax.getWidth() / 2);
@@ -374,6 +371,11 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
         @Override
         public View getInfoContents(Marker marker) {
+            if (marker != null
+                    && marker.isInfoWindowShown()) {
+                marker.hideInfoWindow();
+                marker.showInfoWindow();
+            }
             return null;
         }
 
@@ -393,7 +395,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
                 @Override
                 public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                    img.setImageDrawable(resource);
+                    getInfoContents(mSelectedMarker);
                     return false;
                 }
             }).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(img);
