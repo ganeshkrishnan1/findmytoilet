@@ -268,21 +268,13 @@ public class CategoriesActivity extends AppCompatActivity {
         acTextView = (AutoCompleteTextView) findViewById(R.id.autoComplete);
         acTextView.setAdapter(new SuggestionAdapter(this, acTextView.getText().toString()));
         btnExploreAroundMe = (Button) findViewById(R.id.btnExploreAroundMe);
-//        Typeface typeface = Typeface.createFromAsset(getAssets(), "brown.ttf");
-//        acTextView.setTypeface(typeface);
         acTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String strCityGet = parent.getItemAtPosition(position).toString();
 
-//                String filenameArray[] = strCityGet.split("\\,");
-//                String strCity = filenameArray[0];
-//                String strCountry = filenameArray[1];
-//                String text = "<font color=#a9a9a9 >" + strCity + "</font> <font color=#000000>" + "," + strCountry + "</font>";
-//                acTextView.setText(Html.fromHtml(text));
                 hideKeyboard(acTextView);
                 btnExploreAroundMe.setVisibility(View.VISIBLE);
-//                Toast.makeText(CategoriesActivity.this, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
                 MainActivity.bolLocationType = false;
                 MainActivity.cityName = strCityGet;
                 JSONDownloader jsonDownloader = new JSONDownloader();

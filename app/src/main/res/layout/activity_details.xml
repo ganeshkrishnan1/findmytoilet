@@ -4,8 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#7F000000"
-    tools:context="com.wikibackpacker.DetailsActivity"
-    android:paddingTop="50dp">
+    android:paddingTop="50dp"
+    tools:context="com.wikibackpacker.DetailsActivity">
+
+    <ImageView
+        android:id="@+id/imgParallaxTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,12 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/imgParallaxTwo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    />
 
                 <include
                     android:id="@+id/mToolbarDetais"
@@ -42,8 +41,7 @@
             <LinearLayout
                 android:id="@+id/scrollViewBase"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rl">
+                android:layout_height="wrap_content">
 
                 <ScrollView
                     android:id="@+id/scrollView"
@@ -73,7 +71,7 @@
                                 android:id="@+id/mapDetails"
                                 android:name="com.google.android.gms.maps.MapFragment"
                                 android:layout_width="match_parent"
-                                android:layout_height="300dp" />
+                                android:layout_height="350dp" />
 
                         </com.wikibackpacker.utils.MapFragmentContainer>
 
