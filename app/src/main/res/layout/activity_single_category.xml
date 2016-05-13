@@ -1,5 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mapActivityRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wikibackpacker.SingleCategoryActivity">
 
+    <include
+        android:id="@+id/mToolbar"
+        layout="@layout/toolbar" />
 
+<<<<<<< HEAD
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
@@ -31,24 +41,71 @@
 
             <LinearLayout
                 android:orientation="vertical"
+=======
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/mToolbar"
+        tools:context="com.wikibackpacker.SingleCategoryActivity" />
+
+
+
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_alignTop="@+id/map"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardUseCompatPadding="true">
+
+            <TextView
+                android:id="@+id/txtResetMap"
+>>>>>>> cfc0da6a88b1f541fd82ec51fdf354204ec2261d
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/activity_vertical_margin">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/txtSelectedItemName"
-                    android:textSize="20dp" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="resetMap"
+                android:text="@string/Redo"
+                android:textColor="@color/main_color_500"
+                android:textSize="18sp" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:padding="4dp"
+                android:layout_gravity="center" />
+        </android.support.v7.widget.CardView>
 
-                <Gallery
-                    android:id="@+id/galleryOSelectedCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spacing="5dp"/>
-                </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
 
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/txtSelectedItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text=""
+            android:textSize="20dp" />
+
+        <Gallery
+            android:id="@+id/galleryOSelectedCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spacing="5dp" />
+    </LinearLayout>
+
+</RelativeLayout>
 

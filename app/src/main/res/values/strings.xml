@@ -12,6 +12,7 @@
     <string name="title_activity_single_category_list">SingleCategoryListActivity</string>
     <string name="search_hint">Where are you going?</string>
     <string name="Explore_Around_Me">Explore Around Me</string>
+    <string name="Redo">Redo</string>
 
 
     <!--Drawer Menu Array-->

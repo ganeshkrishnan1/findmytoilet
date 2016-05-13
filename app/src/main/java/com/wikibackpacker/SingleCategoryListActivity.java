@@ -1,13 +1,17 @@
 package com.wikibackpacker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -53,11 +57,35 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         listPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+                WindowManager windowManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+                Display display = windowManager.getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int deviceWidth = size.x;
+                int deviceHeight = size.y;
+
+                int[] screenLocation = new int[2];
+                view.getLocationOnScreen(screenLocation);
+                Intent subActivity = new Intent(SingleCategoryListActivity.this,
+                        DetailsActivity.class);
+                int orientation = getResources().getConfiguration().orientation;
+                subActivity
+                        .putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails)
+                        .putExtra("selectedIndex", position)
+                        .putExtra("category", category)
+                        .putExtra("IMG_orientation", orientation).
+                        putExtra("IMG_left", screenLocation[0]).
+                        putExtra("IMG_top", screenLocation[1]).
+                        putExtra("IMG_width", deviceWidth).
+                        putExtra("IMG_height", deviceHeight *4/10);
+                startActivity(subActivity);
+                overridePendingTransition(0, 0);
+
+/*                Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
                 intent.putExtra("singleCategoryDetails",(Serializable)singleCategoryDetails);
                 intent.putExtra("selectedIndex",position);
                 intent.putExtra("category",category);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
 
