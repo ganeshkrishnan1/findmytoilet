@@ -73,10 +73,6 @@ public class SingleCategoryActivity extends FragmentActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     public void resetMap(View view) {
-<<<<<<< HEAD
-       // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-       // Toast.makeText(this, "Map Recentered", Toast.LENGTH_SHORT).show();
-=======
         progressBar.setVisibility(View.VISIBLE);
         txtResetMap.setVisibility(View.GONE);
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
@@ -119,7 +115,6 @@ public class SingleCategoryActivity extends FragmentActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
->>>>>>> cfc0da6a88b1f541fd82ec51fdf354204ec2261d
     }
 
     @Override
