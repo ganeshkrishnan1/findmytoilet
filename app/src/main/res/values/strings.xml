@@ -13,6 +13,7 @@
     <string name="search_hint">Where are you going?</string>
     <string name="Explore_Around_Me">Explore Around Me</string>
     <string name="Redo">Redo</string>
+    <string name="GettingLocationMSG">Getting Location, Please Wait</string>
 
 
     <!--Drawer Menu Array-->

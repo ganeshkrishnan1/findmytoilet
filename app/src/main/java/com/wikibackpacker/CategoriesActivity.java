@@ -267,6 +267,7 @@ public class CategoriesActivity extends AppCompatActivity {
         acTextView = (AutoCompleteTextView) findViewById(R.id.autoComplete);
         acTextView.setAdapter(new SuggestionAdapter(this, acTextView.getText().toString()));
         btnExploreAroundMe = (Button) findViewById(R.id.btnExploreAroundMe);
+
         acTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
