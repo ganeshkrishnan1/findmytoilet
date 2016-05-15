@@ -145,6 +145,10 @@ public class CategoriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(isFinishing())
+        {
+          //  return;
+        }
         setContentView(R.layout.activity_categories);
 
 //        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));

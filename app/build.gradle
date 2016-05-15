@@ -24,8 +24,8 @@ android {
         minSdkVersion 16
         //We must keep this as 22. Making this as 23 would crash on devices which have android 23 because of permissions
         targetSdkVersion 22
-        versionCode 9
-        versionName "1.9"
+        versionCode 10
+        versionName "1.10"
     }
     buildTypes {
         debug
