@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static String apiShowers =Constant.HOSTNAME+ "findToilets/2";
     public static String apiDrinkingWater = Constant.HOSTNAME+"findToilets/1";
     public static String apiCaravanParks = Constant.HOSTNAME+"findAmenity/2";
-    public static String apiBBQSpots = Constant.HOSTNAME+"findBBQLocations/";
+    public static String apiBBQSpots = Constant.HOSTNAME+"findBBQLocations";
 
     public static boolean bolLocationType = true;
     public static String lat = "";
@@ -75,14 +76,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     TextView txtStatus;
 
     CountDownTimer countDownTimer;
-
     @Override
     public void onLocationChanged(Location location) {
 
         countDownTimer.cancel();
-
         lat = String.valueOf(location.getLatitude());
         lon = String.valueOf(location.getLongitude());
+//        Log.e("Location","2nd lat "+lat+" lon "+lon);
 
 //        updateAPI(lat,lon);
 
@@ -107,6 +107,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     }
 
+    public boolean isFileCachedAvailable() {
+        try {
+
+
+            InputStream inputStream = openFileInput("WikiBackPackerJSONData.txt");
+            if(inputStream!=null)
+            {
+                return true;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+//            Log.e("FileCheck","Not Available"+e.toString());
+        }
+        return false;
+    }
+
     public class JSONDownloader extends AsyncTask<String,Integer,String>
     {
         @Override
@@ -116,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             try {
                 for (int i = 0; i < urls.length; i++) {
                     String result = "";
-
+//                    Log.e("URL GET ", "POS " + i + " " + urls[i]);
                     Request request  = new Request.Builder().url(urls[i]).build();
                     Response response = client.newCall(request).execute();
                     result = response.body().string();
@@ -174,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 downloadedJSONString = readFromFile();
             }
             isDownloadedJSONData = true;
+            checkDownloadStatus();
         }
 
         @Override
@@ -191,48 +208,87 @@ if(!BuildConfig.DEBUG) {
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().hide();
-        bolLocationType=true;
+        bolLocationType = true;
 
-        txtStatus = (TextView)findViewById(R.id.txtStatus);
-        Typeface customFont = Typeface.createFromAsset(getAssets(),"brown.ttf");
+        txtStatus = (TextView) findViewById(R.id.txtStatus);
+        Typeface customFont = Typeface.createFromAsset(getAssets(), "brown.ttf");
         txtStatus.setTypeface(customFont);
+        myProgressBar = (ProgressBar)findViewById(R.id.myProgressBar);
+        myProgressBar.setMax(10);
+        myProgressBar.setProgress(0);
 
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        provider = locationManager.getBestProvider(new Criteria(),true);
-       //BUG provider can be null
-        if(null!=provider && provider.contains("gps"))
-        {
-            onGPSAvailable();
-        }
-        else
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("GPS unavailable, Please enable GPS and click OK");
-            builder.setCancelable(false);
-            builder.setPositiveButton("OK",null);
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface dialog) {
-                    Button btnPstv = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-                    btnPstv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(isGPSEnabled())
-                            {
-                                alertDialog.dismiss();
-                                onGPSAvailable();
+        // Check File already have Cache data
+        if (isFileCachedAvailable()) {
+            try {
+                downloadedJSONString = readFromFile();
+                isDownloadedJSONData = true;
+                countDownTimer = new CountDownTimer(1500, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                        myProgressBar.setProgress(10);
+                        checkDownloadStatus();
+                    }
+                }.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            provider = locationManager.getBestProvider(new Criteria(), true);
+            //BUG provider can be null
+            if (null != provider && provider.contains("gps")) {
+                onGPSAvailable();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("GPS unavailable, Please enable GPS and click OK");
+                builder.setCancelable(false);
+                builder.setPositiveButton("OK", null);
+                final AlertDialog alertDialog = builder.create();
+
+                builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        MainActivity.this.startActivity(intent);
+                    }
+                });
+
+                builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+
+                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        Button btnPstv = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                        btnPstv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (isGPSEnabled()) {
+                                    alertDialog.dismiss();
+                                    onGPSAvailable();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "GPS not enabled", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else
-                            {
-                                Toast.makeText(getApplicationContext(),"GPS not enabled",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-            });
-            alertDialog.show();
+                        });
+                    }
+                });
+                alertDialog.show();
+            }
+
         }
+
+
+
     }
 
     public boolean isGPSEnabled()
@@ -250,13 +306,16 @@ if(!BuildConfig.DEBUG) {
 
     public void onGPSAvailable()
     {
+
         locationManager.requestLocationUpdates(provider, 400, 0.1f, this);
         location = locationManager.getLastKnownLocation(provider);
+//        Log.e("DATA"," location "+location);
         if (location != null) {
             txtStatus.setText("Location Received");
 
-             lat = String.valueOf(location.getLatitude());
-             lon = String.valueOf(location.getLongitude());
+            lat = String.valueOf(location.getLatitude());
+            lon = String.valueOf(location.getLongitude());
+//            Log.e("Location","lat "+lat+" lon "+lon);
 //            updateAPI(lat, lon);
 
             locationManager.removeUpdates(this);
@@ -271,6 +330,7 @@ if(!BuildConfig.DEBUG) {
 
                 @Override
                 public void onFinish() {
+
                     Location location = new Location("dummyprovider");
                     location.setLatitude(0);
                     location.setLongitude(0);
@@ -282,9 +342,7 @@ if(!BuildConfig.DEBUG) {
 
     public void onLocationReceived()
     {
-        myProgressBar = (ProgressBar)findViewById(R.id.myProgressBar);
-        myProgressBar.setMax(10);
-        myProgressBar.setProgress(0);
+
 
         JSONDownloader jsonDownloader = new JSONDownloader();
         try {

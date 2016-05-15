@@ -31,7 +31,9 @@
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            >
 
 
             <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -54,16 +56,8 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="?attr/actionBarSize"
-                        >
+                        android:layout_height="wrap_content">
 
-                        <LinearLayout
-                            android:layout_width="0px"
-                            android:layout_height="0px"
-
-                            android:focusable="true"
-                            android:focusableInTouchMode="true" />
 
                         <AutoCompleteTextView
                             android:id="@+id/autoComplete"
@@ -129,6 +123,7 @@
                                 android:background="@color/lightbackground"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="10dp"
+                                android:onClick="onClickCategory"
                                 android:paddingTop="20dp"
                                 android:text="Campgrounds\n"
                                 android:textColor="@color/cFont"

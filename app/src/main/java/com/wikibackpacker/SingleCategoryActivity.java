@@ -27,7 +27,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.wikibackpacker.utils.Constant;
-import com.wikibackpacker.utils.GPSDetector;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,7 +64,6 @@ public class SingleCategoryActivity extends FragmentActivity {
     Gallery gallery;
     Toolbar mToolbar;
     Typeface customFont;
-    GPSDetector gd;
     Geocoder geocoder;
     ProgressBar progressBar;
     TextView txtResetMap;
@@ -134,7 +132,6 @@ public class SingleCategoryActivity extends FragmentActivity {
                 onBackPressed();
             }
         });
-        gd = new GPSDetector(getApplicationContext());
         geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
         singleCategoryDetails = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("singleCategoryDetails");
