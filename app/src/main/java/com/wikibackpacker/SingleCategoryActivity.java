@@ -74,7 +74,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         progressBar.setVisibility(View.VISIBLE);
         txtResetMap.setVisibility(View.GONE);
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-        getApiCampgrounds();
+        getResetMapData();
 
     }
 
@@ -105,7 +105,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         return 0;
     }
 
-    private void getApiCampgrounds() {
+    private void getResetMapData() {
         JSONDownloader jsonDownloader = new JSONDownloader();
         try {
             String strURL = allCatURL[intCatPOS] + "/" + latTmp + "/" + lonTmp;

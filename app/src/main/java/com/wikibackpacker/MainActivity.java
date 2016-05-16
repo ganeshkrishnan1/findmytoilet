@@ -1,30 +1,23 @@
 package com.wikibackpacker;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.wikibackpacker.utils.Constant;
+import com.wikibackpacker.utils.GPSDetector;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,18 +35,20 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class MainActivity extends AppCompatActivity implements LocationListener {
+public class MainActivity extends AppCompatActivity
+//        implements LocationListener
+{
 
-    public static String apiCampgrounds = Constant.HOSTNAME+ "findAmenity/1";
-    public static String apiHostels = Constant.HOSTNAME+"findAmenity/4";
-    public static String apiDayUseArea = Constant.HOSTNAME+"findAmenity/8";
-    public static String apiPointsOfnterest = Constant.HOSTNAME+"findAmenity/16";
-    public static String apiInfoCenter = Constant.HOSTNAME+"findAmenity/32";
-    public static String apiToilets =Constant.HOSTNAME+ "findToilets/";
-    public static String apiShowers =Constant.HOSTNAME+ "findToilets/2";
-    public static String apiDrinkingWater = Constant.HOSTNAME+"findToilets/1";
-    public static String apiCaravanParks = Constant.HOSTNAME+"findAmenity/2";
-    public static String apiBBQSpots = Constant.HOSTNAME+"findBBQLocations";
+    public static String apiCampgrounds = Constant.HOSTNAME + "findAmenity/1";
+    public static String apiHostels = Constant.HOSTNAME + "findAmenity/4";
+    public static String apiDayUseArea = Constant.HOSTNAME + "findAmenity/8";
+    public static String apiPointsOfnterest = Constant.HOSTNAME + "findAmenity/16";
+    public static String apiInfoCenter = Constant.HOSTNAME + "findAmenity/32";
+    public static String apiToilets = Constant.HOSTNAME + "findToilets";
+    public static String apiShowers = Constant.HOSTNAME + "findToilets/2";
+    public static String apiDrinkingWater = Constant.HOSTNAME + "findToilets/1";
+    public static String apiCaravanParks = Constant.HOSTNAME + "findAmenity/2";
+    public static String apiBBQSpots = Constant.HOSTNAME + "findBBQLocations";
 
     public static boolean bolLocationType = true;
     public static String lat = "";
@@ -64,62 +59,66 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     boolean isDownloadedJSONData = false;
 
-    Handler handler;
-    Runnable runnable;
+//    Handler handler;
+//    Runnable runnable;
 
     ProgressBar myProgressBar;
 
-    LocationManager locationManager;
-    String provider;
-    Location location;
+//    LocationManager locationManager;
+//    String provider;
+//    Location location;
 
     TextView txtStatus;
 
     CountDownTimer countDownTimer;
-    @Override
-    public void onLocationChanged(Location location) {
 
-        countDownTimer.cancel();
-        lat = String.valueOf(location.getLatitude());
-        lon = String.valueOf(location.getLongitude());
+//    @Override
+//    public void onLocationChanged(Location location) {
+//
+//        countDownTimer.cancel();
+//        lat = String.valueOf(location.getLatitude());
+//        lon = String.valueOf(location.getLongitude());
 //        Log.e("Location","2nd lat "+lat+" lon "+lon);
-
-//        updateAPI(lat,lon);
-
-        txtStatus.setText("Location Received");
-
-        locationManager.removeUpdates(this);
-        onLocationReceived();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
+//
+////        updateAPI(lat,lon);
+//
+//
+//        locationManager.removeUpdates(this);
+//        onLocationReceived();
+//    }
+//
+//    @Override
+//    public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderEnabled(String provider) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderDisabled(String provider) {
+//
+//    }
 
     public boolean isFileCachedAvailable() {
         try {
-
-
             InputStream inputStream = openFileInput("WikiBackPackerJSONData.txt");
             if(inputStream!=null)
             {
+                Log.e("File","Available");
                 return true;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
 //            Log.e("FileCheck","Not Available"+e.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+//            Log.e("FileCheck","Not Available"+e.toString());
         }
+        Log.e("File","Not Available");
+
         return false;
     }
 
@@ -132,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             try {
                 for (int i = 0; i < urls.length; i++) {
                     String result = "";
-//                    Log.e("URL GET ", "POS " + i + " " + urls[i]);
+                    Log.e("URL GET ", "POS " + i + " " + urls[i]);
                     Request request  = new Request.Builder().url(urls[i]).build();
                     Response response = client.newCall(request).execute();
                     result = response.body().string();
@@ -175,14 +174,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 return jsonObject.toString();
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Failed";
+//                return "Failed";
+                return "";
             }
         }
 
         @Override
         protected void onPostExecute(String s) {
 
-            writeToFile(s);
+            if (!s.equals("")) {
+                writeToFile(s);
+
+                downloadedJSONString = s;
+//                downloadedJSONString = readFromFile();
+
+            }
+            isDownloadedJSONData = true;
+            checkDownloadStatus();
+// old check
+/*            writeToFile(s);
 
             downloadedJSONString = s;
             if (downloadedJSONString.equals("") || downloadedJSONString.equals("Failed"))
@@ -190,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 downloadedJSONString = readFromFile();
             }
             isDownloadedJSONData = true;
-            checkDownloadStatus();
+            checkDownloadStatus();*/
         }
 
         @Override
@@ -198,13 +208,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             myProgressBar.setProgress(values[0]);
         }
     }
-
+    GPSDetector gd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-if(!BuildConfig.DEBUG) {
-    Fabric.with(this, new Crashlytics());
-}
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().hide();
@@ -239,7 +249,10 @@ if(!BuildConfig.DEBUG) {
                 e.printStackTrace();
             }
         } else {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Log.e("File","After File not Available");
+            onGPSCheck();
+
+           /* locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             provider = locationManager.getBestProvider(new Criteria(), true);
             //BUG provider can be null
             if (null != provider && provider.contains("gps")) {
@@ -283,15 +296,69 @@ if(!BuildConfig.DEBUG) {
                     }
                 });
                 alertDialog.show();
+            }*/
+        }
+    }
+    private void onGPSCheck() {
+        gd = new GPSDetector(MainActivity.this);
+
+                if(gd.canGetLocation())
+                {
+                    String latitude = String.valueOf(gd.getLatitude());
+                    String longitude = String.valueOf(gd.getLongitude());
+                    Log.e("Location gd","latitude "+latitude+" longitude "+longitude);
+
+                    if (!latitude.equals("0.0")&&!longitude.equals("0.0")) {
+                        lat=latitude;
+                        lon=longitude;
+                        onLocationReceived();
+                    }else {
+                        onGPSDialog();
+                    }
+                }else
+                {
+                    onGPSDialog();
+                }
+
             }
 
-        }
 
 
+        private void onGPSDialog() {
 
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setMessage("GPS unavailable, Please enable GPS from Settings then click Ok");
+            alertDialog.setCancelable(false);
+            alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int which) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    MainActivity.this.startActivity(intent);
+                    onGPSDialog();
+                }
+            });
+
+            alertDialog.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    txtStatus.setText(getString(R.string.GettingLocationMSG));
+                    dialog.cancel();
+                    CountDownTimer countDownTimer = new CountDownTimer(4000,1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            onGPSCheck();
+                        }
+                    }.start();
+                }
+            });
+            alertDialog.show();
     }
 
-    public boolean isGPSEnabled()
+   /* public boolean isGPSEnabled()
     {
         provider = locationManager.getBestProvider(new Criteria(),true);
         if(null!=provider && provider.contains("gps"))
@@ -309,10 +376,8 @@ if(!BuildConfig.DEBUG) {
 
         locationManager.requestLocationUpdates(provider, 400, 0.1f, this);
         location = locationManager.getLastKnownLocation(provider);
-//        Log.e("DATA"," location "+location);
+        Log.e("DATA"," location "+location);
         if (location != null) {
-            txtStatus.setText("Location Received");
-
             lat = String.valueOf(location.getLatitude());
             lon = String.valueOf(location.getLongitude());
 //            Log.e("Location","lat "+lat+" lon "+lon);
@@ -339,10 +404,11 @@ if(!BuildConfig.DEBUG) {
             }.start();
         }
     }
-
+*/
     public void onLocationReceived()
     {
 
+        txtStatus.setText(getString(R.string.LocationReceived));
 
         JSONDownloader jsonDownloader = new JSONDownloader();
         try {
@@ -351,27 +417,28 @@ if(!BuildConfig.DEBUG) {
             e.printStackTrace();
         }
 
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                checkDownloadStatus();
-                if (!isDownloadedJSONData) {
-                    handler.postDelayed(this, 1000);
-                } else {
-                    handler.removeCallbacks(this);
-                }
-            }
-        };
-
-        handler.post(runnable);
+//        handler = new Handler();
+//        runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.e("DATA","HAndler");
+//                checkDownloadStatus();
+//                if (!isDownloadedJSONData) {
+//                    handler.postDelayed(this, 1000);
+//                } else {
+//                    handler.removeCallbacks(this);
+//                }
+//            }
+//        };
+//
+//        handler.post(runnable);
     }
 
     public void checkDownloadStatus()
     {
         if(isDownloadedJSONData)
         {
-            writeToFile(downloadedJSONString);
+//            writeToFile(downloadedJSONString);
             Intent intent = new Intent(getApplicationContext(),CategoriesActivity.class);
             intent.putExtra("jsonString",downloadedJSONString);
             MainActivity.this.finish();
@@ -427,6 +494,8 @@ if(!BuildConfig.DEBUG) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return ret;
@@ -434,11 +503,14 @@ if(!BuildConfig.DEBUG) {
 
     public void writeToFile(String data) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("WikiBackPackerJSONData.txt", MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
+            if (!data.equals("")) {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("WikiBackPackerJSONData.txt", MODE_PRIVATE));
+                outputStreamWriter.write(data);
+                outputStreamWriter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -538,4 +610,6 @@ if(!BuildConfig.DEBUG) {
             return apiBBQSpots + "?location=" + cityName;
         }
     }
+
+
 }
