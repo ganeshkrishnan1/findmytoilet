@@ -36,7 +36,6 @@ import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity
-//        implements LocationListener
 {
 
     public static String apiCampgrounds = Constant.HOSTNAME + "findAmenity/1";
@@ -59,48 +58,15 @@ public class MainActivity extends AppCompatActivity
 
     boolean isDownloadedJSONData = false;
 
-//    Handler handler;
-//    Runnable runnable;
 
     ProgressBar myProgressBar;
 
-//    LocationManager locationManager;
-//    String provider;
-//    Location location;
 
     TextView txtStatus;
 
     CountDownTimer countDownTimer;
 
-//    @Override
-//    public void onLocationChanged(Location location) {
-//
-//        countDownTimer.cancel();
-//        lat = String.valueOf(location.getLatitude());
-//        lon = String.valueOf(location.getLongitude());
-//        Log.e("Location","2nd lat "+lat+" lon "+lon);
-//
-////        updateAPI(lat,lon);
-//
-//
-//        locationManager.removeUpdates(this);
-//        onLocationReceived();
-//    }
-//
-//    @Override
-//    public void onStatusChanged(String provider, int status, Bundle extras) {
-//
-//    }
-//
-//    @Override
-//    public void onProviderEnabled(String provider) {
-//
-//    }
-//
-//    @Override
-//    public void onProviderDisabled(String provider) {
-//
-//    }
+
 
     public boolean isFileCachedAvailable() {
         try {
@@ -191,16 +157,6 @@ public class MainActivity extends AppCompatActivity
             }
             isDownloadedJSONData = true;
             checkDownloadStatus();
-// old check
-/*            writeToFile(s);
-
-            downloadedJSONString = s;
-            if (downloadedJSONString.equals("") || downloadedJSONString.equals("Failed"))
-            {
-                downloadedJSONString = readFromFile();
-            }
-            isDownloadedJSONData = true;
-            checkDownloadStatus();*/
         }
 
         @Override
@@ -217,7 +173,9 @@ public class MainActivity extends AppCompatActivity
         }
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().hide();
+        if(null!= getSupportActionBar()) {
+            getSupportActionBar().hide();
+        }
         bolLocationType = true;
 
         txtStatus = (TextView) findViewById(R.id.txtStatus);
@@ -251,52 +209,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             Log.e("File","After File not Available");
             onGPSCheck();
-
-           /* locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            provider = locationManager.getBestProvider(new Criteria(), true);
-            //BUG provider can be null
-            if (null != provider && provider.contains("gps")) {
-                onGPSAvailable();
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("GPS unavailable, Please enable GPS and click OK");
-                builder.setCancelable(false);
-                builder.setPositiveButton("OK", null);
-                final AlertDialog alertDialog = builder.create();
-
-                builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        MainActivity.this.startActivity(intent);
-                    }
-                });
-
-                builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-
-                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        Button btnPstv = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-                        btnPstv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (isGPSEnabled()) {
-                                    alertDialog.dismiss();
-                                    onGPSAvailable();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "GPS not enabled", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-                });
-                alertDialog.show();
-            }*/
         }
     }
     private void onGPSCheck() {
@@ -358,53 +270,7 @@ public class MainActivity extends AppCompatActivity
             alertDialog.show();
     }
 
-   /* public boolean isGPSEnabled()
-    {
-        provider = locationManager.getBestProvider(new Criteria(),true);
-        if(null!=provider && provider.contains("gps"))
-        {
-            return true;
-        }
-        else
-        {
-            return  false;
-        }
-    }
 
-    public void onGPSAvailable()
-    {
-
-        locationManager.requestLocationUpdates(provider, 400, 0.1f, this);
-        location = locationManager.getLastKnownLocation(provider);
-        Log.e("DATA"," location "+location);
-        if (location != null) {
-            lat = String.valueOf(location.getLatitude());
-            lon = String.valueOf(location.getLongitude());
-//            Log.e("Location","lat "+lat+" lon "+lon);
-//            updateAPI(lat, lon);
-
-            locationManager.removeUpdates(this);
-            onLocationReceived();
-        } else {
-            txtStatus.setText("Getting Location, Please Wait");
-            countDownTimer = new CountDownTimer(5000,1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-
-                }
-
-                @Override
-                public void onFinish() {
-
-                    Location location = new Location("dummyprovider");
-                    location.setLatitude(0);
-                    location.setLongitude(0);
-                    onLocationChanged(location);
-                }
-            }.start();
-        }
-    }
-*/
     public void onLocationReceived()
     {
 
@@ -416,22 +282,6 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        handler = new Handler();
-//        runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                Log.e("DATA","HAndler");
-//                checkDownloadStatus();
-//                if (!isDownloadedJSONData) {
-//                    handler.postDelayed(this, 1000);
-//                } else {
-//                    handler.removeCallbacks(this);
-//                }
-//            }
-//        };
-//
-//        handler.post(runnable);
     }
 
     public void checkDownloadStatus()
@@ -515,21 +365,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-/*
-    public void updateAPI(String lat, String lon)
-    {
-        apiCampgrounds += "/" + lat + "/" + lon;
-        apiHostels += "/" + lat + "/" + lon;
-        apiDayUseArea += "/" + lat + "/" + lon;
-        apiPointsOfnterest += "/" + lat + "/" + lon;
-        apiInfoCenter += "/" + lat + "/" + lon;
-        apiToilets += "/" + lat + "/" + lon;
-        apiShowers += "/" + lat + "/" + lon;
-        apiDrinkingWater += "/" + lat + "/" + lon;
-        apiCaravanParks += "/" + lat + "/" + lon;
-        apiBBQSpots += "/" + lat + "/" + lon;
-    }
-*/
+
 
     public static String getApiCampgrounds() {
         if (bolLocationType) {
