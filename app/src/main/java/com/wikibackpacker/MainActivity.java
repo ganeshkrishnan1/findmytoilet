@@ -9,9 +9,9 @@ import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -63,100 +63,7 @@ public class MainActivity extends AppCompatActivity
     GPSDetector gpsDetector;
 
 
-    public boolean isFileCachedAvailable() {
-        try {
-            InputStream inputStream = openFileInput("WikiBackPackerJSONData.txt");
-            if(inputStream!=null)
-            {
-                Log.e("File","Available");
-                return true;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Log.e("File","Not Available");
 
-        return false;
-    }
-
-    public class JSONDownloader extends AsyncTask<String,Integer,String>
-    {
-        @Override
-        protected String doInBackground(String... urls) {
-            JSONObject jsonObject = new JSONObject();
-            OkHttpClient client = new OkHttpClient();
-            try {
-                for (int i = 0; i < urls.length; i++) {
-                    String result = "";
-                    Log.e("URL GET ", "POS " + i + " " + urls[i]);
-                    Request request  = new Request.Builder().url(urls[i]).build();
-                    Response response = client.newCall(request).execute();
-                    result = response.body().string();
-                    JSONArray jsonArray = new JSONArray(result);
-                    switch (i)
-                    {
-                        case 0:
-                            jsonObject.put("campgrounds",jsonArray);
-                            break;
-                        case 1:
-                            jsonObject.put("hostels", jsonArray);
-                            break;
-                        case 2:
-                            jsonObject.put("dayusearea", jsonArray);
-                            break;
-                        case 3:
-                            jsonObject.put("pointsofinterest", jsonArray);
-                            break;
-                        case 4:
-                            jsonObject.put("infocenter", jsonArray);
-                            break;
-                        case 5:
-                            jsonObject.put("toilets", jsonArray);
-                            break;
-                        case 6:
-                            jsonObject.put("showers", jsonArray);
-                            break;
-                        case 7:
-                            jsonObject.put("drinkingwater", jsonArray);
-                            break;
-                        case 8:
-                            jsonObject.put("caravanparks", jsonArray);
-                            break;
-                        case 9:
-                            jsonObject.put("bbqspots", jsonArray);
-                            break;
-                    }
-                    publishProgress(i + 1);
-                }
-                return jsonObject.toString();
-            } catch (Exception e) {
-                e.printStackTrace();
-//                return "Failed";
-                return "";
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            if (!s.equals("")) {
-                writeToFile(s);
-
-                downloadedJSONString = s;
-//                downloadedJSONString = readFromFile();
-
-            }
-            isDownloadedJSONData = true;
-            checkDownloadStatus();
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            myProgressBar.setProgress(values[0]);
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,7 +71,6 @@ public class MainActivity extends AppCompatActivity
             Fabric.with(this, new Crashlytics());
         }
         setContentView(R.layout.activity_main);
-
         if(null!= getSupportActionBar()) {
             getSupportActionBar().hide();
         }
@@ -180,13 +86,13 @@ public class MainActivity extends AppCompatActivity
         // Check File already have Cache data
         if (isFileCachedAvailable()) {
             try {
-
+                myProgressBar.setVisibility(View.GONE);
                 currentLatitude = PrefUtils.getPref(getApplicationContext(), PrefUtils.PRF_Latitude, "");
                 currentLongitude = PrefUtils.getPref(getApplicationContext(), PrefUtils.PRF_Longitude, "");
 
                 downloadedJSONString = readFromFile();
                 isDownloadedJSONData = true;
-                countDownTimer = new CountDownTimer(1500, 1000) {
+                countDownTimer = new CountDownTimer(2000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
 
@@ -194,8 +100,6 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void onFinish() {
-
-                        myProgressBar.setProgress(10);
                         checkDownloadStatus();
                     }
                 }.start();
@@ -203,7 +107,7 @@ public class MainActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         } else {
-            Log.e("File","After File not Available");
+//            Log.e("File","After File not Available");
             onGPSCheck();
         }
     }
@@ -214,7 +118,7 @@ public class MainActivity extends AppCompatActivity
         if (gpsDetector.canGetLocation()) {
             String latitude = String.valueOf(gpsDetector.getLatitude());
             String longitude = String.valueOf(gpsDetector.getLongitude());
-            Log.e("Location gd", "latitude " + latitude + " longitude " + longitude);
+//            Log.e("Location gd", "latitude " + latitude + " longitude " + longitude);
 
             if (!latitude.equals("0.0") && !longitude.equals("0.0")) {
                 currentLatitude = latitude;
@@ -442,6 +346,99 @@ public class MainActivity extends AppCompatActivity
             return apiBBQSpots + "?location=" + cityName;
         }
     }
+    public boolean isFileCachedAvailable() {
+        try {
+            InputStream inputStream = openFileInput("WikiBackPackerJSONData.txt");
+            if(inputStream!=null)
+            {
+//                Log.e("File","Available");
+                return true;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        Log.e("File","Not Available");
 
+        return false;
+    }
+
+    public class JSONDownloader extends AsyncTask<String,Integer,String>
+    {
+        @Override
+        protected String doInBackground(String... urls) {
+            JSONObject jsonObject = new JSONObject();
+            OkHttpClient client = new OkHttpClient();
+            try {
+                for (int i = 0; i < urls.length; i++) {
+                    String result = "";
+//                    Log.e("URL GET ", "POS " + i + " " + urls[i]);
+                    Request request  = new Request.Builder().url(urls[i]).build();
+                    Response response = client.newCall(request).execute();
+                    result = response.body().string();
+                    JSONArray jsonArray = new JSONArray(result);
+                    switch (i)
+                    {
+                        case 0:
+                            jsonObject.put("campgrounds",jsonArray);
+                            break;
+                        case 1:
+                            jsonObject.put("hostels", jsonArray);
+                            break;
+                        case 2:
+                            jsonObject.put("dayusearea", jsonArray);
+                            break;
+                        case 3:
+                            jsonObject.put("pointsofinterest", jsonArray);
+                            break;
+                        case 4:
+                            jsonObject.put("infocenter", jsonArray);
+                            break;
+                        case 5:
+                            jsonObject.put("toilets", jsonArray);
+                            break;
+                        case 6:
+                            jsonObject.put("showers", jsonArray);
+                            break;
+                        case 7:
+                            jsonObject.put("drinkingwater", jsonArray);
+                            break;
+                        case 8:
+                            jsonObject.put("caravanparks", jsonArray);
+                            break;
+                        case 9:
+                            jsonObject.put("bbqspots", jsonArray);
+                            break;
+                    }
+                    publishProgress(i + 1);
+                }
+                return jsonObject.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+//                return "Failed";
+                return "";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if (!s.equals("")) {
+                writeToFile(s);
+
+                downloadedJSONString = s;
+//                downloadedJSONString = readFromFile();
+
+            }
+            isDownloadedJSONData = true;
+            checkDownloadStatus();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            myProgressBar.setProgress(values[0]);
+        }
+    }
 
 }

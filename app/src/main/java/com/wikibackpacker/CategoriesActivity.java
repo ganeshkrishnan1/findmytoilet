@@ -18,7 +18,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1028,7 +1027,7 @@ public class CategoriesActivity extends AppCompatActivity {
         if (gpsDetector.canGetLocation()) {
             String latitude = String.valueOf(gpsDetector.getLatitude());
             String longitude = String.valueOf(gpsDetector.getLongitude());
-            Log.e("Location New", "latitude " + latitude + " longitude " + longitude);
+//            Log.e("Location New", "latitude " + latitude + " longitude " + longitude);
 
             if (!latitude.equals("0.0") && !longitude.equals("0.0")) {
                 MainActivity.currentLatitude = latitude;
