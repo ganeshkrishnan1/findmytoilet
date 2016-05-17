@@ -214,10 +214,16 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private void loadDefaultData() {
-        Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgParallax);
-        mapFragment.getMapAsync(this);
-
-        txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
+        try {
+            Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgParallax);
+            mapFragment.getMap().clear();
+            mapFragment.getMapAsync(this);
+            txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override

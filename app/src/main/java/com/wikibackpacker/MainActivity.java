@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.wikibackpacker.utils.Constant;
 import com.wikibackpacker.utils.GPSDetector;
+import com.wikibackpacker.utils.PrefUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -50,22 +51,16 @@ public class MainActivity extends AppCompatActivity
     public static String apiBBQSpots = Constant.HOSTNAME + "findBBQLocations";
 
     public static boolean bolLocationType = true;
-    public static String lat = "";
-    public static String lon = "";
+    public static String currentLatitude = "";
+    public static String currentLongitude = "";
     public static String cityName = "";
 
     String downloadedJSONString;
-
     boolean isDownloadedJSONData = false;
-
-
     ProgressBar myProgressBar;
-
-
     TextView txtStatus;
-
     CountDownTimer countDownTimer;
-
+    GPSDetector gpsDetector;
 
 
     public boolean isFileCachedAvailable() {
@@ -78,10 +73,8 @@ public class MainActivity extends AppCompatActivity
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-//            Log.e("FileCheck","Not Available"+e.toString());
         } catch (Exception e) {
             e.printStackTrace();
-//            Log.e("FileCheck","Not Available"+e.toString());
         }
         Log.e("File","Not Available");
 
@@ -164,7 +157,6 @@ public class MainActivity extends AppCompatActivity
             myProgressBar.setProgress(values[0]);
         }
     }
-    GPSDetector gd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,6 +180,10 @@ public class MainActivity extends AppCompatActivity
         // Check File already have Cache data
         if (isFileCachedAvailable()) {
             try {
+
+                currentLatitude = PrefUtils.getPref(getApplicationContext(), PrefUtils.PRF_Latitude, "");
+                currentLongitude = PrefUtils.getPref(getApplicationContext(), PrefUtils.PRF_Longitude, "");
+
                 downloadedJSONString = readFromFile();
                 isDownloadedJSONData = true;
                 countDownTimer = new CountDownTimer(1500, 1000) {
@@ -211,28 +207,28 @@ public class MainActivity extends AppCompatActivity
             onGPSCheck();
         }
     }
+
     private void onGPSCheck() {
-        gd = new GPSDetector(MainActivity.this);
+        gpsDetector = new GPSDetector(MainActivity.this);
 
-                if(gd.canGetLocation())
-                {
-                    String latitude = String.valueOf(gd.getLatitude());
-                    String longitude = String.valueOf(gd.getLongitude());
-                    Log.e("Location gd","latitude "+latitude+" longitude "+longitude);
+        if (gpsDetector.canGetLocation()) {
+            String latitude = String.valueOf(gpsDetector.getLatitude());
+            String longitude = String.valueOf(gpsDetector.getLongitude());
+            Log.e("Location gd", "latitude " + latitude + " longitude " + longitude);
 
-                    if (!latitude.equals("0.0")&&!longitude.equals("0.0")) {
-                        lat=latitude;
-                        lon=longitude;
-                        onLocationReceived();
-                    }else {
-                        onGPSDialog();
-                    }
-                }else
-                {
-                    onGPSDialog();
-                }
+            if (!latitude.equals("0.0") && !longitude.equals("0.0")) {
+                currentLatitude = latitude;
+                currentLongitude = longitude;
 
+                PrefUtils.setPref(getApplicationContext(),PrefUtils.PRF_Latitude,latitude);
+                PrefUtils.setPref(getApplicationContext(),PrefUtils.PRF_Longitude,longitude);
+
+                onLocationReceived();
+                return;
             }
+        }
+        onGPSDialog();
+    }
 
 
 
@@ -369,7 +365,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiCampgrounds() {
         if (bolLocationType) {
-            return apiCampgrounds + "/" + lat + "/" + lon;
+            return apiCampgrounds + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiCampgrounds + "?location=" + cityName;
         }
@@ -377,7 +373,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiHostels() {
         if (bolLocationType) {
-            return apiHostels + "/" + lat + "/" + lon;
+            return apiHostels + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiHostels + "?location=" + cityName;
         }
@@ -385,7 +381,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiDayUseArea() {
         if (bolLocationType) {
-            return apiDayUseArea + "/" + lat + "/" + lon;
+            return apiDayUseArea + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiDayUseArea + "?location=" + cityName;
         }
@@ -393,7 +389,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiPointsOfnterest() {
         if (bolLocationType) {
-            return apiPointsOfnterest + "/" + lat + "/" + lon;
+            return apiPointsOfnterest + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiPointsOfnterest + "?location=" + cityName;
         }
@@ -401,7 +397,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiInfoCenter() {
         if (bolLocationType) {
-            return apiInfoCenter + "/" + lat + "/" + lon;
+            return apiInfoCenter + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiInfoCenter + "?location=" + cityName;
         }
@@ -409,7 +405,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiToilets() {
         if (bolLocationType) {
-            return apiToilets + "/" + lat + "/" + lon;
+            return apiToilets + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiToilets + "?location=" + cityName;
         }
@@ -417,7 +413,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiShowers() {
         if (bolLocationType) {
-            return apiShowers + "/" + lat + "/" + lon;
+            return apiShowers + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiShowers + "?location=" + cityName;
         }
@@ -425,7 +421,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiCaravanParks() {
         if (bolLocationType) {
-            return apiCaravanParks + "/" + lat + "/" + lon;
+            return apiCaravanParks + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiCaravanParks + "?location=" + cityName;
         }
@@ -433,7 +429,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiDrinkingWater() {
         if (bolLocationType) {
-            return apiDrinkingWater + "/" + lat + "/" + lon;
+            return apiDrinkingWater + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiDrinkingWater + "?location=" + cityName;
         }
@@ -441,7 +437,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String getApiBBQSpots() {
         if (bolLocationType) {
-            return apiBBQSpots + "/" + lat + "/" + lon;
+            return apiBBQSpots + "/" + currentLatitude + "/" + currentLongitude;
         } else {
             return apiBBQSpots + "?location=" + cityName;
         }

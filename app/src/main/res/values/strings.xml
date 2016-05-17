@@ -15,6 +15,7 @@
     <string name="GettingLocationMSG">Getting Location, Please Wait</string>
     <string name="Redo">Search Here</string>
     <string name="LocationReceived">Location Received</string>
+    <string name="action_refresh">Refresh</string>
 
 
     <!--Drawer Menu Array-->

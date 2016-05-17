@@ -3,17 +3,22 @@ package com.wikibackpacker;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,12 +34,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.wikibackpacker.adapter.NavDrawerListAdapter;
 import com.wikibackpacker.adapter.SuggestionAdapter;
 import com.wikibackpacker.utils.Constant;
+import com.wikibackpacker.utils.GPSDetector;
 import com.wikibackpacker.utils.NavDrawerItem;
+import com.wikibackpacker.utils.PrefUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -91,6 +99,7 @@ public class CategoriesActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+    GPSDetector gpsDetector;
 
     public void onClickCategory(View view) {
         Intent intent = new Intent(getApplicationContext(), SingleCategoryListActivity.class);
@@ -141,7 +150,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
-
+    @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -292,16 +301,8 @@ public class CategoriesActivity extends AppCompatActivity {
         btnExploreAroundMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acTextView.setText("");
-                btnExploreAroundMe.setVisibility(View.GONE);
-                hideKeyboard(acTextView);
-                MainActivity.bolLocationType = true;
-                JSONDownloader jsonDownloader = new JSONDownloader();
-                try {
-                    jsonDownloader.execute(MainActivity.getApiCampgrounds(), MainActivity.getApiHostels(), MainActivity.getApiDayUseArea(), MainActivity.getApiPointsOfnterest(), MainActivity.getApiInfoCenter(), MainActivity.getApiToilets(), MainActivity.getApiShowers(), MainActivity.getApiDrinkingWater(), MainActivity.getApiCaravanParks(), MainActivity.getApiBBQSpots());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
+                refreshLocationData();
 
             }
         });
@@ -366,6 +367,19 @@ public class CategoriesActivity extends AppCompatActivity {
 
 
         txtHomeMessage.setText("\nLive Love Travel");
+    }
+
+    private void refreshLocationData() {
+        acTextView.setText("");
+        btnExploreAroundMe.setVisibility(View.GONE);
+        hideKeyboard(acTextView);
+        MainActivity.bolLocationType = true;
+        JSONDownloader jsonDownloader = new JSONDownloader();
+        try {
+            jsonDownloader.execute(MainActivity.getApiCampgrounds(), MainActivity.getApiHostels(), MainActivity.getApiDayUseArea(), MainActivity.getApiPointsOfnterest(), MainActivity.getApiInfoCenter(), MainActivity.getApiToilets(), MainActivity.getApiShowers(), MainActivity.getApiDrinkingWater(), MainActivity.getApiCaravanParks(), MainActivity.getApiBBQSpots());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadGalleryData() {
@@ -668,33 +682,6 @@ public class CategoriesActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_categories, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-/*        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }*/
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void parseJSONString(String jsonString) {
         listCampgrounds = new ArrayList<>();
         listHostels = new ArrayList<>();
@@ -991,7 +978,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 return jsonObject.toString();
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Failed";
+                return "";
             }
         }
 
@@ -1005,23 +992,116 @@ public class CategoriesActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-
-            writeToFile(s);
-
-            jsonString = s;
-            if (jsonString.equals("") || jsonString.equals("Failed")) {
-                jsonString = readFromFile();
+            try {
+                if (!s.equals("")) {
+//-- Store data if data from current location
+                    if (MainActivity.bolLocationType) {
+                        writeToFile(s);
+                    }
+                    jsonString = s;
+//                if (jsonString.equals("") || jsonString.equals("Failed")) {
+//                    jsonString = readFromFile();
+//                }
+                    parseJSONString(jsonString);
+                    loadGalleryData();
+                } else {
+                    jsonString = readFromFile();
+                    parseJSONString(jsonString);
+                    loadGalleryData();
+                }
+                if (pDialog != null && pDialog.isShowing()) {
+                    pDialog.dismiss();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            parseJSONString(jsonString);
-            loadGalleryData();
-            if (pDialog != null && pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-//            isDownloadedJSONData = true;
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
         }
     }
+
+    private void onGPSCheck() {
+        gpsDetector = new GPSDetector(CategoriesActivity.this);
+
+        if (gpsDetector.canGetLocation()) {
+            String latitude = String.valueOf(gpsDetector.getLatitude());
+            String longitude = String.valueOf(gpsDetector.getLongitude());
+            Log.e("Location New", "latitude " + latitude + " longitude " + longitude);
+
+            if (!latitude.equals("0.0") && !longitude.equals("0.0")) {
+                MainActivity.currentLatitude = latitude;
+                MainActivity.currentLongitude = longitude;
+
+                PrefUtils.setPref(getApplicationContext(), PrefUtils.PRF_Latitude, latitude);
+                PrefUtils.setPref(getApplicationContext(), PrefUtils.PRF_Longitude, longitude);
+
+                refreshLocationData();
+                return;
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "GPS not enabled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        onGPSDialog();
+    }
+    private void onGPSDialog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("GPS unavailable, Please enable GPS from Settings then click Ok");
+        alertDialog.setCancelable(true);
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                CategoriesActivity.this.startActivity(intent);
+                onGPSDialog();
+            }
+        });
+
+        alertDialog.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                CountDownTimer countDownTimer = new CountDownTimer(4000,1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        onGPSCheck();
+                    }
+                }.start();
+            }
+        });
+        alertDialog.show();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_categories, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_refresh) {
+            onGPSCheck();
+
+        }
+
+/*        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }*/
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -8,9 +8,4 @@
     <color name="cTextBlack">#000000</color>
 
     <color name="transparent">#00000000</color>
-    <!-- card colors -->
-    <color name="card_background">#ffffff</color>
-    <color name="card_shadow_1">#FFFFFF</color>
-    <color name="card_shadow_2">#dddddd</color>
-    <color name="card_detailing">#eee</color>
 </resources>

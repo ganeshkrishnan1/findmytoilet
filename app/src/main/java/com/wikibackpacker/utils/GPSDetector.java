@@ -80,8 +80,6 @@ public class GPSDetector extends Service implements LocationListener
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
-                            Log.e("location 11","latitude "+latitude+" longitude "+longitude);
-
                         }
                     }
                 }
@@ -100,8 +98,6 @@ public class GPSDetector extends Service implements LocationListener
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
-                                Log.e("location 22","latitude "+latitude+" longitude "+longitude);
-
                             }
                         }
                     }

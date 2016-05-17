@@ -71,6 +71,7 @@
                             android:singleLine="true"
                             android:textColor="#FF5A5E"
                             android:textStyle="bold"
+                            android:inputType="textNoSuggestions"
                             android:textColorHint="#bebebe" />
 
                         <Button
