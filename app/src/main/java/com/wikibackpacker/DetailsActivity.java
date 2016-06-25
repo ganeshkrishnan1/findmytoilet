@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.tapreason.sdk.TapReason;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +70,20 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     PicAdapter picAdapterSimilarPlaces;
     GoogleMap mGoogleMap;
     private int mOriginalOrientation;
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        TapReason.register( this );
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        TapReason.unRegister( this );
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

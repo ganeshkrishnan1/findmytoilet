@@ -16,7 +16,7 @@ repositories {
 
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.3"
 
     defaultConfig {
@@ -24,8 +24,8 @@ android {
         minSdkVersion 16
         //We must keep this as 22. Making this as 23 would crash on devices which have android 23 because of permissions
         targetSdkVersion 22
-        versionCode 10
-        versionName "1.10"
+        versionCode 13
+        versionName "1.13"
     }
     buildTypes {
         debug
@@ -44,16 +44,18 @@ android {
 }
 
 dependencies {
-     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile project(':tapReason')
+     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.google.android.gms:play-services-location:8.4.0'
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.google.android.gms:play-services-location:9.0.2'
+    compile 'com.google.android.gms:play-services-maps:9.0.2'
+    compile 'com.android.support:design:24.0.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-    compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.android.support:cardview-v7:24.0.0'
+
 }

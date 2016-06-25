@@ -56,3 +56,12 @@
   **[] $VALUES;
   public *;
 }
+
+#TapReason proguard configuration
+-dontwarn com.tapreason.**
+-keep class com.tapreason.**   { *; }
+
+-keep class * extends android.app.Activity
+-keep class * extends android.support.v4.app.Fragment
+-keep class * extends android.app.Fragment
+#TapReason proguard configuration

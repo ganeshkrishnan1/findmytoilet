@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.tapreason.sdk.TapReason;
 import com.wikibackpacker.adapter.NavDrawerListAdapter;
 import com.wikibackpacker.adapter.SuggestionAdapter;
 import com.wikibackpacker.utils.Constant;
@@ -99,7 +100,19 @@ public class CategoriesActivity extends AppCompatActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
     GPSDetector gpsDetector;
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        TapReason.register( this );
+    }
 
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        TapReason.unRegister( this );
+    }
     public void onClickCategory(View view) {
         Intent intent = new Intent(getApplicationContext(), SingleCategoryListActivity.class);
 

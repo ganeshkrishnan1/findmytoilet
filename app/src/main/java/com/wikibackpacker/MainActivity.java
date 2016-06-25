@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.tapreason.sdk.TapReason;
 import com.wikibackpacker.utils.Constant;
 import com.wikibackpacker.utils.GPSDetector;
 import com.wikibackpacker.utils.PrefUtils;
@@ -62,7 +63,19 @@ public class MainActivity extends AppCompatActivity
     CountDownTimer countDownTimer;
     GPSDetector gpsDetector;
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        TapReason.register( this );
+    }
 
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        TapReason.unRegister( this );
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +124,7 @@ public class MainActivity extends AppCompatActivity
             onGPSCheck();
         }
     }
+
 
     private void onGPSCheck() {
         gpsDetector = new GPSDetector(MainActivity.this);
