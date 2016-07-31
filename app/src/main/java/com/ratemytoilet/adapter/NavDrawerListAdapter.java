@@ -1,4 +1,4 @@
-package com.wikibackpacker.adapter;
+package com.ratemytoilet.adapter;
 
 
 import android.app.Activity;
@@ -11,8 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wikibackpacker.R;
-import com.wikibackpacker.utils.NavDrawerItem;
+import com.ratemytoilet.R;
+import com.ratemytoilet.utils.NavDrawerItem;
 
 import java.util.ArrayList;
 

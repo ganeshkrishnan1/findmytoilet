@@ -1,4 +1,4 @@
-package com.wikibackpacker.adapter;
+package com.ratemytoilet.adapter;
 
 
 import android.app.Activity;
@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import com.wikibackpacker.R;
+import com.ratemytoilet.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

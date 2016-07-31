@@ -1,4 +1,4 @@
-package com.wikibackpacker;
+package com.ratemytoilet;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
@@ -39,14 +39,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.tapreason.sdk.TapReason;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class DetailsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, View.OnClickListener {
 
     //--
     private static final TimeInterpolator sDecelerator = new DecelerateInterpolator();
@@ -75,14 +74,14 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onStart()
     {
         super.onStart();
-        TapReason.register( this );
+
     }
 
     @Override
     protected void onStop()
     {
         super.onStop();
-        TapReason.unRegister( this );
+
     }
 
     @Override
@@ -114,7 +113,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
                 int id = item.getItemId();
                 if (id == R.id.action_share) {
                     String shareText = singleCategoryDetails.get(selectedIndex).get("name") + "\n";
-                    shareText += "http://wikibackpacker.com/app/detail/" + category + "/" + singleCategoryDetails.get(selectedIndex).get("id");
+                    shareText += "http://www.wikibackpacker.com/app/detail/" + category + "/" + singleCategoryDetails.get(selectedIndex).get("id");
 
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
@@ -201,37 +200,38 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         txtSimilarItemName.setTextColor(Color.WHITE);
 
         picAdapterSimilarPlaces = new PicAdapter(this, singleCategoryDetails, 12);
-        gallerySimilarPlaces.setAdapter(picAdapterSimilarPlaces);
-        gallerySimilarPlaces.setFocusable(false);
-        gallerySimilarPlaces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                txtSimilarItemName.setText(singleCategoryDetails.get(position).get("name"));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        gallerySimilarPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedIndex = position;
-                loadDefaultData();
-//                Intent intent = getIntent();
-//                intent.putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails);
-//                intent.putExtra("selectedIndex", position);
-//                finish();
-//                startActivity(intent);
-            }
-        });
+//        gallerySimilarPlaces.setAdapter(picAdapterSimilarPlaces);
+//        gallerySimilarPlaces.setFocusable(false);
+//        gallerySimilarPlaces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                txtSimilarItemName.setText(singleCategoryDetails.get(position).get("name"));
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        gallerySimilarPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                selectedIndex = position;
+//                loadDefaultData();
+////                Intent intent = getIntent();
+////                intent.putExtra("singleCategoryDetails", (Serializable) singleCategoryDetails);
+////                intent.putExtra("selectedIndex", position);
+////                finish();
+////                startActivity(intent);
+//            }
+//        });
     }
 
     private void loadDefaultData() {
         try {
-            Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgParallax);
-            mapFragment.getMap().clear();
+           // Glide.with(this).load(singleCategoryDetails.get(selectedIndex).get("url")).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgParallax);
+            Glide.with(this).load("https://api.wikibackpacker.com/api/viewAmenityImage/62044?default=Toilets").placeholder(android.R.drawable.progress_indeterminate_horizontal).into(imgParallax);
+
             mapFragment.getMapAsync(this);
             txtName.setText("\n" + singleCategoryDetails.get(selectedIndex).get("name") + "\n");
         }
@@ -269,9 +269,9 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
 
         mGoogleMap.setMyLocationEnabled(true);
 
-        double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
-        double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
-        String title = singleCategoryDetails.get(selectedIndex).get("name");
+       final double lat = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lat"));
+      final  double lon = Double.parseDouble(singleCategoryDetails.get(selectedIndex).get("lon"));
+      final  String title = singleCategoryDetails.get(selectedIndex).get("name");
         Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).icon(BitmapDescriptorFactory
                 .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)).title(title));
         marker.showInfoWindow();
@@ -281,14 +281,20 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public boolean onMarkerClick(Marker mMarker) {
 
-                if (mMarker.isInfoWindowShown()) {
-                    mMarker.hideInfoWindow();
-                } else {
-                    mGoogleMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-                    mGoogleMap.setOnInfoWindowClickListener(DetailsActivity.this);
-                    mMarker.showInfoWindow();
+//                if (mMarker.isInfoWindowShown()) {
+//                    mMarker.hideInfoWindow();
+//                } else {
+//                    mGoogleMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+//                    mGoogleMap.setOnInfoWindowClickListener(DetailsActivity.this);
+//                    mMarker.showInfoWindow();
+//
+//                }
+                Intent intent = new Intent(getApplicationContext(),RateDetail.class);
+                intent.putExtra("title",title);
+                intent.putExtra("lat",lat);
+                intent.putExtra("lon",lon);
 
-                }
+                startActivity(intent);
                 return true;
             }
         });
@@ -380,6 +386,14 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         overridePendingTransition(0, 0);
     }
 
+    @Override
+    public void onClick(View view) {
+
+        Intent intent = new Intent(getApplicationContext(),RateDetail.class);
+        intent.putExtra("jsonString","sampleurl");
+        startActivity(intent);
+    }
+
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         Marker mSelectedMarker;
@@ -404,6 +418,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
         public View getInfoWindow(Marker marker) {
             mSelectedMarker = marker;
             img = ((ImageView) myContentsView.findViewById(R.id.img));
+            img.setOnClickListener(DetailsActivity.this);
             TextView txtMarkerTitle = ((TextView) myContentsView.findViewById(R.id.txtMarkerTitle));
             txtMarkerTitle.setText(marker.getTitle());
             String strURL = "http://api.wikibackpacker.com/api/viewAmenityImage/" + singleCategoryDetails.get(selectedIndex).get("id");
@@ -420,6 +435,7 @@ public class DetailsActivity extends FragmentActivity implements OnMapReadyCallb
                     return false;
                 }
             }).placeholder(android.R.drawable.progress_indeterminate_horizontal).into(img);
+
 
             return myContentsView;
         }

@@ -1,4 +1,4 @@
-package com.wikibackpacker.utils;
+package com.ratemytoilet.utils;
 
 import android.app.AlertDialog;
 import android.app.Service;

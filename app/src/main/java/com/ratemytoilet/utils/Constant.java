@@ -1,4 +1,4 @@
-package com.wikibackpacker.utils;
+package com.ratemytoilet.utils;
 
 /**
  * Created by spyder on 20/04/16.

@@ -1,4 +1,4 @@
-package com.wikibackpacker.utils;
+package com.ratemytoilet.utils;
 
 public class NavDrawerItem {
 

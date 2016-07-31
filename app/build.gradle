@@ -20,7 +20,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.wikibackpacker"
+        applicationId "com.ratemytoilet"
         minSdkVersion 16
         //We must keep this as 22. Making this as 23 would crash on devices which have android 23 because of permissions
         targetSdkVersion 22
@@ -30,10 +30,12 @@ android {
     buildTypes {
         debug
                 {
-                    minifyEnabled true
+                    minifyEnabled false
                     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                     ext.enableCrashlytics = false
                     versionNameSuffix "-DEBUG"
+                    debuggable true
+                    jniDebuggable true
                 }
         release {
             minifyEnabled true
@@ -44,12 +46,11 @@ android {
 }
 
 dependencies {
-    compile project(':tapReason')
-     compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.google.android.gms:play-services-location:9.0.2'
-    compile 'com.google.android.gms:play-services-maps:9.0.2'
+    compile 'com.google.android.gms:play-services-location:9.2.1'
+    compile 'com.google.android.gms:play-services-maps:9.2.1'
     compile 'com.android.support:design:24.0.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
@@ -57,5 +58,4 @@ dependencies {
         transitive = true;
     }
     compile 'com.android.support:cardview-v7:24.0.0'
-
 }

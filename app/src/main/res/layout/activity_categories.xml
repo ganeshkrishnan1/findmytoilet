@@ -64,6 +64,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
+                            android:layout_marginBottom="20dp"
                             android:ems="10"
                             android:textSize="20sp"
                             android:hint="@string/search_hint"
@@ -71,25 +72,56 @@
                             android:singleLine="true"
                             android:textColor="#FF5A5E"
                             android:textStyle="bold"
+                            android:visibility="invisible"
                             android:inputType="textNoSuggestions"
                             android:textColorHint="#bebebe" />
 
                         <Button
-                            android:id="@+id/btnExploreAroundMe"
+                            android:id="@+id/btnFindToilet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
                             android:layout_below="@+id/autoComplete"
                             android:background="@drawable/shape_roundedbutton"
-                            android:padding="8dp"
-                            android:text="@string/Explore_Around_Me"
+                            android:padding="12dp"
+                            android:layout_margin="10dp"
+                            android:text="@string/Find_Toilet"
                             android:textAllCaps="false"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
-                            android:visibility="gone" />
+                             />
+                        <Button
+                            android:id="@+id/btnFindWater"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_below="@+id/btnFindToilet"
+                            android:background="@drawable/shape_roundedbutton"
+                            android:padding="12dp"
+                            android:layout_margin="10dp"
+                            android:text="@string/Find_Shower"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            />
+                        <Button
+                            android:id="@+id/btnFindShower"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_below="@+id/btnFindWater"
+                            android:background="@drawable/shape_roundedbutton"
+                            android:padding="12dp"
+                            android:layout_margin="10dp"
+                            android:text="@string/Find_Water"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            />
                     </RelativeLayout>
 
                     <ScrollView
+                        android:visibility="invisible"
                         android:id="@+id/scrollView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,202 +130,12 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/txtHomeMessage"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:text="Welcome Message"
-                                android:textSize="20sp" />
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="20dp"
-                                android:background="@android:color/darker_gray" />
 
-                            <TextView
-                                android:id="@+id/txtCampgrounds"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:background="@color/lightbackground"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="10dp"
-                                android:onClick="onClickCategory"
-                                android:paddingTop="20dp"
-                                android:text="Campgrounds\n"
-                                android:textColor="@color/cFont"
-                                android:textSize="20sp" />
-
-                            <Gallery
-                                android:id="@+id/galleryOne"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:spacing="5dp" />
-
-                            <TextView
-                                android:id="@+id/txtCampgroundsName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:textSize="20sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="20dp"
-                                android:background="@android:color/darker_gray" />
-
-                            <TextView
-                                android:id="@+id/txtHostels"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:background="@color/lightbackground"
-                                android:onClick="onClickCategory"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="10dp"
-                                android:paddingTop="20dp"
-                                android:text="Hostels\n"
-                                android:textColor="@color/cFont"
-                                android:textSize="20sp" />
-
-                            <Gallery
-                                android:id="@+id/galleryTwo"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:spacing="5dp" />
-
-                            <TextView
-                                android:id="@+id/txtHostelsName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:spacing="5dp"
-                                android:textSize="20sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="20dp"
-                                android:background="@android:color/darker_gray" />
-
-                            <TextView
-                                android:id="@+id/txtDayUseArea"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:background="@color/lightbackground"
-                                android:onClick="onClickCategory"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="10dp"
-                                android:paddingTop="20dp"
-                                android:text="Day Use Area\n"
-                                android:textColor="@color/cFont"
-                                android:textSize="20sp" />
-
-                            <Gallery
-                                android:id="@+id/galleryThree"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:spacing="5dp" />
-
-                            <TextView
-                                android:id="@+id/txtDayUseAreaName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:textSize="20sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="20dp"
-                                android:background="@android:color/darker_gray" />
-
-                            <TextView
-                                android:id="@+id/txtPointsOfInterest"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:background="@color/lightbackground"
-                                android:onClick="onClickCategory"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="10dp"
-                                android:paddingTop="20dp"
-
-                                android:text="Points Of Interest\n"
-                                android:textColor="@color/cFont"
-                                android:textSize="20sp" />
-
-                            <Gallery
-                                android:id="@+id/galleryFour"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:spacing="5dp" />
-
-                            <TextView
-                                android:id="@+id/txtPointsOfInterestName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:singleLine="true"
-                                android:ellipsize="end"
-                                android:textSize="20sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="20dp"
-                                android:background="@android:color/darker_gray" />
-
-                            <TextView
-                                android:id="@+id/txtInfocenter"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:background="@color/lightbackground"
-                                android:onClick="onClickCategory"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="10dp"
-                                android:paddingTop="20dp"
-                                android:text="Infocenter\n"
-
-                                android:textColor="@color/cFont"
-                                android:textSize="20sp" />
-
-                            <Gallery
-                                android:id="@+id/galleryFive"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:spacing="5dp" />
-
-                            <TextView
-                                android:id="@+id/txtInfocenterName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:singleLine="true"
-                                android:ellipsize="end"
-                                android:textSize="20sp" />
-
-                            <View
+                      <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:layout_marginTop="20dp"
@@ -408,71 +250,7 @@
                                 android:layout_marginTop="20dp"
                                 android:background="@android:color/darker_gray" />
 
-                            <TextView
-                                android:id="@+id/txtCaravanParks"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:background="@color/lightbackground"
-                                android:onClick="onClickCategory"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="10dp"
-                                android:paddingTop="20dp"
-                                android:text="Caravan Parks\n"
-                                android:textColor="@color/cFont"
-                                android:textSize="20sp" />
 
-                            <Gallery
-                                android:id="@+id/galleryNine"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:spacing="5dp" />
-
-                            <TextView
-                                android:id="@+id/txtCaravanParksName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:singleLine="true"
-                                android:ellipsize="end"
-                                android:textSize="20sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="20dp"
-                                android:background="@android:color/darker_gray" />
-
-                            <TextView
-                                android:id="@+id/txtBBQSpots"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:background="@color/lightbackground"
-                                android:onClick="onClickCategory"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="10dp"
-                                android:paddingTop="20dp"
-                                android:text="BBQ Spots\n"
-                                android:textColor="@color/cFont"
-                                android:textSize="20sp" />
-
-                            <Gallery
-                                android:id="@+id/galleryTen"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:spacing="5dp" />
-
-                            <TextView
-                                android:id="@+id/txtBBQSpotsName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:singleLine="true"
-                                android:ellipsize="end"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:textSize="20sp" />
 
                         </LinearLayout>
                     </ScrollView>

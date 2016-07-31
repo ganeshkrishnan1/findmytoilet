@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/imgParallaxTwo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/toilet" />
 
     <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,17 +27,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/rl"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <include
-                    android:id="@+id/mToolbarDetais"
-                    layout="@layout/toolbar" />
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/scrollViewBase"
@@ -59,8 +49,37 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="New Text"
+                            android:text="The Walk Arcade"
                             android:textSize="20sp" />
+
+
+                        <RatingBar
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ratingBar"
+                            android:layout_weight="1"
+                            android:numStars="5"
+                            android:rating="4" />
+
+                        <TextView
+                            android:text="Click to rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView" />
+
+                        <Button
+                            android:id="@+id/btnMaintenance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                             android:background="@drawable/shape_roundedbutton"
+                            android:padding="12dp"
+                            android:layout_margin="10dp"
+                            android:text="Maintenance Required"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            />
 
                         <com.ratemytoilet.utils.MapFragmentContainer
                             android:id="@+id/llMap"
@@ -75,37 +94,7 @@
 
                         </com.ratemytoilet.utils.MapFragmentContainer>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/main_color_500"
-                            android:orientation="vertical"
-                            android:paddingBottom="16dp"
-                            android:paddingTop="16dp">
 
-                            <TextView
-                                android:id="@+id/txtSimilarItem"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="Similar Items"
-                                android:textSize="20sp" />
-
-                            <Gallery
-                                android:id="@+id/gallerySimilarPlaces"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:spacing="5dp" />
-
-                            <TextView
-                                android:id="@+id/txtSimilarItemName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text=""
-                                android:textSize="20sp" />
-
-                        </LinearLayout>
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>

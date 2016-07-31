@@ -1,4 +1,4 @@
-package com.wikibackpacker;
+package com.ratemytoilet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,14 +20,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.tapreason.sdk.TapReason;
-import com.wikibackpacker.utils.Constant;
+import com.ratemytoilet.utils.Constant;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,21 +42,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SingleCategoryActivity extends FragmentActivity {
+public class SingleCategoryActivity extends FragmentActivity implements OnMapReadyCallback{
     public static int intCatPOS = 0;
     static String latTmp = "";
     static String lonTmp = "";
     private static String[] allCatURL = {
-            MainActivity.apiCampgrounds,
-            MainActivity.apiHostels,
-            MainActivity.apiDayUseArea,
-            MainActivity.apiPointsOfnterest,
-            MainActivity.apiInfoCenter,
+
             MainActivity.apiToilets,
             MainActivity.apiShowers,
             MainActivity.apiDrinkingWater,
-            MainActivity.apiCaravanParks,
-            MainActivity.apiBBQSpots
+
     };
     List<HashMap<String, String>> singleCategoryDetails;
     String category;
@@ -75,14 +70,14 @@ public class SingleCategoryActivity extends FragmentActivity {
     protected void onStart()
     {
         super.onStart();
-        TapReason.register( this );
+
     }
 
     @Override
     protected void onStop()
     {
         super.onStop();
-        TapReason.unRegister( this );
+
     }
 
     public void resetMap(View view) {
@@ -96,26 +91,13 @@ public class SingleCategoryActivity extends FragmentActivity {
     private int getCat(String mCategory) {
 
         switch (mCategory) {
-            case "campgrounds":
-                return 0;
-            case "hostels":
-                return 1;
-            case "dayusearea":
-                return 2;
-            case "pois":
-                return 3;
-            case "infocenter":
-                return 4;
-            case "toilets":
+              case "toilets":
                 return 5;
             case "showers":
                 return 6;
             case "drinkingwater":
                 return 7;
-            case "caravanparks":
-                return 8;
-            case "bbq":
-                return 9;
+
         }
         return 0;
     }
@@ -138,7 +120,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         mToolbar = (Toolbar) findViewById(R.id.mToolbar);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         txtResetMap = (TextView) findViewById(R.id.txtResetMap);
-        mToolbar.setTitle("Wikibackpacker");
+        mToolbar.setTitle("Rate My Toilet");
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setNavigationIcon(R.drawable.ic_action_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -251,8 +233,7 @@ public class SingleCategoryActivity extends FragmentActivity {
         try {
             if (mMap == null) {
                 // Try to obtain the map from the SupportMapFragment.
-                mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                        .getMap();
+                ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
                 // Check if we were successful in obtaining the map.
                 if (mMap != null) {
                     setUpMap();
@@ -260,8 +241,16 @@ public class SingleCategoryActivity extends FragmentActivity {
             }
         } catch (Exception ex) {
             //this is to catch the maps throwing exception for lat lng builders
+            ex.printStackTrace();
         }
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap=googleMap;
+        setUpMap();
+    }
+
 
     /**
      * <p/>
@@ -331,87 +320,11 @@ public class SingleCategoryActivity extends FragmentActivity {
             JSONArray jsonArray = new JSONArray();
             switch (intCatPOS) {
                 case 0:
-                    jsonArray = jsonRootObject.optJSONArray("campgrounds");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
-                        hm.put("url", Constant.HOSTNAME + "viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=campgrounds");
-                        hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
-                        hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
-                        hm.put("score", jsonArray.getJSONObject(i).optString("score"));
-                        hm.put("rating", jsonArray.getJSONObject(i).optString("rating"));
-                        hm.put("notes", jsonArray.getJSONObject(i).optString("notes"));
-                        singleCategoryDetails.add(hm);
-                    }
-                    break;
-                case 1:
-                    jsonArray = jsonRootObject.optJSONArray("hostels");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
-                        hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=hostels");
-                        hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
-                        hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
-                        hm.put("score", jsonArray.getJSONObject(i).optString("score"));
-                        hm.put("rating", jsonArray.getJSONObject(i).optString("rating"));
-                        hm.put("notes", jsonArray.getJSONObject(i).optString("notes"));
-                        singleCategoryDetails.add(hm);
-                    }
-                    break;
-                case 2:
-                    jsonArray = jsonRootObject.optJSONArray("dayusearea");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
-                        hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=dayusearea");
-                        hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
-                        hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
-                        hm.put("score", jsonArray.getJSONObject(i).optString("score"));
-                        hm.put("rating", jsonArray.getJSONObject(i).optString("rating"));
-                        hm.put("notes", jsonArray.getJSONObject(i).optString("notes"));
-                        singleCategoryDetails.add(hm);
-                    }
-                    break;
-                case 3:
-                    jsonArray = jsonRootObject.optJSONArray("pointsofinterest");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
-                        hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=pois");
-                        hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
-                        hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
-                        hm.put("score", jsonArray.getJSONObject(i).optString("score"));
-                        hm.put("rating", jsonArray.getJSONObject(i).optString("rating"));
-                        hm.put("notes", jsonArray.getJSONObject(i).optString("notes"));
-                        singleCategoryDetails.add(hm);
-                    }
-                    break;
-                case 4:
-                    jsonArray = jsonRootObject.optJSONArray("infocenter");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
-                        hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=infocenter");
-                        hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
-                        hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
-                        hm.put("score", jsonArray.getJSONObject(i).optString("score"));
-                        hm.put("rating", jsonArray.getJSONObject(i).optString("rating"));
-                        hm.put("notes", jsonArray.getJSONObject(i).optString("notes"));
-                        singleCategoryDetails.add(hm);
-                    }
-                    break;
-                case 5:
                     jsonArray = jsonRootObject.optJSONArray("toilets");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         HashMap<String, String> hm = new HashMap<String, String>();
                         hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("tname"));
+                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
                         hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=toilets");
                         hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
                         hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
@@ -421,12 +334,12 @@ public class SingleCategoryActivity extends FragmentActivity {
                         singleCategoryDetails.add(hm);
                     }
                     break;
-                case 6:
+                case 1:
                     jsonArray = jsonRootObject.optJSONArray("showers");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         HashMap<String, String> hm = new HashMap<String, String>();
                         hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("tname"));
+                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
                         hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=showers");
                         hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
                         hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
@@ -436,12 +349,12 @@ public class SingleCategoryActivity extends FragmentActivity {
                         singleCategoryDetails.add(hm);
                     }
                     break;
-                case 7:
+                case 2:
                     jsonArray = jsonRootObject.optJSONArray("drinkingwater");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         HashMap<String, String> hm = new HashMap<String, String>();
                         hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("tname"));
+                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
                         hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=drinkingwater");
                         hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
                         hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
@@ -451,36 +364,7 @@ public class SingleCategoryActivity extends FragmentActivity {
                         singleCategoryDetails.add(hm);
                     }
                     break;
-                case 8:
-                    jsonArray = jsonRootObject.optJSONArray("caravanparks");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("displayName"));
-                        hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=caravanparks");
-                        hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
-                        hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
-                        hm.put("score", jsonArray.getJSONObject(i).optString("score"));
-                        hm.put("rating", jsonArray.getJSONObject(i).optString("rating"));
-                        hm.put("notes", jsonArray.getJSONObject(i).optString("notes"));
-                        singleCategoryDetails.add(hm);
-                    }
-                    break;
-                case 9:
-                    jsonArray = jsonRootObject.optJSONArray("bbqspots");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("id", jsonArray.getJSONObject(i).optString("id"));
-                        hm.put("name", jsonArray.getJSONObject(i).optString("bbqName"));
-                        hm.put("url", "http://api.wikibackpacker.com/api/viewAmenityImage/" + jsonArray.getJSONObject(i).optString("id") + "?default=bbq");
-                        hm.put("lat", jsonArray.getJSONObject(i).optString("lat"));
-                        hm.put("lon", jsonArray.getJSONObject(i).optString("lon"));
-                        hm.put("score", jsonArray.getJSONObject(i).optString("score"));
-                        hm.put("rating", jsonArray.getJSONObject(i).optString("rating"));
-                        hm.put("notes", jsonArray.getJSONObject(i).optString("notes"));
-                        singleCategoryDetails.add(hm);
-                    }
-                    break;
+
 
             }
 
@@ -513,34 +397,13 @@ public class SingleCategoryActivity extends FragmentActivity {
                 JSONArray jsonArray = new JSONArray(result);
                 switch (intCatPOS) {
                     case 0:
-                        jsonObject.put("campgrounds", jsonArray);
-                        break;
-                    case 1:
-                        jsonObject.put("hostels", jsonArray);
-                        break;
-                    case 2:
-                        jsonObject.put("dayusearea", jsonArray);
-                        break;
-                    case 3:
-                        jsonObject.put("pointsofinterest", jsonArray);
-                        break;
-                    case 4:
-                        jsonObject.put("infocenter", jsonArray);
-                        break;
-                    case 5:
-                        jsonObject.put("toilets", jsonArray);
+                       jsonObject.put("toilets", jsonArray);
                         break;
                     case 6:
                         jsonObject.put("showers", jsonArray);
                         break;
                     case 7:
                         jsonObject.put("drinkingwater", jsonArray);
-                        break;
-                    case 8:
-                        jsonObject.put("caravanparks", jsonArray);
-                        break;
-                    case 9:
-                        jsonObject.put("bbqspots", jsonArray);
                         break;
                 }
 //                }

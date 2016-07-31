@@ -1,8 +1,6 @@
 <resources>
-    <string name="app_name">WikiBackpacker</string>
-
-
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Find My Toilet</string>
+   <string name="action_settings">Settings</string>
     <string name="title_activity_categories">CategoriesActivity</string>
     <string name="title_activity_single_category">Map</string>
 
@@ -12,6 +10,9 @@
     <string name="title_activity_single_category_list">SingleCategoryListActivity</string>
     <string name="search_hint">Where are you going?</string>
     <string name="Explore_Around_Me">Explore Around Me</string>
+    <string name="Find_Toilet">Find My Toilet</string>
+    <string name="Find_Water">Find My Water</string>
+    <string name="Find_Shower">Find My Shower</string>
     <string name="GettingLocationMSG">Getting Location, Please Wait</string>
     <string name="Redo">Search Here</string>
     <string name="LocationReceived">Location Received</string>
@@ -20,28 +21,17 @@
 
     <!--Drawer Menu Array-->
     <string-array name="nav_drawer_items">
-        <item>Campgrounds</item>
-        <item>Hostels</item>
-        <item>Day Use Area</item>
-        <item>Points of Interest</item>
-        <item>Infocenter</item>
+
         <item>Toilets</item>
         <item>Showers</item>
         <item>Drinking Water</item>
-        <item>Caravan Parks</item>
-        <item>BBQ Spots</item>
+
     </string-array>
 
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_menu_campgrounds</item>
-        <item>@drawable/ic_menu_hotels</item>
-        <item>@drawable/ic_menu_dayuse</item>
-        <item>@drawable/ic_menu_parks</item>
-        <item>@drawable/ic_menu_infocenter</item>
         <item>@drawable/ic_menu_toilets</item>
         <item>@drawable/ic_menu_showers</item>
         <item>@drawable/ic_menu_water</item>
-        <item>@drawable/ic_menu_caravan</item>
-        <item>@drawable/ic_menu_bbq</item>
+
     </array>
 </resources>

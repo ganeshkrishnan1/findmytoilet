@@ -3,7 +3,7 @@
     android:id="@+id/mapActivityRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wikibackpacker.SingleCategoryActivity">
+    tools:context="com.ratemytoilet.SingleCategoryActivity">
 
     <include
         android:id="@+id/mToolbar"
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/mToolbar"
-        tools:context="com.wikibackpacker.SingleCategoryActivity" />
+        tools:context="com.ratemytoilet.SingleCategoryActivity" />
 
 
 

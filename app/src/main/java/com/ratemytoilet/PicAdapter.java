@@ -1,4 +1,4 @@
-package com.wikibackpacker;
+package com.ratemytoilet;
 
 /**
  * Created by soumyadip on 09-04-2016.

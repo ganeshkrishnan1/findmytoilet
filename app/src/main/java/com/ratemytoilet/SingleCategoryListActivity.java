@@ -1,4 +1,4 @@
-package com.wikibackpacker;
+package com.ratemytoilet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +16,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.tapreason.sdk.TapReason;
 
 import org.json.JSONArray;
 
@@ -43,14 +41,14 @@ public class SingleCategoryListActivity extends AppCompatActivity {
     protected void onStart()
     {
         super.onStart();
-        TapReason.register( this );
+
     }
 
     @Override
     protected void onStop()
     {
         super.onStop();
-        TapReason.unRegister( this );
+
     }
 
     @Override
@@ -59,7 +57,7 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_category_list);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_color_500)));
-        setTitle("Wikibackpacker");
+        setTitle("Find My Toilet");
 
         singleCategoryDetails = (ArrayList<HashMap<String,String>>)getIntent().getSerializableExtra("singleCategoryDetails");
         category = getIntent().getStringExtra("category");
@@ -175,27 +173,7 @@ public class SingleCategoryListActivity extends AppCompatActivity {
     public void addMorePlaces(int pageNo)
     {
         String apiToCall = "";
-        if (category.equals("campgrounds"))
-        {
-            apiToCall = MainActivity.getApiCampgrounds() + "?page=" + String.valueOf(pageNo);
-        }
-        else if (category.equals("hostels"))
-        {
-            apiToCall = MainActivity.getApiHostels() + "?page=" + String.valueOf(pageNo);
-        }
-        else if (category.equals("dayusearea"))
-        {
-            apiToCall = MainActivity.getApiDayUseArea() + "?page=" + String.valueOf(pageNo);
-        }
-        else if (category.equals("pois"))
-        {
-            apiToCall = MainActivity.getApiPointsOfnterest() + "?page=" + String.valueOf(pageNo);
-        }
-        else if (category.equals("infocenter"))
-        {
-            apiToCall = MainActivity.getApiInfoCenter() + "?page=" + String.valueOf(pageNo);
-        }
-        else if (category.equals("toilets"))
+        if (category.equals("toilets"))
         {
             apiToCall = MainActivity.getApiToilets() + "?page=" + String.valueOf(pageNo);
         }
@@ -206,14 +184,6 @@ public class SingleCategoryListActivity extends AppCompatActivity {
         else if (category.equals("drinkingwater"))
         {
             apiToCall = MainActivity.getApiDrinkingWater() + "?page=" + String.valueOf(pageNo);
-        }
-        else if (category.equals("caravanparks"))
-        {
-            apiToCall = MainActivity.getApiCaravanParks() + "?page=" + String.valueOf(pageNo);
-        }
-        else if (category.equals("bbq"))
-        {
-            apiToCall = MainActivity.getApiBBQSpots() + "?page=" + String.valueOf(pageNo);
         }
 
         SingleCategoryJSONDownloader jsonDownloader = new SingleCategoryJSONDownloader();

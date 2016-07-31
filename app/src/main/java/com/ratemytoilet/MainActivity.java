@@ -1,4 +1,4 @@
-package com.wikibackpacker;
+package com.ratemytoilet;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,10 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-import com.tapreason.sdk.TapReason;
-import com.wikibackpacker.utils.Constant;
-import com.wikibackpacker.utils.GPSDetector;
-import com.wikibackpacker.utils.PrefUtils;
+import com.ratemytoilet.utils.Constant;
+import com.ratemytoilet.utils.GPSDetector;
+import com.ratemytoilet.utils.PrefUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,16 +39,11 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity
 {
 
-    public static String apiCampgrounds = Constant.HOSTNAME + "findAmenity/1";
-    public static String apiHostels = Constant.HOSTNAME + "findAmenity/4";
-    public static String apiDayUseArea = Constant.HOSTNAME + "findAmenity/8";
-    public static String apiPointsOfnterest = Constant.HOSTNAME + "findAmenity/16";
-    public static String apiInfoCenter = Constant.HOSTNAME + "findAmenity/32";
-    public static String apiToilets = Constant.HOSTNAME + "findToilets";
-    public static String apiShowers = Constant.HOSTNAME + "findToilets/2";
-    public static String apiDrinkingWater = Constant.HOSTNAME + "findToilets/1";
-    public static String apiCaravanParks = Constant.HOSTNAME + "findAmenity/2";
-    public static String apiBBQSpots = Constant.HOSTNAME + "findBBQLocations";
+
+    public static String apiToilets = Constant.HOSTNAME + "findAmenity/516";
+    public static String apiShowers = Constant.HOSTNAME + "findAmenity/514";
+    public static String apiDrinkingWater = Constant.HOSTNAME + "findAmenity/512";
+
 
     public static boolean bolLocationType = true;
     public static String currentLatitude = "";
@@ -67,14 +61,14 @@ public class MainActivity extends AppCompatActivity
     protected void onStart()
     {
         super.onStart();
-        TapReason.register( this );
+
     }
 
     @Override
     protected void onStop()
     {
         super.onStop();
-        TapReason.unRegister( this );
+
     }
 
     @Override
@@ -192,7 +186,7 @@ public class MainActivity extends AppCompatActivity
 
         JSONDownloader jsonDownloader = new JSONDownloader();
         try {
-            jsonDownloader.execute(getApiCampgrounds(), getApiHostels(), getApiDayUseArea(), getApiPointsOfnterest(), getApiInfoCenter(), getApiToilets(), getApiShowers(), getApiDrinkingWater(), getApiCaravanParks(), getApiBBQSpots());
+            jsonDownloader.execute(    getApiToilets(), getApiShowers(), getApiDrinkingWater());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -233,7 +227,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public String readFromFile() {
+    public  String readFromFile() {
 
         String ret = "";
 
@@ -265,7 +259,7 @@ public class MainActivity extends AppCompatActivity
         return ret;
     }
 
-    public void writeToFile(String data) {
+    public  void writeToFile(String data) {
         try {
             if (!data.equals("")) {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("WikiBackPackerJSONData.txt", MODE_PRIVATE));
@@ -281,45 +275,13 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    public static String getApiCampgrounds() {
-        if (bolLocationType) {
-            return apiCampgrounds + "/" + currentLatitude + "/" + currentLongitude;
-        } else {
-            return apiCampgrounds + "?location=" + cityName;
-        }
-    }
 
-    public static String getApiHostels() {
-        if (bolLocationType) {
-            return apiHostels + "/" + currentLatitude + "/" + currentLongitude;
-        } else {
-            return apiHostels + "?location=" + cityName;
-        }
-    }
 
-    public static String getApiDayUseArea() {
-        if (bolLocationType) {
-            return apiDayUseArea + "/" + currentLatitude + "/" + currentLongitude;
-        } else {
-            return apiDayUseArea + "?location=" + cityName;
-        }
-    }
 
-    public static String getApiPointsOfnterest() {
-        if (bolLocationType) {
-            return apiPointsOfnterest + "/" + currentLatitude + "/" + currentLongitude;
-        } else {
-            return apiPointsOfnterest + "?location=" + cityName;
-        }
-    }
 
-    public static String getApiInfoCenter() {
-        if (bolLocationType) {
-            return apiInfoCenter + "/" + currentLatitude + "/" + currentLongitude;
-        } else {
-            return apiInfoCenter + "?location=" + cityName;
-        }
-    }
+
+
+
 
     public static String getApiToilets() {
         if (bolLocationType) {
@@ -337,13 +299,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public static String getApiCaravanParks() {
-        if (bolLocationType) {
-            return apiCaravanParks + "/" + currentLatitude + "/" + currentLongitude;
-        } else {
-            return apiCaravanParks + "?location=" + cityName;
-        }
-    }
+
 
     public static String getApiDrinkingWater() {
         if (bolLocationType) {
@@ -353,13 +309,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public static String getApiBBQSpots() {
-        if (bolLocationType) {
-            return apiBBQSpots + "/" + currentLatitude + "/" + currentLongitude;
-        } else {
-            return apiBBQSpots + "?location=" + cityName;
-        }
-    }
+
     public boolean isFileCachedAvailable() {
         try {
             InputStream inputStream = openFileInput("WikiBackPackerJSONData.txt");

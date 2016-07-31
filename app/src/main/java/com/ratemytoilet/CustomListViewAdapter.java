@@ -1,4 +1,4 @@
-package com.wikibackpacker;
+package com.ratemytoilet;
 
 import android.content.Context;
 import android.graphics.Point;
