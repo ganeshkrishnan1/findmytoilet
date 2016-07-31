@@ -1,2 +1,4 @@
 # ratemytoilet
 Gov Hack 2016 for Melbourne, Australia
+
+An app allowing users to find their closest public amenity (toilets, shower, drinking water), provided feedback rating of the facility and inform the body responsible for the amenity if maintenance is required. By recording the location of users when they indicate they need a facility and providing access to this new dataset to councils and town planners via both an API and a heatmap, it is easy for them to visualise where new amenities are most needed. The addition of machine learning to suggest viable locations of new amenities close to hot spots (such as in a nearby park to a popular tram stop) further facilitates future amenity installations.
