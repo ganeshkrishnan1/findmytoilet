@@ -10,5 +10,9 @@ Find My Toilet User Amenity Location Requests Generated Dataset and Heatmap
 Dataset URL: 
 https://www.google.com/fusiontables/DataSource?docid=1_-8Cb2VZU_-MoJ_HydDzJ09sWeav7yuMIuBVfpC4
 
+published url from
+
+https://www.aihello.com
+
 Description:
 Our generated API accessible data set of anonymous user locations where access to facilities were requested. Includes heatmap visualisation to help councils and town planners plan future amenities.
